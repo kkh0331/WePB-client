@@ -52,7 +52,7 @@ export default function SignupPage() {
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,15}$/; //오류메세지 보고 구현해뒀음
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{1,15}$/; // 특수문자 허용
     setPassword(newPassword);
     setPasswordValid(passwordRegex.test(newPassword));
   };
@@ -61,7 +61,6 @@ export default function SignupPage() {
     setPasswordConfirm(e.target.value);
     setPasswordMatch(e.target.value === password);
   };
-  
 
   const handleAssetConnect = () => {
     if (isNaN(asset) || asset.trim() === '') {

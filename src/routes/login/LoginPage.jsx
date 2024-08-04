@@ -17,7 +17,6 @@ export default function LoginPage() {
         } else {
           const token = data.response;
           localStorage.setItem('jwtToken', token); // 추후 redux에 저장하도록 할 예정. redux를 다른 페이지들에서 어떻게 받아서 쓸지 몰라서, 일단 로컬스토리지로 저장하는 방식으로 해뒀음
-          alert('로그인되었습니다');
           navigate('/'); 
         }
       } else {
