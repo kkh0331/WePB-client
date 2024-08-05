@@ -10,6 +10,7 @@ import search from '../../assets/search.svg';
 // components
 import PBInfoComponent from '../../components/PBInfo/PBInfoComponent';
 import PBCardListComponent from '../../components/Home/PBCardListComponent';
+import ButtonActive from '../../components/button/ButtonActive';
 
 export default function HomePage() {
 	const [isModal, setIsModal] = useState(false);
@@ -77,8 +78,11 @@ const SlideUpDownModal = ({ setIsModal, isModal }) => {
 				<Sheet.Header />
 				<Sheet.Content className="py-10">
 					<PBInfoComponent />
-					<div className="mt-10 bg-[#0046FF] px-12 rounded-[10px] py-3 w-fit font-bold flex self-center text-white">
+					{/* <div className="mt-10 bg-[#0046FF] px-12 rounded-[10px] py-3 w-fit font-bold flex self-center text-white">
 						채팅하기
+					</div> */}
+					<div className="flex self-center w-5/12">
+						<ButtonActive btnTxt="채팅하기" isConfirm={true} />
 					</div>
 				</Sheet.Content>
 			</Sheet.Container>
