@@ -5,7 +5,7 @@ import moment from 'moment';
 import GroupDocument from '../../components/my/GroupDocument';
 
 export default function MyPage() {
-	const { role } = useSelector(state => state.user);
+	const {name, role} = useSelector(state => state.user);
 	const [documents, setDocuments] = useState({});
 	const [keys, setKeys] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +65,6 @@ export default function MyPage() {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			console.log(documents);
 			setIsLoading(false);
 		}
 	}, []);
@@ -91,7 +90,7 @@ export default function MyPage() {
 							<div className="flex items-baseline gap-2 pl-2">
 								<span className="text-[24px] font-bold">
 									<span className="text-blue-700">
-										권기현 {role === 0 ? 'PB' : '고객'}
+										{name} {role === 0 ? 'PB' : '고객'}
 									</span>
 									님,
 								</span>
