@@ -1,15 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // assets
 import consulting from '../../assets/consulting.png';
 import arrowUp from '../../assets/arrow-up.svg';
-import { useNavigate } from 'react-router-dom';
+import back from '../../assets/cheveron-left.svg';
 
 export default function ChatRoomPage() {
+	const navigate = useNavigate();
 	return (
 		<>
 			<div className="flex items-center justify-center h-16 p-5 font-bold">
-				채팅
+				<img
+					src={back}
+					className="absolute left-0 w-8 h-8 ml-5"
+					onClick={() => navigate(-1)}
+				/>
+				<span>채팅</span>
 			</div>
 			<ChatPartnerInfo />
 			<div className="grid w-full px-5 mt-6">

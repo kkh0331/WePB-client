@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // assets
 import calendar from '../../assets/calendar.svg';
 import message from '../../assets/chat-alt.svg';
+import back from '../../assets/cheveron-left.svg';
 
 // components
 import CustomCalendar from '../../components/calendar/CustomCalendar';
@@ -10,10 +12,16 @@ import EnableTime from '../../components/calendar/EnableTime';
 import ButtonDouble from '../../components/button/ButtonDouble';
 
 export default function ConsultingReservationPage() {
+	const navigate = useNavigate();
 	return (
 		<div className="mb-16">
 			<div className="flex items-center justify-center h-16 p-5 font-bold">
-				상담 예약하기
+				<img
+					src={back}
+					className="absolute left-0 w-8 h-8 ml-5"
+					onClick={() => navigate(-1)}
+				/>
+				<span>상담 예약하기</span>
 			</div>
 			<div className="flex flex-col p-5">
 				<div className="flex items-center mb-5">
