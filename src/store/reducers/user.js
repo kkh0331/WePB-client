@@ -1,24 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-// 최초 상태 - 추후 localStorage나 session에 저장
 const initialState = {
-  id : 1,
-  name : "test",
-  role : 0, // 0 : PB, 1 : user
-}
+  user: null, 
+};
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: initialState,
-  reducers:{
-    setState(state, action){
-      state.id = action.payload.id;
-      state.name = action.payload.name;
-      state.role = action.payload.role;
-    }
-  }
-})
+  reducers: {
+    setUser(state, action) {
+      state.user = action.payload; 
+    },
+    clearUser(state) {
+      state.user = null; 
+    },
+  },
+});
 
-export const {setNickname} = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;
