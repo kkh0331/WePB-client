@@ -129,10 +129,14 @@ export default function MyPage() {
 /*
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { clearUser } from '../../store/reducers/user';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyPage() {
   const user = useSelector(state => state.user.user); 
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
@@ -142,6 +146,12 @@ export default function MyPage() {
     }
   }, [user]);
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    dispatch(clearUser());
+    navigate('/login');
+  };
+
   return (
     <div>
       {error ? (
@@ -149,12 +159,13 @@ export default function MyPage() {
       ) : (
         <>
           <div>ID: {user?.id}</div>
-          <div>Email: {user?.email}</div>
           <div>Name: {user?.name}</div>
+          <button onClick={handleLogout}>로그아웃</button>
         </>
       )}
     </div>
   );
 }
+
   */
 
