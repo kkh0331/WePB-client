@@ -13,6 +13,7 @@ import MyPage from '../routes/my/MyPage';
 import LoginPage from '../routes/login/LoginPage';
 import SignupPage from '../routes/login/SignupPage';
 import ChatRoomPage from '../routes/chat/ChatRoomPage';
+import ConsultingReservationPage from '../routes/chat/ConsultingReservationPage';
 
 const router = createBrowserRouter([
 	{
@@ -51,6 +52,11 @@ const router = createBrowserRouter([
 					{
 						path: 'room',
 						element: <ChatRoomPage />,
+						index: true,
+					},
+					{
+						path: 'reservation',
+						element: <ConsultingReservationPage />,
 						index: true,
 					},
 				],

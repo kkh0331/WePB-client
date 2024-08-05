@@ -3,6 +3,7 @@ import React from 'react';
 // assets
 import consulting from '../../assets/consulting.png';
 import arrowUp from '../../assets/arrow-up.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChatRoomPage() {
 	return (
@@ -21,6 +22,7 @@ export default function ChatRoomPage() {
 }
 
 const ChatPartnerInfo = () => {
+	const navigate = useNavigate();
 	return (
 		<div className="flex items-center justify-between px-5">
 			<div className="flex">
@@ -30,10 +32,13 @@ const ChatPartnerInfo = () => {
 					<span className="text-[13px]">머시기저시기 담당</span>
 				</div>
 			</div>
-			<div className="flex flex-col items-center justify-center">
+			<button
+				className="flex flex-col items-center justify-center"
+				onClick={() => navigate('../reservation')}
+			>
 				<img src={consulting} className="w-5" />
 				<span className="text-[12px] mt-1">상담 신청하기</span>
-			</div>
+			</button>
 		</div>
 	);
 };
