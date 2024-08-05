@@ -19,6 +19,7 @@ export default function LoginPage() {
           setError('비밀번호가 틀렸습니다.');
         } else {
           const token = data.response; 
+          sessionStorage.setItem('token', token); 
           const userInfo = await getUserInfo(token);
           dispatch(setUser(userInfo.response)); 
           navigate('/home');
