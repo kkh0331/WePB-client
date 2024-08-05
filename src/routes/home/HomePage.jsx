@@ -13,6 +13,7 @@ import PBCardListComponent from '../../components/Home/PBCardListComponent';
 
 export default function HomePage() {
 	const [isModal, setIsModal] = useState(false);
+	const [isSelected, setIsSelected] = useState(0);
 	return (
 		<div>
 			<div className="flex items-center w-full h-16 px-5 font-bold">WeePB</div>
@@ -22,19 +23,34 @@ export default function HomePage() {
 					<span>카테고리별로 PB 정보를 확인할 수 있어요!</span>
 				</div>
 				<div className="flex gap-3 py-4 overflow-x-scroll">
-					<button className="flex-shrink-0 bg-[#0046FF] px-6 py-1 rounded-[50px] font-bold text-white text-[15px]">
+					<button
+						onClick={() => setIsSelected(0)}
+						className={`flex-shrink-0 px-6 py-1 rounded-[50px] font-bold text-[15px] ${isSelected === 0 ? 'text-white bg-[#0046FF]' : 'text-black bg-[#ECECEC]'}`}
+					>
 						상품 1
 					</button>
-					<button className="flex-shrink-0 bg-[#ECECEC] px-6 py-1 rounded-[50px] font-bold text-black text-[15px]">
+					<button
+						onClick={() => setIsSelected(1)}
+						className={`flex-shrink-0 px-6 py-1 rounded-[50px] font-bold text-[15px] ${isSelected === 1 ? 'text-white bg-[#0046FF]' : 'text-black bg-[#ECECEC]'}`}
+					>
 						상품 1
 					</button>
-					<button className="flex-shrink-0 bg-[#ECECEC] px-6 py-1 rounded-[50px] font-bold text-black text-[15px]">
+					<button
+						onClick={() => setIsSelected(2)}
+						className={`flex-shrink-0 px-6 py-1 rounded-[50px] font-bold text-[15px] ${isSelected === 2 ? 'text-white bg-[#0046FF]' : 'text-black bg-[#ECECEC]'}`}
+					>
 						상품 1
 					</button>
-					<button className="flex-shrink-0 bg-[#ECECEC] px-6 py-1 rounded-[50px] font-bold text-black text-[15px]">
+					<button
+						onClick={() => setIsSelected(3)}
+						className={`flex-shrink-0 px-6 py-1 rounded-[50px] font-bold text-[15px] ${isSelected === 3 ? 'text-white bg-[#0046FF]' : 'text-black bg-[#ECECEC]'}`}
+					>
 						상품 1
 					</button>
-					<button className="flex-shrink-0 bg-[#ECECEC] px-6 py-1 rounded-[50px] font-bold text-black text-[15px]">
+					<button
+						onClick={() => setIsSelected(4)}
+						className={`flex-shrink-0 px-6 py-1 rounded-[50px] font-bold text-[15px] ${isSelected === 4 ? 'text-white bg-[#0046FF]' : 'text-black bg-[#ECECEC]'}`}
+					>
 						상품 1
 					</button>
 				</div>
