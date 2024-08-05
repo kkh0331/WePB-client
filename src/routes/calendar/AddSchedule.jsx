@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import EnableTime from '../../components/calendar/EnableTime';
+import ButtonDouble from '../../components/button/ButtonDouble';
 
 export default function AddSchedule({isAddSchedule, setIsAddSchedule}) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("")
   const [selectedTime, setSelectedTime] = useState("");
-
-  const times = [
-    {"isEnable" : false, time : "10:00"},
-    {"isEnable" : true, time : "11:30"},
-    {"isEnable" : false, time : "13:30"},
-    {"isEnable" : true, time : "14:30"},
-    {"isEnable" : false, time : "15:30"},
-    {"isEnable" : true, time : "16:20"},
-    {"isEnable" : true, time : "17:00"},
-    {"isEnable" : false, time : "18:00"}
-  ]
 
   useEffect(() => {
     if(isAddSchedule){
@@ -27,22 +18,13 @@ export default function AddSchedule({isAddSchedule, setIsAddSchedule}) {
     setDescription("");
     setSelectedTime("");
     setIsAddSchedule();
+    console.log("취소")
   }
 
   const clickAddBtn = () => {
     //TODO 데이터 보내기
     setIsAddSchedule();
-  }
-
-  const timeClass = (time) => {
-    if(!time.isEnable) return "border-gray-200 text-gray-200";
-    if(selectedTime === time.time) return "text-white bg-blue-600"
-    return "border-black"; 
-  }
-
-  const clickTime = (time) => {
-    if(!time.isEnable) return;
-    setSelectedTime(time.time);
+    console.log("추가")
   }
 
 	return (
@@ -67,19 +49,8 @@ export default function AddSchedule({isAddSchedule, setIsAddSchedule}) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <div className="grid grid-cols-4 gap-2 my-3">
-          {times.map(time => {
-            return(
-              <div key={time.time} className={`${timeClass(time)} rounded-lg border h-8 flex justify-center items-center`} onClick={() => clickTime(time)}>
-                {time.time}
-              </div>
-            )
-          })}
-        </div>
-        <div className='flex justify-between grow space-x-4 mt-1'>
-          <button className='bg-gray-300 h-8 text-black rounded-lg font-bold text-lg flex-grow' onClick={clickCancelBtn}>취소</button>
-          <button className='bg-blue-600 text-white h-8 rounded-lg font-bold text-lg flex-grow' onClick={clickAddBtn}>추가</button>
-        </div>
+        <EnableTime selectedTime={selectedTime} setSelectedTime={(time) => setSelectedTime(time)}/>
+        <ButtonDouble btnCancelTxt={"닫기"} btnConfirmTxt={"추가"} clickCancelBtn={clickCancelBtn} clickConfirmBtn={clickAddBtn}/>
       </div>
 		</div>
 	);
