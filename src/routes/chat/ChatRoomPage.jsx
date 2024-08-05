@@ -2,6 +2,7 @@ import React from 'react';
 
 // assets
 import consulting from '../../assets/consulting.png';
+import arrowUp from '../../assets/arrow-up.svg';
 
 export default function ChatRoomPage() {
 	return (
@@ -14,6 +15,7 @@ export default function ChatRoomPage() {
 				<ChatSenderComponent />
 				<ChatReceiverComponent />
 			</div>
+			<ChatInputComponent />
 		</>
 	);
 }
@@ -58,6 +60,19 @@ const ChatReceiverComponent = () => {
 			<span className="text-[12px] text-[#8F8F8F] mb-2 ml-2 flex items-end">
 				18:22
 			</span>
+		</div>
+	);
+};
+
+const ChatInputComponent = () => {
+	return (
+		<div className="fixed bottom-0 flex items-center justify-center w-full mb-20">
+			<div className="border-2 rounded-[20px] py-2 px-3 w-11/12 flex justify-between">
+				<input className="flex-1 ml-2 mr-4 bg-white" />
+				<button className="bg-[#0046FF] p-[6px] rounded-full">
+					<img src={arrowUp} />
+				</button>
+			</div>
 		</div>
 	);
 };
