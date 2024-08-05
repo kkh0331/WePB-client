@@ -51,26 +51,26 @@ export default function LoginPage() {
             placeholder="이메일"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
-            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-black"
+            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
           />
           <input
             type="password"
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-black"
+            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
           />
         </div>
         {error && <p className="mt-4 text-red-500">{error}</p>}
         <div className="mt-20 space-y-8">
           <button
-            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
             onClick={handleLogin}
           >
             로그인
           </button>
           <button
-            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
             onClick={handleSignUp}
           >
             회원가입

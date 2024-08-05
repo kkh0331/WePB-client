@@ -33,7 +33,6 @@ export default function SignupPage() {
   const handleIdChange = (e) => {
     const newId = e.target.value;
     setId(newId);
-  
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     if (newId.length === 0) {
@@ -46,6 +45,7 @@ export default function SignupPage() {
   };
   
   const handleIdCheck = () => {
+    console.log('중복확인 버튼 ');
     if (id.length === 0) {
       setIdError('이메일을 입력해주세요');
     } else {
@@ -59,7 +59,6 @@ export default function SignupPage() {
       }
     }
   };
-  
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -103,7 +102,6 @@ export default function SignupPage() {
       setSignupError('회원가입 중 오류가 발생했습니다.');
     }
   };
-  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
@@ -116,13 +114,13 @@ export default function SignupPage() {
             <input
               type="text"
               placeholder="이름"
-              className="w-2/3 px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-2/3 px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={nameConnected}
             />
             <button
-              className="px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2"
+              className="px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff] ml-2 disabled:focus:ring-[#94caff] disabled:focus:ring-2"
               onClick={handleNameConnect}
             >
               자산연결
@@ -135,15 +133,15 @@ export default function SignupPage() {
             <input
               type="text"
               placeholder="이메일"
-              className="w-2/3 px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-2/3 px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
               value={id}
               onChange={handleIdChange}
               disabled={idChecked}
             />
             <button
-              className="px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2"
+              className="px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff] ml-2 disabled:focus:ring-[#94caff] disabled:focus:ring-2"
               onClick={handleIdCheck}
-              disabled={idChecked || idError !== ''}
+              disabled={idChecked && idError === ''}
             >
               중복확인
             </button>
@@ -154,7 +152,7 @@ export default function SignupPage() {
           <input
             type="password"
             placeholder="비밀번호"
-            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
             value={password}
             onChange={handlePasswordChange}
           />
@@ -164,7 +162,7 @@ export default function SignupPage() {
           <input
             type="password"
             placeholder="비밀번호 확인"
-            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
             value={passwordConfirm}
             onChange={handlePasswordConfirmChange}
           />
@@ -172,7 +170,7 @@ export default function SignupPage() {
             {passwordConfirm && (passwordMatch ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.')}
           </p>
           <button
-            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
             onClick={handleSignupComplete}
           >
             회원가입
@@ -191,7 +189,7 @@ export default function SignupPage() {
               <input
                 type="text"
                 placeholder=""
-                className="w-full px-4 py-2 pr-12 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 pr-12 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
                 value={asset}
                 onChange={(e) => setAsset(e.target.value)}
               />
@@ -201,7 +199,7 @@ export default function SignupPage() {
               {assetError}
             </p>
             <button
-              className="w-full px-4 py-2 mt-4 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 mt-4 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
               onClick={handleAssetConnect}
             >
               자산 연결하기
