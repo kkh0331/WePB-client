@@ -4,9 +4,9 @@ import BottomNavigation from './BottomNavigation';
 
 export default function NavLayout() {
 	return (
-    <>
-      <Outlet/>
-      <BottomNavigation/>
-    </>
+		<>
+			<Outlet />
+			<BottomNavigation />
+		</>
 	);
 }
