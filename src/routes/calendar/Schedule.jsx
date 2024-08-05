@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ChatSvg from "@/assets/svg/chat-text.svg"
 import ContentSvg from "@/assets/svg/card-text.svg"
+import ContentPopup from '../../components/common/ContentPopup';
 
-export default function Schedule({ dayTime, name, description }) {
+export default function Schedule({ dayTime, name, description, place }) {
+  const [isContent, setIsContent] = useState(false);
 
   const clickChat = () => {
     console.log("해당 chat 내용으로 이동")
   }
 
   const clickContent = () => {
-    console.log("해당 상담 내용 보기")
+    // console.log("해당 상담 내용 보기")
+    setIsContent(!isContent)
   }
 
 	return (
@@ -19,10 +22,11 @@ export default function Schedule({ dayTime, name, description }) {
       </div>
       <div className='w-3/5 flex flex-col justify-center'>
         <p className='font-bold text-lg'>{name}</p>
-        <p className='font-normal text-gray-400 text-sm'>{description}</p>
+        <p className='font-normal text-gray-400 text-sm'>{place}</p>
       </div>
       <div className='w-1/5 flex justify-end items-center pr-1'>
-        <img src={ContentSvg} onClick={clickContent} className='mr-2'/>
+        <img src={ContentSvg} onClick={clickContent} className='mr-2 w-5 h-5'/>
+        {isContent ? <ContentPopup content={description} setIsContentPopup={() => setIsContent(!isContent)}/> : <></>}
         <img src={ChatSvg} onClick={clickChat}/>
       </div>
 		</div>
