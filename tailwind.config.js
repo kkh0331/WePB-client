@@ -4,8 +4,11 @@ export default {
 	theme: {
 		extend: {
 			placeholderColor: {
-			  'black': '#000',
+				'black': '#000',
 			},
+			colors: {
+				'sh-gr-01': '#f3f9fd',
+			}
 		},
 	},
 	plugins: [],
