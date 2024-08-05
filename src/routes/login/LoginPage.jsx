@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../libs/apis/login';
+import { useDispatch } from 'react-redux';
+import { loginUser, getUserInfo } from '../../libs/apis/login';
+import { setUser } from '../../store/reducers/user';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,9 +18,10 @@ export default function LoginPage() {
         if (data.response === 'password error') {
           setError('비밀번호가 틀렸습니다.');
         } else {
-          const token = data.response;
-          localStorage.setItem('jwtToken', token); // 추후 redux에 저장하도록 할 예정. redux를 다른 페이지들에서 어떻게 받아서 쓸지 몰라서, 일단 로컬스토리지로 저장하는 방식으로 해뒀음
-          navigate('/'); 
+          const token = data.response; 
+          const userInfo = await getUserInfo(token);
+          dispatch(setUser(userInfo.response)); 
+          navigate('/home');
         }
       } else {
         if (data.response === '회원가입이 필요합니다') {
@@ -39,12 +43,12 @@ export default function LoginPage() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-white-100">
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
-          <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" /> {/* 로고 나오면 수정예정. placeholder임*/}
+          <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" /> {/* 로고 나오면 수정예정. placeholder임 */}
         </div>
         <div className="space-y-8">
           <input
             type="text"
-            placeholder="아이디"
+            placeholder="이메일"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
             className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-black"

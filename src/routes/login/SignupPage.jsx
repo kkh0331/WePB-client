@@ -23,7 +23,7 @@ export default function SignupPage() {
   const handleNameConnect = () => {
     const koreanRegex = /^[가-힣]+$/;
     if (name.length < 2 || !koreanRegex.test(name)) {
-      setNameError('이름을 2글자 이상 한글로 입력해주세요');
+      setNameError('이름을 2글자 이상 한글로 입력해주세요.');
     } else {
       setNameError('');
       setIsModalOpen(true);
@@ -33,26 +33,37 @@ export default function SignupPage() {
   const handleIdChange = (e) => {
     const newId = e.target.value;
     setId(newId);
-
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
     if (newId.length === 0) {
-      setIdError('아이디를 입력해주세요');
-    } else if (newId.length < 4) {
-      setIdError('사용 불가능한 아이디입니다');
+      setIdError('이메일을 입력해주세요');
+    } else if (!emailRegex.test(newId)) {
+      setIdError('사용 불가능한 이메일입니다');
     } else {
       setIdError('');
     }
   };
-
+  
   const handleIdCheck = () => {
-    if (id.length >= 4) {
-      setIdChecked(true);
-      setIdError(''); 
-    } //중복검사 로직 어떻게 될지 몰라서, 무조건 패스되는걸로 틀만 짜놨음. 아이디를 점유한단 의미로 확인하는 순간 락인
+    if (id.length === 0) {
+      setIdError('이메일을 입력해주세요');
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(id)) {
+        setIdError('사용 불가능한 이메일입니다');
+      } else {
+        // 중복처리 api 만들거면 여기서 중복여부 확인 한번 해줘야함. 지금은 중복확인 누르면 무조건 통과되게 처리
+        setIdChecked(true);
+        setIdError('');
+      }
+    }
   };
+  
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{1,15}$/; // 특수문자 허용
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{1,15}$/; 
     setPassword(newPassword);
     setPasswordValid(passwordRegex.test(newPassword));
   };
@@ -79,12 +90,20 @@ export default function SignupPage() {
         alert('회원가입 완료');
         navigate('/login');
       } else {
-        setSignupError('회원가입 중 오류가 발생했습니다.');
+        const errorMessage = response.error?.errorMessage;
+        if (typeof errorMessage === 'string') {
+          setSignupError(errorMessage);
+        } else if (errorMessage?.password) {
+          setSignupError(errorMessage.password);
+        } else {
+          setSignupError('회원가입 중 오류가 발생했습니다.');
+        }
       }
     } catch (error) {
       setSignupError('회원가입 중 오류가 발생했습니다.');
     }
-  }; //오류처리 세분화..할게요
+  };
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
@@ -105,7 +124,6 @@ export default function SignupPage() {
             <button
               className="px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2"
               onClick={handleNameConnect}
-              disabled={nameConnected}
             >
               자산연결
             </button>
@@ -116,7 +134,7 @@ export default function SignupPage() {
           <div className="flex justify-between">
             <input
               type="text"
-              placeholder="아이디"
+              placeholder="이메일"
               className="w-2/3 px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={id}
               onChange={handleIdChange}
@@ -131,7 +149,7 @@ export default function SignupPage() {
             </button>
           </div>
           <p className="h-6" style={{ color: idError || idChecked ? (idError ? '#EE4D2A' : '#94CAFF') : '#000' }}>
-            {idError || (idChecked ? '사용 가능한 아이디입니다' : '')}
+            {idError || (idChecked ? '사용 가능한 이메일입니다' : '')}
           </p>
           <input
             type="password"
@@ -160,8 +178,8 @@ export default function SignupPage() {
             회원가입
           </button>
           <p className="h-6 text-center" style={{ color: '#EE4D2A' }}>
-  {signupError}
-</p>
+          {signupError}
+          </p>
         </div>
       </div>
 
