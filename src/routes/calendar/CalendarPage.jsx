@@ -7,12 +7,17 @@ import moment from 'moment';
 import Schedule from './Schedule';
 import AddSchedule from './AddSchedule';
 import CustomCalendar from '../../components/calendar/CustomCalendar';
+import { useFetcher } from 'react-router-dom';
 
 export default function CalendarPage() {
 	const { id, role } = useSelector(state => state.user);
 	const [schedules, setSchedules] = useState([]);
 	const [value, onChange] = useState(new Date());
 	const [isAddSchedule, setIsAddSchedule] = useState(false);
+
+	useEffect(() => {
+		console.log(moment(value).format('YYYY-MM'));
+	}, [value])
 
 	useEffect(() => {
 		// TODO 달력에 사용할 데이터를 가져온다.
@@ -48,8 +53,8 @@ export default function CalendarPage() {
 	}, [value]);
 
 	return (
-		<div className="bg-sh-gr-01 h-screen ">
-			<div className={`${isAddSchedule ? "opacity-10" : ""} w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 text-xl font-sans font-bold flex justify-center items-center relative shadow`}>
+		<div className="bg-sh-gr-01 h-screen">
+			<div className={`${isAddSchedule ? "opacity-20" : ""} w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 text-xl font-sans font-bold flex justify-center items-center relative shadow`}>
 				<div>일정</div>
 				<button
 					className="absolute right-4"
@@ -62,7 +67,7 @@ export default function CalendarPage() {
 			<div className={`p-3 ${isAddSchedule ? "opacity-10" : ""}`}>
 				<CustomCalendar value={value} onChange={onChange}/>
 				<div className="mt-6">
-					<p className="px-1 font-black">Today's Meeting</p>
+					<p className="px-1 font-black">{moment(value).format('YYYY년 MM월 DD일')}</p>
 					{[...schedules].map(schedule => (
 						<Schedule
 							key={schedule.id}
