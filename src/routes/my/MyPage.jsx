@@ -53,6 +53,8 @@ export default function MyPage() {
         <>
           <div>ID: {user?.id}</div>
           <div>Name: {user?.name}</div>
+          <div>Role: {user?.role}</div>
+          // API 까보니까 ID/NAME/ROLE 이렇게 3개 와서 테스트용으로 표시해둠
           <button onClick={handleLogout}>로그아웃</button>
         </>
       )}
