@@ -1,6 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// redux
+import { useSelector } from 'react-redux';
 
 // assets
 import calendar from '../../assets/calendar.svg';
@@ -17,7 +21,6 @@ import ButtonActive from '../../components/button/ButtonActive';
 // apis
 import { makeReservation } from '../../libs/apis/reservation';
 import { getAvailableTime } from '../../libs/apis/schedule';
-import { useEffect } from 'react';
 
 export default function ConsultingReservationPage() {
 	const navigate = useNavigate();
@@ -28,6 +31,7 @@ export default function ConsultingReservationPage() {
 		const formattedDate = new Date(date).toLocaleDateString('en-CA', options);
 		return formattedDate;
 	};
+	const { id, role } = useSelector(state => state.user);
 	const [selectedTime, setSelectedTime] = useState(-1);
 	const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
 	const [message, setMessage] = useState('');
@@ -49,7 +53,7 @@ export default function ConsultingReservationPage() {
 		} else {
 			try {
 				const response = await makeReservation({
-					userId: 1,
+					userId: id,
 					pbId: 2,
 					content: message,
 					date: formatDate(new Date(selectedDate)),
