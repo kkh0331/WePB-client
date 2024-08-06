@@ -90,7 +90,7 @@ export default function ChatRoomPage() {
 					className="absolute left-0 w-8 h-8 ml-5"
 					onClick={() => navigate(-1)}
 				/>
-				<span>채팅</span>
+				<span className="text-xl">채팅</span>
 			</div>
 			<ChatPartnerInfo />
 			{isLoading ? (

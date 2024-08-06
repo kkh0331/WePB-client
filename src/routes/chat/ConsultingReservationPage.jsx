@@ -96,7 +96,7 @@ export default function ConsultingReservationPage() {
 					className="absolute left-0 w-8 h-8 ml-5"
 					onClick={() => navigate(-1)}
 				/>
-				<span>상담 예약하기</span>
+				<span className="text-xl">상담 예약하기</span>
 			</div>
 			<div className="flex flex-col p-5">
 				<div className="flex items-center mb-5">
