@@ -106,8 +106,10 @@ export default function ConsultingReservationPage() {
 				</div>
 				<div>
 					<div className="flex items-center gap-1 mb-1">
-						<img src={calendar} />
-						<span>원하시는 상담 날짜와 시간을 선택해주세요.</span>
+						<img src={calendar} className="w-6 h-6" />
+						<span className="text-[15px]">
+							원하시는 상담 날짜와 시간을 선택해주세요.
+						</span>
 					</div>
 					<CustomCalendar onChange={setSelectedDate} />
 					<EnableTime
@@ -116,8 +118,8 @@ export default function ConsultingReservationPage() {
 						setSelectedTime={setSelectedTime}
 					/>
 					<div className="flex items-center gap-1 mt-5 mb-2">
-						<img src={messageIcon} />
-						<span>상담 메시지를 작성해주세요.</span>
+						<img src={messageIcon} className="w-6 h-6" />
+						<span className="text-[15px]">상담 메시지를 작성해주세요.</span>
 					</div>
 					<div className="w-full p-5 border-2 rounded-[10px]">
 						<textarea
