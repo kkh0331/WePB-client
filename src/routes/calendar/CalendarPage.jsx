@@ -6,44 +6,31 @@ import moment from 'moment';
 import Schedule from './Schedule';
 import AddSchedule from './AddSchedule';
 import CustomCalendar from '../../components/calendar/CustomCalendar';
+import { getTodaySchedules } from '../../libs/apis/calendar';
 
 export default function CalendarPage() {
 	const { id, role } = useSelector(state => state.user);
 	const [schedules, setSchedules] = useState([]);
 	const [value, onChange] = useState(new Date());
 	const [isAddSchedule, setIsAddSchedule] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		// TODO 달력에 사용할 데이터를 가져온다.
-		// 달력이 월 기준이므로 '202407'로 전송하면 사용자의 schedules 데이터를 가져온다.
-		const ym = getYM();
-		const today = '09:00';
-		const resSchedules = [
-			{
-				id: 1,
-				partner: '홍길동',
-				dayTime: today,
-				scheduleName: '누구누구누구와 약속',
-				scheduleDescription: '약속 세부사항~~~~~~',
-			},
-			{
-				id: 2,
-				partner: '홍길동',
-				dayTime: today,
-				scheduleName: '누구누구누구와 약속',
-				scheduleDescription: '약속 세부사항~~~~~~',
-			},
-			{
-				id: 3,
-				partner: '홍길동',
-				dayTime: today,
-				scheduleName: '누구누구누구와 약속',
-				scheduleDescription: '약속 세부사항~~~~~~',
-			},
-		];
-		setSchedules(resSchedules);
-
+		fetchTodaySchedules();
 	}, [value]);
+
+	const fetchTodaySchedules = async() => {
+		const today = moment(value).format("YYYY-MM-DD")
+		try{
+			const response = await getTodaySchedules(id, today, role);
+			setSchedules(response.response);
+		} catch(error){
+			console.log(error);
+			setSchedules([]);
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	return (
 		<div className="bg-sh-gr-01 h-screen">
@@ -63,9 +50,10 @@ export default function CalendarPage() {
 					<p className="px-1 font-black">{moment(value).format('YYYY년 MM월 DD일')}</p>
 					{[...schedules].map(schedule => (
 						<Schedule
-							key={schedule.id}
-							dayTime={schedule.dayTime}
+							key={schedule.dayTime}
+							dayTime={moment(schedule.dayTime).format("HH:mm")}
 							name={schedule.scheduleName}
+							place={schedule.schedulePlace}
 							description={schedule.scheduleDescription}
 						/>
 					))}

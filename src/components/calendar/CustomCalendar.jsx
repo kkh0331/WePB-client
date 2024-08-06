@@ -22,6 +22,7 @@ export default function CustomCalendar({ value, onChange }) {
 			setDays(response.response);
 		} catch (error) {
 			console.log(error);
+			setDays([])
 		} finally {
 			setIsLoading(false);
 		}
