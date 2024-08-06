@@ -5,6 +5,7 @@ export const getChatList = async(myId, myRole) => {
     const response = await instance.post('/chat/list',{
       myId, myRole
     })
+    console.log(response.data.response);
     return response.data;
   } catch(error){
     console.log(error);
@@ -16,7 +17,7 @@ export const getChatContents = async(roomId, role) => {
     const response = await instance.post('/chat/enterRoom', {
       roomId, role
     })
-    console.log(response.data);
+    return response.data;
   } catch(error){
     console.log(error);
   }
