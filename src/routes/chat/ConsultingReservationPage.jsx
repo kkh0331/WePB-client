@@ -16,11 +16,20 @@ import ButtonActive from '../../components/button/ButtonActive';
 
 // apis
 import { makeReservation } from '../../libs/apis/reservation';
+import { getAvailableTime } from '../../libs/apis/schedule';
+import { useEffect } from 'react';
 
 export default function ConsultingReservationPage() {
 	const navigate = useNavigate();
+
+	// 날짜 format yyyy-mm-dd 로 포맷 바꾸기
+	const formatDate = date => {
+		const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+		const formattedDate = new Date(date).toLocaleDateString('en-CA', options);
+		return formattedDate;
+	};
 	const [selectedTime, setSelectedTime] = useState(-1);
-	const [selectedDate, setSelectedDate] = useState(-1);
+	const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
 	const [message, setMessage] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	/**
@@ -30,16 +39,10 @@ export default function ConsultingReservationPage() {
 	 * 2 : 입력 값 제대로 넣고 상담 예약 마감 실패
 	 */
 	const [status, setStatus] = useState(0);
-
-	// 날짜 format yyyy-mm-dd 로 포맷 바꾸기
-	const formatDate = date => {
-		const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-		const formattedDate = new Date(date).toLocaleDateString('en-CA', options);
-		return formattedDate;
-	};
+	const [Enabletimes, setEnableTimes] = useState([]);
 
 	const clickReservationBtn = async () => {
-		if (message === '' || selectedDate === -1 || selectedTime === -1) {
+		if (message === '' || selectedTime === -1) {
 			setIsOpen(true);
 			setStatus(0);
 		} else {
@@ -64,6 +67,19 @@ export default function ConsultingReservationPage() {
 			}
 		}
 	};
+
+	const fetchTimesData = async () => {
+		const response = await getAvailableTime({
+			pbId: 2,
+			reservationDay: formatDate(selectedDate),
+		});
+		setEnableTimes(response.response);
+	};
+
+	useEffect(() => {
+		fetchTimesData();
+	}, [selectedDate]);
+
 	return (
 		<div className="relative mb-16">
 			{isOpen ? <AlertModal status={status} setIsOpen={setIsOpen} /> : null}
@@ -88,6 +104,7 @@ export default function ConsultingReservationPage() {
 					</div>
 					<CustomCalendar onChange={setSelectedDate} />
 					<EnableTime
+						Enabletimes={Enabletimes}
 						selectedTime={selectedTime}
 						setSelectedTime={setSelectedTime}
 					/>
