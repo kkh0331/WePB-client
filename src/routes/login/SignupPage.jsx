@@ -45,7 +45,6 @@ export default function SignupPage() {
   };
   
   const handleIdCheck = () => {
-    console.log('중복확인 버튼 ');
     if (id.length === 0) {
       setIdError('이메일을 입력해주세요');
     } else {

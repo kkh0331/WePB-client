@@ -50,7 +50,7 @@ const router = createBrowserRouter([
 						index: true,
 					},
 					{
-						path: 'room',
+						path: ':chatRoomCode',
 						element: <ChatRoomPage />,
 						index: true,
 					},
