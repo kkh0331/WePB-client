@@ -18,7 +18,8 @@ export default function AddSchedule({
 	const { id, role } = useSelector(state => state.user);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
-	const [selectedTime, setSelectedTime] = useState('');
+	const [place, setPlace] = useState('');
+	const [selectedTime, setSelectedTime] = useState([]);
 	const [enableTimes, setEnableTimes] = useState([]);
 
 	const fetchEnableTimes = async () => {
@@ -65,12 +66,20 @@ export default function AddSchedule({
 				/>
 				<input
 					className="w-full px-2 my-1 border border-gray-200 rounded-lg h-9"
-					placeholder="일정 세부사항"
+					placeholder="일정 세부사항 (선택사항)"
 					type="text"
 					value={description}
 					onChange={e => setDescription(e.target.value)}
 				/>
+				<input
+					className="w-full px-2 my-1 border border-gray-200 rounded-lg h-9"
+					placeholder="장소 (선택사항)"
+					type="text"
+					value={place}
+					onChange={e => setPlace(e.target.value)}
+				/>
 				<EnableTime
+					isAddSchedule={true}
 					Enabletimes={enableTimes}
 					selectedTime={selectedTime}
 					setSelectedTime={time => setSelectedTime(time)}

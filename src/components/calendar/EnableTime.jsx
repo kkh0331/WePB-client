@@ -6,11 +6,13 @@ import React, { useEffect, useState } from 'react';
 export default function EnableTime({
 	id,
 	date,
+	isAddSchedule,
 	Enabletimes,
 	selectedTime,
 	setSelectedTime,
 }) {
 	const [timeObjs, setTimeObjs] = useState([]);
+	const [schedules, setSchedules] = useState([]);
 
 	const updateTimeObjs = (timeObjs, compareTimes) => {
 		return timeObjs.map(timeObj => {
@@ -43,14 +45,27 @@ export default function EnableTime({
 
 	const timeClass = timeObj => {
 		if (!timeObj.isEnable) return 'border-gray-200 text-gray-200';
-		if (selectedTime === timeObj.time) return 'text-white bg-blue-600';
+		if (isAddSchedule) {
+			if (schedules.includes(timeObj.time)) return 'text-white bg-blue-600';
+		} else {
+			if (selectedTime === timeObj.time) return 'text-white bg-blue-600';
+		}
 		return 'border-black';
 	};
 
 	const clickTime = timeObj => {
 		if (!timeObj.isEnable) return;
-		setSelectedTime(timeObj.time);
+		if (isAddSchedule) {
+			if (schedules.includes(timeObj.time)) {
+				setSchedules(prev => prev.filter(x => x != timeObj.time));
+			} else {
+				setSchedules(prev => [...prev, timeObj.time]);
+			}
+		} else {
+			setSelectedTime(timeObj.time);
+		}
 	};
+
 	return (
 		<div className="grid grid-cols-4 gap-2 my-3">
 			{timeObjs.map(timeObj => {
