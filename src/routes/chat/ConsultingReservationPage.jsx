@@ -32,6 +32,7 @@ export default function ConsultingReservationPage() {
 	const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
 	const [message, setMessage] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
+	const [tmp, setTmp] = useState(0);
 	/**
 	 * status
 	 * 0 : 입력 값 제대로 안넣었을 때
@@ -76,13 +77,19 @@ export default function ConsultingReservationPage() {
 		setEnableTimes(response.response);
 	};
 
+	const hasToReload = () => {
+		setIsOpen(false);
+		setTmp(tmp + 1);
+		setMessage('');
+	};
+
 	useEffect(() => {
 		fetchTimesData();
-	}, [selectedDate]);
+	}, [selectedDate, tmp]);
 
 	return (
 		<div className="relative mb-16">
-			{isOpen ? <AlertModal status={status} setIsOpen={setIsOpen} /> : null}
+			{isOpen ? <AlertModal status={status} hasToReload={hasToReload} /> : null}
 			<div className="flex items-center justify-center h-16 p-5 font-bold">
 				<img
 					src={back}
@@ -134,7 +141,7 @@ export default function ConsultingReservationPage() {
 	);
 }
 
-const AlertModal = ({ status, setIsOpen }) => {
+const AlertModal = ({ status, hasToReload }) => {
 	const navigate = useNavigate();
 	return (
 		<div className="absolute z-10 flex items-center justify-center w-screen h-screen">
@@ -155,9 +162,7 @@ const AlertModal = ({ status, setIsOpen }) => {
 					<ButtonActive
 						btnTxt="확인"
 						isConfirm={true}
-						clickBtn={() =>
-							status === 1 ? navigate('/home') : setIsOpen(false)
-						}
+						clickBtn={() => (status === 1 ? navigate('/home') : hasToReload())}
 					/>
 				</div>
 			</div>
