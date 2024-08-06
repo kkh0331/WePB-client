@@ -11,8 +11,7 @@ export default function ChatPage() {
 	const fetchChatList = async () => {
 		try{
 			const response = await getChatList(id, role);
-			console.log(response);
-			setChatRooms(response.response);
+			setChatRooms(response.response || []);
 		} catch(error){
 			console.log(error);
 		} finally {
@@ -42,8 +41,6 @@ export default function ChatPage() {
 					})}
 				</>
 			)}
-			{/* <ChatListComponent />
-			<ChatListComponent /> */}
 		</>
 	);
 }
