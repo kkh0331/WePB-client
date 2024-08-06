@@ -49,12 +49,13 @@ export default function CalendarPage() {
 			</div>
 			<AddSchedule
 				id="default-modal"
+				selectedDate={value}
 				isAddSchedule={isAddSchedule}
 				setIsAddSchedule={setIsAddSchedule}
 			/>
 			<div className={`p-3 ${isAddSchedule ? 'opacity-10' : ''}`}>
 				<CustomCalendar value={value} onChange={onChange} />
-				<div className="mt-6">
+				<div className="flex-1 mt-6 mb-16">
 					<p className="px-1 font-black">
 						{moment(value).format('YYYY년 MM월 DD일')}
 					</p>
