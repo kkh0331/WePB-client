@@ -12,11 +12,11 @@ export default function GroupDocument({ documents }) {
 	}, [documents]);
 
 	return (
-    <div className='mt-4'>
-      <p className='font-semibold text-base'>{date}</p>
-      {documents.map(document => {
-        return <Document key={document.reservationDate} document={document}/>
-      })}
-    </div>
-  );
+		<div className="mt-4">
+			<p className="text-base font-semibold">{date}</p>
+			{documents.map(document => {
+				return <Document key={document.reservationDate} document={document} />;
+			})}
+		</div>
+	);
 }

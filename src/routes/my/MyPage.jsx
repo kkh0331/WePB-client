@@ -3,69 +3,86 @@ import { useSelector } from 'react-redux';
 import EditSvg from '@/assets/svg/edit.svg';
 import moment from 'moment';
 import GroupDocument from '../../components/my/GroupDocument';
+import { getRequestList } from '../../libs/apis/mypage';
 
 export default function MyPage() {
-	const { name, role } = useSelector(state => state.user);
+	const { name, id, role } = useSelector(state => state.user);
 	const [documents, setDocuments] = useState({});
 	const [keys, setKeys] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
-	useEffect(() => {
-		console.log(role);
-	}, []);
-
+	const fetchList = async () => {
+		const data = await getRequestList(role === 0 ? 'pb' : 'customer', id);
+		const processedData = await data.response
+			.map(document => {
+				return {
+					...document,
+					date: moment(document.reservationDate).format('YYYYMMDD'),
+					time: moment(document.reservationDate).format('HHmm'),
+				};
+			})
+			.reduce((newDocuments, document) => {
+				const { date } = document;
+				if (!newDocuments[date]) newDocuments[date] = [];
+				newDocuments[date].push(document);
+				return newDocuments;
+			}, {});
+		setDocuments(processedData);
+		setKeys(Object.keys(processedData).reverse());
+	};
 	useEffect(() => {
 		try {
 			// role에 따라서 api 따로 보내야 함.
-			const processedDocuments = [
-				{
-					name: '테스트',
-					content: '"빅파이01는 왜 빅파이인가요?"',
-					reservationDate: '2024-08-05T08:54:21Z',
-				},
-				{
-					name: '테스트',
-					content: '"빅파이02는 왜 빅파이인가요?"',
-					reservationDate: '2024-08-06T08:54:21Z',
-				},
-				{
-					name: '테스트',
-					content: '"빅파이03는 왜 빅파이인가요?"',
-					reservationDate: '2024-08-07T08:54:21Z',
-				},
-				{
-					name: '테스트',
-					content: '"빅파이04는 왜 빅파이인가요?"',
-					reservationDate: '2024-08-05T09:54:21Z',
-				},
-				{
-					name: '테스트',
-					content: '"빅파이05는 왜 빅파이인가요?"',
-					reservationDate: '2024-08-05T11:54:21Z',
-				},
-				{
-					name: '테스트',
-					content: '"빅파이06는 왜 빅파이인가요?"',
-					reservationDate: '2024-08-06T08:00:21Z',
-				},
-			]
-				.map(document => {
-					return {
-						...document,
-						date: moment(document.reservationDate).format('YYYYMMDD'),
-						time: moment(document.reservationDate).format('HHmm'),
-					};
-				})
-				.reduce((newDocuments, document) => {
-					const { date } = document;
-					if (!newDocuments[date]) newDocuments[date] = [];
-					newDocuments[date].push(document);
-					return newDocuments;
-				}, {});
+			// const processedDocuments = [
+			// 	{
+			// 		name: '테스트',
+			// 		content: '"빅파이01는 왜 빅파이인가요?"',
+			// 		reservationDate: '2024-08-05T08:54:21Z',
+			// 	},
+			// 	{
+			// 		name: '테스트',
+			// 		content: '"빅파이02는 왜 빅파이인가요?"',
+			// 		reservationDate: '2024-08-06T08:54:21Z',
+			// 	},
+			// 	{
+			// 		name: '테스트',
+			// 		content: '"빅파이03는 왜 빅파이인가요?"',
+			// 		reservationDate: '2024-08-07T08:54:21Z',
+			// 	},
+			// 	{
+			// 		name: '테스트',
+			// 		content: '"빅파이04는 왜 빅파이인가요?"',
+			// 		reservationDate: '2024-08-05T09:54:21Z',
+			// 	},
+			// 	{
+			// 		name: '테스트',
+			// 		content: '"빅파이05는 왜 빅파이인가요?"',
+			// 		reservationDate: '2024-08-05T11:54:21Z',
+			// 	},
+			// 	{
+			// 		name: '테스트',
+			// 		content: '"빅파이06는 왜 빅파이인가요?"',
+			// 		reservationDate: '2024-08-06T08:00:21Z',
+			// 	},
+			// ]
+			// 	.map(document => {
+			// 		return {
+			// 			...document,
+			// 			date: moment(document.reservationDate).format('YYYYMMDD'),
+			// 			time: moment(document.reservationDate).format('HHmm'),
+			// 		};
+			// 	})
+			// 	.reduce((newDocuments, document) => {
+			// 		const { date } = document;
+			// 		if (!newDocuments[date]) newDocuments[date] = [];
+			// 		newDocuments[date].push(document);
+			// 		return newDocuments;
+			// 	}, {});
 
-			setDocuments(processedDocuments);
-			const extractKeys = Object.keys(processedDocuments).reverse();
-			setKeys(extractKeys);
+			// setDocuments(processedDocuments);
+			// const extractKeys = Object.keys(processedDocuments).reverse();
+			// setKeys(extractKeys);
+			fetchList();
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -78,19 +95,19 @@ export default function MyPage() {
 	};
 
 	return (
-		<div className="bg-sh-gr-01 h-screen">
+		<div className={`min-h-screen h-full bg-sh-gr-01 pb-20`}>
 			{isLoading ? (
 				<div className="flex items-center justify-center h-full">
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
 				</div>
 			) : (
 				<>
-					<div className="w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 text-xl font-sans font-bold flex justify-center items-center relative shadow">
+					<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow dark:bg-gray-700 dark:border-gray-600">
 						<div>마이페이지</div>
 					</div>
-					<div className="flex items-center justify-start w-full p-5 relative">
+					<div className="relative flex items-center justify-start w-full p-5">
 						<div className="flex items-center justify-center w-20 h-20 bg-gray-300 rounded-full" />
-						<div className="flex flex-col items-left ml-5">
+						<div className="flex flex-col ml-5 items-left">
 							<div className="flex items-baseline gap-2 pl-2">
 								<span className="text-[24px] font-bold">
 									<span className="text-blue-700">

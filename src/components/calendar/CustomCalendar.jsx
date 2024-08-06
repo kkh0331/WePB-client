@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import { getDays } from '../../libs/apis/calendar';
 import { useSelector } from 'react-redux';
 import Loading from '../common/Loading';
+import { useLocation } from 'react-router-dom';
 
 export default function CustomCalendar({ value, onChange }) {
 	const { id, role } = useSelector(state => state.user);
@@ -11,6 +12,7 @@ export default function CustomCalendar({ value, onChange }) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [year, setYear] = useState(moment(value).format('YYYY'));
 	const [month, setMonth] = useState(moment(value).format('MM'));
+	const location = useLocation();
 
 	useEffect(() => {
 		fetchDays();
@@ -22,7 +24,7 @@ export default function CustomCalendar({ value, onChange }) {
 			setDays(response.response);
 		} catch (error) {
 			console.log(error);
-			setDays([])
+			setDays([]);
 		} finally {
 			setIsLoading(false);
 		}
@@ -52,16 +54,20 @@ export default function CustomCalendar({ value, onChange }) {
 					onActiveStartDateChange={handleOnActiveStartDateChange}
 					formatDay={(local, date) => moment(date).format('DD')}
 					showNeighboringMonth={false}
-					className="mx-auto w-full text-sm shadow"
+					className="w-full mx-auto text-sm shadow"
 					tileContent={({ date, view }) => {
-						if (days.find(x => x.date === moment(date).format('YYYY-MM-DD'))) {
-							return (
-								<>
-									<div className="flex justify-center items-center absoluteDiv">
-										<div className="dot"></div>
-									</div>
-								</>
-							);
+						if (location.pathname === '/calendar') {
+							if (
+								days.find(x => x.date === moment(date).format('YYYY-MM-DD'))
+							) {
+								return (
+									<>
+										<div className="flex items-center justify-center absoluteDiv">
+											<div className="dot"></div>
+										</div>
+									</>
+								);
+							}
 						}
 					}}
 				/>

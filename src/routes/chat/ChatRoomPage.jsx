@@ -12,6 +12,7 @@ import moment from 'moment';
 import Loading from '../../components/common/Loading';
 
 export default function ChatRoomPage() {
+	const lastMessageRef = useRef(null);
 	const navigate = useNavigate();
 	const { chatRoomCode } = useParams();
 	const { id, role } = useSelector(state => state.user);
@@ -31,6 +32,10 @@ export default function ChatRoomPage() {
 		fetchMessages();
 		return () => disconnect();
 	}, []);
+
+	useEffect(() => {
+		lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+	}, [messages]);
 
 	const fetchMessages = async () => {
 		// 기존 채팅 메시지를 서버로부터 가져오는 함수
@@ -52,8 +57,8 @@ export default function ChatRoomPage() {
 			stompClient.current.subscribe(`/sub/chat/${chatRoomCode}`, message => {
 				// console.log(JSON.parse(message.body));
 				const newMessage = JSON.parse(message.body);
-				console.log(newMessage)
-				setMessages((preMessage) => [...preMessage, newMessage]);
+				console.log(newMessage);
+				setMessages(preMessage => [...preMessage, newMessage]);
 			});
 		});
 	};
@@ -81,40 +86,44 @@ export default function ChatRoomPage() {
 	};
 
 	return (
-		<>
+		<div className="flex flex-col h-screen overflow-y-hidden">
 			<div className="flex items-center justify-center h-16 p-5 font-bold">
 				<img
 					src={back}
 					className="absolute left-0 w-8 h-8 ml-5"
 					onClick={() => navigate(-1)}
 				/>
-				<span>채팅</span>
+				<span className="text-xl">채팅</span>
 			</div>
+			<ChatPartnerInfo />
 			{isLoading ? (
-				<Loading/>
+				<Loading />
 			) : (
-				<>
-					<ChatPartnerInfo />
-					<div className="grid w-full px-5 mt-6">
-						{messages.map(message => {
-							return (
-								id === message.sender_id ?
-								<ChatSenderComponent key={message.id} message={message.message} time={message.send_time}/>
-								:
-								<ChatReceiverComponent key={message.id} message={message.message} time={message.send_time}/>
-							)
-						})}
-						{/* <ChatSenderComponent />
-						<ChatReceiverComponent /> */}
-					</div>
-					<ChatInputComponent
-						inputValue={inputValue}
-						handleInputChange={handleInputChange}
-						sendMessage={sendMessage}
-					/>
-				</>
+				<div className="flex flex-col flex-1 w-full px-5 mt-6 mb-32 overflow-y-scroll">
+					{messages.map(message => {
+						return id === message.sender_id ? (
+							<ChatSenderComponent
+								key={message.id}
+								message={message.message}
+								time={message.send_time}
+							/>
+						) : (
+							<ChatReceiverComponent
+								key={message.id}
+								message={message.message}
+								time={message.send_time}
+							/>
+						);
+					})}
+					<div ref={lastMessageRef} />
+				</div>
 			)}
-		</>
+			<ChatInputComponent
+				inputValue={inputValue}
+				handleInputChange={handleInputChange}
+				sendMessage={sendMessage}
+			/>
+		</div>
 	);
 }
 
@@ -140,11 +149,11 @@ const ChatPartnerInfo = () => {
 	);
 };
 
-const ChatSenderComponent = ({time, message}) => {
+const ChatSenderComponent = ({ time, message }) => {
 	return (
-		<div className="flex justify-self-end">
+		<div className="flex self-end">
 			<span className="text-[12px] text-[#8F8F8F] mb-2 mr-2 flex items-end">
-			{moment(time).format("HH:mm")}
+				{moment(time).format('HH:mm')}
 			</span>
 			<div className="px-5 py-2 bg-[#D8E2FF] w-fit rounded-[10px] my-2">
 				<span className="text-[17px]">{message}</span>
@@ -153,14 +162,14 @@ const ChatSenderComponent = ({time, message}) => {
 	);
 };
 
-const ChatReceiverComponent = ({time, message}) => {
+const ChatReceiverComponent = ({ time, message }) => {
 	return (
 		<div className="flex flex-end">
 			<div className="px-5 py-2 bg-[#F1F1F1] w-fit rounded-[10px] my-2">
 				<span className="text-[17px]">{message}</span>
 			</div>
 			<span className="text-[12px] text-[#8F8F8F] mb-2 ml-2 flex items-end">
-				{moment(time).format("HH:mm")}
+				{moment(time).format('HH:mm')}
 			</span>
 		</div>
 	);
@@ -168,8 +177,8 @@ const ChatReceiverComponent = ({time, message}) => {
 
 const ChatInputComponent = ({ inputValue, handleInputChange, sendMessage }) => {
 	return (
-		<div className="fixed bottom-0 flex items-center justify-center w-full mb-20">
-			<div className="border-2 rounded-[20px] py-2 px-3 w-11/12 flex justify-between">
+		<div className="fixed bottom-0 flex items-center justify-center flex-shrink-0 w-full mb-20">
+			<div className="border-2 rounded-[20px] py-2 px-3 w-11/12 flex justify-between bg-white">
 				<input
 					className="flex-1 ml-2 mr-4 bg-white"
 					type="text"
