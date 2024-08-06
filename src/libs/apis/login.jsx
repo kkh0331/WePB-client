@@ -20,6 +20,7 @@ export const getUserInfo = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(response);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : new Error('사용자 정보 조회 중 오류가 발생했습니다.');

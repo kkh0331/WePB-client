@@ -9,6 +9,7 @@ import back from '../../assets/cheveron-left.svg';
 import { Stomp } from '@stomp/stompjs';
 import { getChatContents } from '../../libs/apis/chat';
 import moment from 'moment';
+import Loading from '../../components/common/Loading';
 
 export default function ChatRoomPage() {
 	const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function ChatRoomPage() {
 	const fetchMessages = async () => {
 		// 기존 채팅 메시지를 서버로부터 가져오는 함수
 		try {
-			const response = await getChatContents(chatRoomCode, role);
+			const response = await getChatContents(chatRoomCode, id, role);
 			setMessages(response.response || []);
 		} catch (error) {
 			console.log(error);
@@ -51,6 +52,7 @@ export default function ChatRoomPage() {
 			stompClient.current.subscribe(`/sub/chat/${chatRoomCode}`, message => {
 				// console.log(JSON.parse(message.body));
 				const newMessage = JSON.parse(message.body);
+				console.log(newMessage)
 				setMessages((preMessage) => [...preMessage, newMessage]);
 			});
 		});
@@ -59,7 +61,7 @@ export default function ChatRoomPage() {
 	// 웹소켓 연결 해제
 	const disconnect = () => {
 		if (stompClient.current) {
-			stompClient.current.disconnect;
+			stompClient.current.disconnect();
 		}
 	};
 
@@ -69,6 +71,7 @@ export default function ChatRoomPage() {
 			const body = {
 				roomId: chatRoomCode,
 				userId: id,
+				partnerId: partnerId,
 				role: role,
 				message: inputValue,
 			};
@@ -88,9 +91,7 @@ export default function ChatRoomPage() {
 				<span>채팅</span>
 			</div>
 			{isLoading ? (
-				<div className="flex items-center justify-center h-[500px]">
-					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
-				</div>
+				<Loading/>
 			) : (
 				<>
 					<ChatPartnerInfo />
