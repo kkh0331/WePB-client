@@ -1,13 +1,80 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState }from 'react';
+import { useNavigate, useParams} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // assets
 import consulting from '../../assets/consulting.png';
 import arrowUp from '../../assets/arrow-up.svg';
 import back from '../../assets/cheveron-left.svg';
+import { Stomp } from '@stomp/stompjs';
+import { getChatContents } from '../../libs/apis/chat';
 
 export default function ChatRoomPage() {
 	const navigate = useNavigate();
+	const {chatRoomCode} = useParams();
+	const {id, role} = useSelector(state => state.user);
+	const stompClient = useRef(null);
+	const [messages, setMessages] = useState([]);
+	const [inputValue, setInputValue] = useState('');
+	const partnerId = role === 0 ? chatRoomCode.split("chat")[1] : chatRoomCode.split("chat")[0];
+
+	const handleInputChange = (event) => {
+		setInputValue(event.target.value);
+	}
+	
+	useEffect(() => {
+		console.log(partnerId)
+
+		connect();
+		fetchMessages();
+		return () => disconnect();
+	}, [])
+
+	const fetchMessages = async () => {
+		// 기존 채팅 메시지를 서버로부터 가져오는 함수
+		try{
+			await getChatContents(chatRoomCode, role);
+		} catch(error){
+			console.log(error);
+		} finally {
+			console.log("hihi");
+		}
+	};
+
+	// 웹소켓 연결 설정
+	const connect = () => {
+		const socket = new WebSocket("ws://localhost:8080/ws");
+		stompClient.current = Stomp.over(socket);
+		stompClient.current.connect({}, () => {
+			stompClient.current.subscribe(`/sub/chat/${chatRoomCode}`, (message) => {
+				console.log(JSON.parse(message.body));
+				// const newMessage = JSON.parse(message.body);
+				// setMessages((preMessage) => [...preMessage, newMessage]);
+			})
+		})
+	}
+
+	// 웹소켓 연결 해제
+	const disconnect = () => {
+		if(stompClient.current){
+			stompClient.current.disconnect
+		}
+	}
+
+	// 메시지 전송
+	const sendMessage = () => {
+		if(stompClient.current && inputValue){
+			const body = {
+				roomId : chatRoomCode,
+				userId : id,
+				role : role,
+				message : inputValue
+			};
+			stompClient.current.send('/pub/message', {}, JSON.stringify(body));
+			setInputValue('');
+		}
+	}
+
 	return (
 		<>
 			<div className="flex items-center justify-center h-16 p-5 font-bold">
@@ -23,7 +90,7 @@ export default function ChatRoomPage() {
 				<ChatSenderComponent />
 				<ChatReceiverComponent />
 			</div>
-			<ChatInputComponent />
+			<ChatInputComponent inputValue={inputValue} handleInputChange={handleInputChange} sendMessage={sendMessage}/>
 		</>
 	);
 }
@@ -76,12 +143,12 @@ const ChatReceiverComponent = () => {
 	);
 };
 
-const ChatInputComponent = () => {
+const ChatInputComponent = ({inputValue, handleInputChange, sendMessage}) => {
 	return (
 		<div className="fixed bottom-0 flex items-center justify-center w-full mb-20">
 			<div className="border-2 rounded-[20px] py-2 px-3 w-11/12 flex justify-between">
-				<input className="flex-1 ml-2 mr-4 bg-white" />
-				<button className="bg-[#0046FF] p-[6px] rounded-full">
+				<input className="flex-1 ml-2 mr-4 bg-white" type='text' value={inputValue} onChange={handleInputChange}/>
+				<button className="bg-[#0046FF] p-[6px] rounded-full" onClick={sendMessage}>
 					<img src={arrowUp} />
 				</button>
 			</div>
