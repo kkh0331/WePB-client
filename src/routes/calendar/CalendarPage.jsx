@@ -1,13 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getSchedulesByYM } from '../../libs/apis/schedule';
 import { changeYYYYMMDD, getYM } from '../../utils/time';
 import '@/assets/css/Calendar.css';
 import moment from 'moment';
 import Schedule from './Schedule';
 import AddSchedule from './AddSchedule';
 import CustomCalendar from '../../components/calendar/CustomCalendar';
-import { useFetcher } from 'react-router-dom';
 
 export default function CalendarPage() {
 	const { id, role } = useSelector(state => state.user);
@@ -16,14 +14,9 @@ export default function CalendarPage() {
 	const [isAddSchedule, setIsAddSchedule] = useState(false);
 
 	useEffect(() => {
-		console.log(moment(value).format('YYYY-MM'));
-	}, [value])
-
-	useEffect(() => {
 		// TODO 달력에 사용할 데이터를 가져온다.
 		// 달력이 월 기준이므로 '202407'로 전송하면 사용자의 schedules 데이터를 가져온다.
 		const ym = getYM();
-		// const resSchedules = getSchedulesByYM(id, ym);
 		const today = '09:00';
 		const resSchedules = [
 			{
