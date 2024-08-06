@@ -11,6 +11,7 @@ import { getChatContents } from '../../libs/apis/chat';
 import moment from 'moment';
 
 export default function ChatRoomPage() {
+	const lastMessageRef = useRef(null);
 	const navigate = useNavigate();
 	const { chatRoomCode } = useParams();
 	const { id, role } = useSelector(state => state.user);
@@ -30,6 +31,10 @@ export default function ChatRoomPage() {
 		fetchMessages();
 		return () => disconnect();
 	}, []);
+
+	useEffect(() => {
+		lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+	}, [messages]);
 
 	const fetchMessages = async () => {
 		// 기존 채팅 메시지를 서버로부터 가져오는 함수
@@ -93,7 +98,7 @@ export default function ChatRoomPage() {
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
 				</div>
 			) : (
-				<div className="flex flex-col w-full px-5 mt-6 overflow-y-scroll">
+				<div className="flex flex-col flex-1 w-full px-5 mt-6 mb-32 overflow-y-scroll">
 					{messages.map(message => {
 						return id === message.sender_id ? (
 							<ChatSenderComponent
@@ -109,6 +114,7 @@ export default function ChatRoomPage() {
 							/>
 						);
 					})}
+					<div ref={lastMessageRef} />
 				</div>
 			)}
 			<ChatInputComponent
@@ -170,7 +176,7 @@ const ChatReceiverComponent = ({ time, message }) => {
 
 const ChatInputComponent = ({ inputValue, handleInputChange, sendMessage }) => {
 	return (
-		<div className="flex items-center justify-center flex-shrink-0 w-full mb-20">
+		<div className="fixed bottom-0 flex items-center justify-center flex-shrink-0 w-full mb-20">
 			<div className="border-2 rounded-[20px] py-2 px-3 w-11/12 flex justify-between bg-white">
 				<input
 					className="flex-1 ml-2 mr-4 bg-white"
