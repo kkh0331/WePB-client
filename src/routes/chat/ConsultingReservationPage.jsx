@@ -122,7 +122,7 @@ const AlertModal = ({ status, setIsOpen }) => {
 	return (
 		<div className="absolute z-10 flex items-center justify-center w-screen h-screen">
 			<div className="absolute w-full h-full bg-gray-300 opacity-50 z-11" />
-			<div className="fixed shadow-md bg-white rounded-[30px] z-20 p-10 flex flex-col items-center gap-5">
+			<div className="fixed shadow-md bg-white rounded-[30px] z-20 p-10 flex flex-col items-center gap-5 animate-slide-down">
 				<div className="flex justify-center gap-1">
 					<img src={check} className="w-7 h-7" />
 					<span className="font-bold text-[18px] text-center whitespace-pre-line">
