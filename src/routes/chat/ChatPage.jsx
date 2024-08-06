@@ -1,49 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getChatList } from '../../libs/apis/chat';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 export default function ChatPage() {
-	const { id, role } = useSelector(state => state.user);
-	const [chatRooms, setChatRooms] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
-
-	const fetchChatList = async () => {
-		try {
-			const response = await getChatList(id, role);
-			setChatRooms(response.response || []);
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	const { chatRooms } = useSelector(state => state.chat);
 
 	useEffect(() => {
-		fetchChatList();
-	}, []);
+		console.log(chatRooms);
+	}, [chatRooms]);
 
 	return (
 		<>
 			<div className="flex items-center justify-center w-full h-16 px-5 text-xl font-bold">
 				채팅 리스트
 			</div>
-			{isLoading ? (
-				<div className="flex items-center justify-center h-[500px]">
-					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
-				</div>
-			) : (
-				<>
-					{chatRooms.map(chatRoom => {
-						return (
-							<ChatListComponent
-								key={chatRoom.chatRoomCode}
-								chatRoom={chatRoom}
-							/>
-						);
-					})}
-				</>
-			)}
+			{chatRooms.map(chatRoom => {
+				return (
+					<ChatListComponent key={chatRoom.chatRoomCode} chatRoom={chatRoom} />
+				);
+			})}
 		</>
 	);
 }
@@ -68,14 +44,16 @@ const ChatListComponent = ({ chatRoom }) => {
 							{chatRoom.partnerCategory}
 						</span>
 					</div>
-					{/* <span className="text-[18px] text-[#8F8F8F]">18:22</span> */}
+					<span className="text-[18px] text-[#8F8F8F]">
+						{moment(chatRoom.lastMessageTime).format('HH:mm')}
+					</span>
 				</div>
 				<div className="flex flex-row justify-between">
 					<div className="flex-1 w-24 truncate">{chatRoom.lastMessage}</div>
 					{chatRoom.unCheckedMessageCount === 0 ? (
 						<></>
 					) : (
-						<div className="flex items-center justify-center flex-shrink-0 w-6 h-6 bg-red-500 rounded-full ml-[2vw]">
+						<div className="flex items-center justify-center flex-shrink-0 w-6 h-6 bg-red-500 rounded-full ml-[2vw] text-white">
 							{chatRoom.unCheckedMessageCount}
 						</div>
 					)}

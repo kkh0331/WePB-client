@@ -30,7 +30,6 @@ export default function MyPage() {
 		setDocuments(processedData);
 		setKeys(Object.keys(processedData).reverse());
 	};
-
 	useEffect(() => {
 		try {
 			// role에 따라서 api 따로 보내야 함.
