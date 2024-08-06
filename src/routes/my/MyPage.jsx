@@ -5,10 +5,14 @@ import moment from 'moment';
 import GroupDocument from '../../components/my/GroupDocument';
 
 export default function MyPage() {
-	const {name, role} = useSelector(state => state.user);
+	const { name, role } = useSelector(state => state.user);
 	const [documents, setDocuments] = useState({});
 	const [keys, setKeys] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		console.log(role);
+	}, []);
 
 	useEffect(() => {
 		try {
@@ -45,19 +49,19 @@ export default function MyPage() {
 					reservationDate: '2024-08-06T08:00:21Z',
 				},
 			]
-			.map(document => {
-				return {
-					...document,
-					date: moment(document.reservationDate).format('YYYYMMDD'),
-					time: moment(document.reservationDate).format('HHmm'),
-				};
-			})
-			.reduce((newDocuments, document) => {
-				const { date } = document;
-				if (!newDocuments[date]) newDocuments[date] = [];
-				newDocuments[date].push(document);
-				return newDocuments;
-			}, {});
+				.map(document => {
+					return {
+						...document,
+						date: moment(document.reservationDate).format('YYYYMMDD'),
+						time: moment(document.reservationDate).format('HHmm'),
+					};
+				})
+				.reduce((newDocuments, document) => {
+					const { date } = document;
+					if (!newDocuments[date]) newDocuments[date] = [];
+					newDocuments[date].push(document);
+					return newDocuments;
+				}, {});
 
 			setDocuments(processedDocuments);
 			const extractKeys = Object.keys(processedDocuments).reverse();
@@ -123,7 +127,6 @@ export default function MyPage() {
 	);
 }
 
-
 // redux 테스트코드
 
 /*
@@ -170,4 +173,3 @@ export default function MyPage() {
 }
 
   */
-

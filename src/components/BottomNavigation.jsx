@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function BottomNavigation() {
 	const { pathname } = useLocation();
+	const {chatRooms} = useSelector(state => state.chat)
+	const [unCheckedCnt, setUnCheckedCnt] = useState(0);
 	const navigate = useNavigate();
 
 	const handleNavigation = path => {
@@ -14,6 +17,11 @@ export default function BottomNavigation() {
 			? 'text-blue-600 dark:text-blue-500'
 			: 'text-gray-500 dark:text-gray-400';
 	};
+
+	useEffect(() => {
+		const total = chatRooms.reduce((sum, item) => sum + item.unCheckedMessageCount, 0);
+		setUnCheckedCnt(total);	
+	}, [chatRooms])
 
 	return (
 		<div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
@@ -64,19 +72,26 @@ export default function BottomNavigation() {
 					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
 					onClick={() => handleNavigation('/chat')}
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className={`w-5 h-5 mb-2 ${navClass('chat')}`}
-						aria-hidden="true"
-						fill="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							fillRule="evenodd"
-							d="M3 5.983C3 4.888 3.895 4 5 4h14c1.105 0 2 .888 2 1.983v8.923a1.992 1.992 0 0 1-2 1.983h-6.6l-2.867 2.7c-.955.899-2.533.228-2.533-1.08v-1.62H5c-1.105 0-2-.888-2-1.983V5.983Zm5.706 3.809a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Zm2.585.002a1 1 0 1 1 .003 1.414 1 1 0 0 1-.003-1.414Zm5.415-.002a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Z"
-							clipRule="evenodd"
-						/>
-					</svg>
+					<div className='relative'>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className={`w-5 h-5 mb-2 ${navClass('chat')} relative`}
+							aria-hidden="true"
+							fill="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								fillRule="evenodd"
+								d="M3 5.983C3 4.888 3.895 4 5 4h14c1.105 0 2 .888 2 1.983v8.923a1.992 1.992 0 0 1-2 1.983h-6.6l-2.867 2.7c-.955.899-2.533.228-2.533-1.08v-1.62H5c-1.105 0-2-.888-2-1.983V5.983Zm5.706 3.809a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Zm2.585.002a1 1 0 1 1 .003 1.414 1 1 0 0 1-.003-1.414Zm5.415-.002a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Z"
+								clipRule="evenodd"
+							/>
+						</svg>
+						{unCheckedCnt === 0 ? <></> :
+							<div className='h-4 w-4 bg-red-500 absolute -top-0.5 -right-3 rounded-lg text-white flex items-center justify-center font-extralight text-xs'>
+								{unCheckedCnt}
+							</div>
+						}
+					</div>
 
 					<span className={`text-sm ${navClass('chat')}`}>Chat</span>
 				</button>
