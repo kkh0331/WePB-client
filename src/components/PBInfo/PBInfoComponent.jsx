@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 
 // components
 import ButtonActive from '../button/ButtonActive';
+import MapComponent from './MapComponent';
 
 export default function PBInfoComponent({ id }) {
 	const [data, setData] = useState({});
@@ -75,7 +76,7 @@ export default function PBInfoComponent({ id }) {
 					</div>
 					<div className="flex flex-col w-full gap-3 p-5 mt-3">
 						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
+							<span className="font-bold text-[15px] flex-1 text-right">
 								경력
 							</span>
 							<div className="flex flex-col w-9/12">
@@ -91,7 +92,7 @@ export default function PBInfoComponent({ id }) {
 							</div>
 						</ul>
 						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
+							<span className="font-bold text-[15px] flex-1 text-right">
 								대외평가
 							</span>
 							<div className="flex flex-col w-9/12">
@@ -110,7 +111,7 @@ export default function PBInfoComponent({ id }) {
 							</div>
 						</ul>
 						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
+							<span className="font-bold text-[15px] flex-1 text-right">
 								자격증
 							</span>
 							<div className="flex flex-col w-9/12">
@@ -126,19 +127,26 @@ export default function PBInfoComponent({ id }) {
 							</div>
 						</ul>
 						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
+							<span className="font-bold text-[15px] flex-1 text-right">
 								지점 정보
 							</span>
 							<div className="flex flex-col w-9/12">
 								<li className="text-[16px]">
 									{data.office.name} ({data.office.region})
 								</li>
-								<li className="text-[14px] text-[#707070]">
+								{/* <li className="text-[14px] text-[#707070]">
 									{data.office.address}
-								</li>
+								</li> */}
 							</div>
 						</ul>
-						<div className="border-2 rounded-[20px] w-full p-5 mt-5 text-[16px]">
+						<div className='mt-1'>
+							<MapComponent
+								lat={data.office.latitude}
+								lng={data.office.longitude}
+								lastPartAddress={data.office.address}
+							/>
+						</div>
+						<div className="border-2 rounded-[20px] w-full p-3 mt-3 text-[16px]">
 							{data.pbUser.pr}
 						</div>
 					</div>
