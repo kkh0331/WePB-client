@@ -140,7 +140,7 @@ export default function MyPage() {
 							})
 						) : (
 							<div className="flex items-center justify-center w-full h-[50vh]">
-								<span>해당 내용이 없습니다.</span>
+								<span>해당 내역이 없습니다.</span>
 							</div>
 						)}
 					</div>

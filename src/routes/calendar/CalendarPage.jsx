@@ -66,7 +66,7 @@ export default function CalendarPage() {
 						<div className="h-[30vh] flex items-center justify-center">
 							<Loading />
 						</div>
-					) : (
+					) : schedules?.length > 0 ? (
 						[...schedules].map(schedule => (
 							<Schedule
 								key={schedule.dayTime}
@@ -76,6 +76,10 @@ export default function CalendarPage() {
 								description={schedule.scheduleDescription}
 							/>
 						))
+					) : (
+						<div className="flex justify-center items-center h-[30vh]">
+							<span>일정이 없습니다.</span>
+						</div>
 					)}
 				</div>
 			</div>
