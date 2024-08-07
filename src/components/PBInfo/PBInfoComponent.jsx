@@ -129,7 +129,7 @@ export default function PBInfoComponent({ pbId }) {
 								)}
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full">
+						<ul className="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1 text-right">
 								자격증
 							</span>
@@ -145,7 +145,7 @@ export default function PBInfoComponent({ pbId }) {
 								)}
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full">
+						<ul className="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1 text-right">
 								지점 정보
 							</span>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import BottomNavigation from './BottomNavigation';
+import Alert from './Alert';
 import { Stomp } from '@stomp/stompjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChatRooms } from '../store/reducers/chat';
@@ -16,8 +17,10 @@ export default function NavLayout() {
 		stompClient.current = Stomp.over(socket);
 		stompClient.current.connect({}, () => {
 			stompClient.current.subscribe(`/sub/user/${id}`, message => {
-				// console.log(message);
 				const newChatRooms = JSON.parse(message.body);
+				newChatRooms.sort((a, b) => {
+					return new Date(b.lastMessageTime) - new Date(a.lastMessageTime);
+				});
 				dispatch(setChatRooms(newChatRooms));
 			});
 		});
@@ -40,8 +43,11 @@ export default function NavLayout() {
 	const fetchChatList = async () => {
 		try{
 			const response = await getChatList(id, role);
-			console.log(response.response);
-			dispatch(setChatRooms(response.response));
+			const res = response.response;
+			res.sort((a, b) => {
+				return new Date(b.lastMessageTime) - new Date(a.lastMessageTime);
+			});
+			dispatch(setChatRooms(res));
 		} catch(error){
 			console.log(error);
 		}
@@ -49,6 +55,7 @@ export default function NavLayout() {
 
 	return (
 		<>
+			{/* <Alert/> */}
 			<Outlet />
 			<BottomNavigation />
 		</>
