@@ -21,7 +21,7 @@ export default function Schedule({
 	const clickContent = () => {
 		setIsContent(!isContent);
 	};
-
+	console.log(partnerName);
 	return (
 		<div className="flex h-16 p-1 px-2 mt-2 text-base bg-white rounded-lg shadow">
 			<div className="flex items-center w-1/5">{dayTime}</div>
