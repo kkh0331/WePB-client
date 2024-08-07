@@ -58,12 +58,15 @@ export default function CalendarPage() {
 			/>
 			<div className={`p-3 ${isAddSchedule ? 'opacity-10' : ''}`}>
 				<CustomCalendar value={value} onChange={onChange} />
-				<div className="flex-1 mt-6 mb-16">
-					<p className="px-1 font-black">
-						{moment(value).format('YYYY년 MM월 DD일')}
-					</p>
+			</div>
+
+			<div className="flex-1 mt-2 mb-16">
+				<p className="ml-3 px-1 font-black mt-2 mb-2">
+					{moment(value).format('YYYY년 MM월 DD일')}
+				</p>
+				<div className='h-[32vh] ml-3 mr-3 overflow-y-scroll'>
 					{isLoading ? (
-						<div className="h-[30vh] flex items-center justify-center">
+						<div className="flex items-center justify-center h-[33vh]">
 							<Loading />
 						</div>
 					) : schedules?.length > 0 ? (
@@ -78,7 +81,7 @@ export default function CalendarPage() {
 							/>
 						))
 					) : (
-						<div className="flex justify-center items-center h-[30vh]">
+						<div className="flex justify-center items-center h-[33vh]">
 							<span>일정이 없습니다.</span>
 						</div>
 					)}

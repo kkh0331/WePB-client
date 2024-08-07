@@ -23,7 +23,7 @@ export default function Schedule({
 	};
 	console.log(partnerName);
 	return (
-		<div className="flex h-16 p-1 px-2 mt-2 text-base bg-white rounded-lg shadow">
+		<div className="flex h-16 p-1 px-2 mb-2 text-base bg-white rounded-lg shadow">
 			<div className="flex items-center w-1/5">{dayTime}</div>
 			<div className="flex flex-col justify-center w-3/5">
 				<p className="font-bold text-[15px]">

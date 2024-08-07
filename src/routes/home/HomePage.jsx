@@ -60,6 +60,8 @@ export default function HomePage() {
 			<div className="flex items-center w-full h-16 px-5 font-bold">WeePB</div>
 			<div className="w-full px-5 pb-28 bg-sh-gr-01">
 				{/* <div className="flex items-center py-2">
+			<div className="w-full h-16 px-5 pb-28 bg-sh-gr-01">
+				<div className="flex items-center py-2">
 					<img src={search} className="mr-2 w-7 h-7" />
 					<span>카테고리별로 PB 정보를 확인할 수 있어요!</span>
 				</div> */}
@@ -109,26 +111,29 @@ export default function HomePage() {
 						<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
 					</label>
 				</div>
-				<div className="flex flex-col items-center w-full gap-5 my-2">
-					{isLoading ? (
-						<Loading />
-					) : (
-						pbList.map((elem, index) => (
-							<PBCardListComponent
-								key={index}
-								setIsModal={setIsModal}
-								data={elem}
-								setSelectedPB={setSelectedPB}
-							/>
-						))
-					)}
+				<div className="flex flex-col items-center w-full gap-5 my-2"></div>
+				<div className="h-[calc(100vh-245px)] overflow-y-scroll bg-sh-gr-01">
+					<div className="flex flex-col items-center gap-5 my-2">
+						{isLoading ? (
+							<Loading />
+						) : (
+							pbList.map((elem, index) => (
+								<PBCardListComponent
+									key={index}
+									setIsModal={setIsModal}
+									data={elem}
+									setSelectedPB={setSelectedPB}
+								/>
+							))
+						)}
+					</div>
 				</div>
+				<SlideUpDownModal
+					setIsModal={setIsModal}
+					isModal={isModal}
+					selectedPB={selectedPB}
+				/>
 			</div>
-			<SlideUpDownModal
-				setIsModal={setIsModal}
-				isModal={isModal}
-				selectedPB={selectedPB}
-			/>
 		</div>
 	);
 }
