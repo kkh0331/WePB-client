@@ -7,6 +7,7 @@ import Schedule from './Schedule';
 import AddSchedule from './AddSchedule';
 import CustomCalendar from '../../components/calendar/CustomCalendar';
 import { getTodaySchedules } from '../../libs/apis/calendar';
+import Loading from '../../components/common/Loading';
 
 export default function CalendarPage() {
 	const { id, role } = useSelector(state => state.user);
@@ -21,6 +22,8 @@ export default function CalendarPage() {
 
 	const fetchTodaySchedules = async () => {
 		const today = moment(value).format('YYYY-MM-DD');
+		setSchedules([]);
+		setIsLoading(true);
 		try {
 			const response = await getTodaySchedules(id, today, role);
 			setSchedules(response.response);
@@ -59,15 +62,21 @@ export default function CalendarPage() {
 					<p className="px-1 font-black">
 						{moment(value).format('YYYY년 MM월 DD일')}
 					</p>
-					{[...schedules].map(schedule => (
-						<Schedule
-							key={schedule.dayTime}
-							dayTime={moment(schedule.dayTime).format('HH:mm')}
-							name={schedule.scheduleName}
-							place={schedule.schedulePlace}
-							description={schedule.scheduleDescription}
-						/>
-					))}
+					{isLoading ? (
+						<div className="h-[30vh] flex items-center justify-center">
+							<Loading />
+						</div>
+					) : (
+						[...schedules].map(schedule => (
+							<Schedule
+								key={schedule.dayTime}
+								dayTime={moment(schedule.dayTime).format('HH:mm')}
+								name={schedule.scheduleName}
+								place={schedule.schedulePlace}
+								description={schedule.scheduleDescription}
+							/>
+						))
+					)}
 				</div>
 			</div>
 		</div>
