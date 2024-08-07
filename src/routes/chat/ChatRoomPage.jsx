@@ -146,7 +146,7 @@ const ChatPartnerInfo = ({ partnerInfo }) => {
 			{role === 0 ? <></> :
 				<button
 					className="flex flex-col items-center justify-center"
-					onClick={() => navigate('../reservation')}
+					onClick={() => navigate('reservation')}
 				>
 					<img src={consulting} className="w-5" />
 					<span className="text-[12px] mt-1">상담 신청하기</span>
