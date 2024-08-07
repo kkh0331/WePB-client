@@ -107,7 +107,7 @@ const SlideUpDownModal = ({ setIsModal, isModal, selectedPB }) => {
 			<Sheet.Container>
 				<Sheet.Header />
 				<Sheet.Content className="py-10">
-					<PBInfoComponent id={selectedPB} />
+					<PBInfoComponent pbId={selectedPB} />
 				</Sheet.Content>
 			</Sheet.Container>
 			<Sheet.Backdrop />

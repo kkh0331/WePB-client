@@ -12,13 +12,19 @@ import { useEffect } from 'react';
 
 // components
 import ButtonActive from '../button/ButtonActive';
+import { useSelector } from 'react-redux';
+import { createRoom } from '../../libs/apis/chat';
+import { useNavigate } from 'react-router-dom';
 
-export default function PBInfoComponent({ id }) {
+export default function PBInfoComponent({ pbId }) {
+	const { id, role } = useSelector(state => state.user);
 	const [data, setData] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
+	const navigate = useNavigate();
+
 	const fetchPBInfo = async () => {
 		try {
-			const response = await getPBInfo(id);
+			const response = await getPBInfo(pbId);
 			setData(response.response);
 		} catch (error) {
 			console.log(error);
@@ -30,6 +36,20 @@ export default function PBInfoComponent({ id }) {
 	useEffect(() => {
 		fetchPBInfo();
 	}, []);
+
+	const clickCreateRoom = async () => {
+		try{
+			const response = await createRoom(id, pbId, role);
+			console.log(response);
+			if(response.status === 200){
+				// enterRoom
+				navigate(`../chat/${pbId}chat${id}`)
+			}
+		}catch(error){
+			console.log(error);
+		} 
+	}
+
 	return (
 		<div>
 			{isLoading ? (
@@ -65,7 +85,7 @@ export default function PBInfoComponent({ id }) {
 						</div>
 					</div>
 					<div className="flex flex-col w-full gap-3 p-5 mt-3">
-						<ul class="flex gap-5 w-full">
+						<ul className="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1 text-right">
 								학력
 							</span>
@@ -74,7 +94,7 @@ export default function PBInfoComponent({ id }) {
 								<li className="text-[16px]">경희대학교</li>
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full">
+						<ul className="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1 text-right">
 								경력
 							</span>
@@ -86,7 +106,7 @@ export default function PBInfoComponent({ id }) {
 								))}
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full">
+						<ul className="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1 text-right">
 								대외평가
 							</span>
@@ -106,11 +126,13 @@ export default function PBInfoComponent({ id }) {
 							{data.pbUser.pr}
 						</div>
 					</div>
-					<div className="flex justify-center w-full">
-						<div className="flex w-5/12">
-							<ButtonActive btnTxt="채팅하기" isConfirm={true} />
+					{role === 0 ? <></> : 
+						<div className="flex justify-center w-full">
+							<div className="flex w-5/12">
+								<ButtonActive btnTxt="채팅하기" isConfirm={true} clickBtn={clickCreateRoom}/>
+							</div>
 						</div>
-					</div>
+					}
 				</>
 			)}
 		</div>
