@@ -19,7 +19,6 @@ export default function Schedule({
 	};
 
 	const clickContent = () => {
-		// console.log("해당 상담 내용 보기")
 		setIsContent(!isContent);
 	};
 

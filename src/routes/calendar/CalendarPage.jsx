@@ -69,7 +69,7 @@ export default function CalendarPage() {
 					) : schedules?.length > 0 ? (
 						[...schedules].map(schedule => (
 							<Schedule
-								key={schedule.dayTime}
+								key={schedule.id}
 								dayTime={moment(schedule.dayTime).format('HH:mm')}
 								name={schedule.scheduleName}
 								place={schedule.schedulePlace}

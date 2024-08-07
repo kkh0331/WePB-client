@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // redux
 import { useSelector } from 'react-redux';
@@ -21,6 +21,7 @@ import ButtonActive from '../../components/button/ButtonActive';
 // apis
 import { makeReservation } from '../../libs/apis/reservation';
 import { getAvailableTime } from '../../libs/apis/schedule';
+import { getPartnerNmCg } from '../../libs/apis/chat';
 
 export default function ConsultingReservationPage() {
 	const navigate = useNavigate();
@@ -37,6 +38,11 @@ export default function ConsultingReservationPage() {
 	const [message, setMessage] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [tmp, setTmp] = useState(0);
+	const [partnerName, setPartnerName] = useState("");
+	const { chatRoomCode } = useParams();
+	const partnerId =
+		role === 0 ? Number(chatRoomCode.split('chat')[1]) : Number(chatRoomCode.split('chat')[0]);
+	console.log(partnerId)
 	/**
 	 * status
 	 * 0 : 입력 값 제대로 안넣었을 때
@@ -54,7 +60,7 @@ export default function ConsultingReservationPage() {
 			try {
 				const response = await makeReservation({
 					userId: id,
-					pbId: 2,
+					pbId: partnerId,
 					content: message,
 					date: formatDate(new Date(selectedDate)),
 					time: selectedTime,
@@ -75,7 +81,7 @@ export default function ConsultingReservationPage() {
 
 	const fetchTimesData = async () => {
 		const response = await getAvailableTime({
-			pbId: 2,
+			pbId: partnerId,
 			reservationDay: formatDate(selectedDate),
 		});
 		setEnableTimes(response.response);
@@ -91,6 +97,19 @@ export default function ConsultingReservationPage() {
 		fetchTimesData();
 	}, [selectedDate, tmp]);
 
+	useEffect(() => {
+		fetchPartnerName();
+	}, [])
+
+	const fetchPartnerName = async () => {
+		try{
+			const response = await getPartnerNmCg(partnerId);
+			setPartnerName(response.response.name)
+		} catch (error){
+			console.log(error);
+		}
+	}
+
 	return (
 		<div className="relative mb-16">
 			{isOpen ? <AlertModal status={status} hasToReload={hasToReload} /> : null}
@@ -105,7 +124,7 @@ export default function ConsultingReservationPage() {
 			<div className="flex flex-col p-5">
 				<div className="flex items-center mb-5">
 					<div className="bg-gray-300 rounded-full w-9 h-9" />
-					<span className="text-[18px] font-bold ml-3 mr-1">권기현 팀장</span>
+					<span className="text-[18px] font-bold ml-3 mr-1">{partnerName} PB</span>
 					<span className="text-[18px]">님과의 상담을 예약해요!</span>
 				</div>
 				<div>
