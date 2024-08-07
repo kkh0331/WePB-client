@@ -139,17 +139,19 @@ const ChatPartnerInfo = ({ partnerInfo }) => {
 			<div className="flex">
 				<div className="w-12 h-12 bg-gray-300 rounded-full" />
 				<div className="flex flex-col justify-center mx-4">
-					<span className="text-[18px] font-bold">{partnerInfo.name} {role === 0 ? 'PB님' : '고객님'}</span>
+					<span className="text-[18px] font-bold">{partnerInfo.name} {role === 0 ? '고객님' : 'PB님'}</span>
 					<span className="text-[13px]">{partnerInfo.category}</span>
 				</div>
 			</div>
-			<button
-				className="flex flex-col items-center justify-center"
-				onClick={() => navigate('../reservation')}
-			>
-				<img src={consulting} className="w-5" />
-				<span className="text-[12px] mt-1">상담 신청하기</span>
-			</button>
+			{role === 0 ? <></> :
+				<button
+					className="flex flex-col items-center justify-center"
+					onClick={() => navigate('../reservation')}
+				>
+					<img src={consulting} className="w-5" />
+					<span className="text-[12px] mt-1">상담 신청하기</span>
+				</button>
+			}
 		</div>
 	);
 };
