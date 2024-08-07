@@ -63,15 +63,15 @@ export default function LoginPage() {
           />
         </div>
         {error && <p className="mt-4 text-red-500">{error}</p>}
-        <div className="mt-20 space-y-8">
+        <div className="mt-16 space-y-8">
           <button
-            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+            className="w-full px-4 py-2 text-white bg-[#0046FF] rounded-lg shadow-md focus:outline-none"
             onClick={handleLogin}
           >
             로그인
           </button>
           <button
-            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+            className="w-full px-4 py-2 text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
             onClick={handleSignUp}
           >
             회원가입
