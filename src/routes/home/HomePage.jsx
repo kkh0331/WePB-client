@@ -12,6 +12,9 @@ import search from '../../assets/search.svg';
 import PBInfoComponent from '../../components/PBInfo/PBInfoComponent';
 import PBCardListComponent from '../../components/Home/PBCardListComponent';
 import ButtonActive from '../../components/button/ButtonActive';
+import Loading from '../../components/common/Loading';
+
+// apis
 import { getPBList } from '../../libs/apis/pb';
 
 export default function HomePage() {
@@ -19,9 +22,16 @@ export default function HomePage() {
 	const [isSelected, setIsSelected] = useState(0);
 	const [pbList, setPbList] = useState([]);
 	const [selectedPB, setSelectedPB] = useState(-1);
+	const [isLoading, setIsLoading] = useState(true);
 	const fetchPBList = async () => {
-		const data = await getPBList();
-		setPbList(data.response);
+		try {
+			const data = await getPBList();
+			setPbList(data.response);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	useEffect(() => {
@@ -68,14 +78,18 @@ export default function HomePage() {
 					</button>
 				</div>
 				<div className="flex flex-col items-center w-full gap-5 my-2">
-					{pbList.map((elem, index) => (
-						<PBCardListComponent
-							key={index}
-							setIsModal={setIsModal}
-							data={elem}
-							setSelectedPB={setSelectedPB}
-						/>
-					))}
+					{isLoading ? (
+						<Loading />
+					) : (
+						pbList.map((elem, index) => (
+							<PBCardListComponent
+								key={index}
+								setIsModal={setIsModal}
+								data={elem}
+								setSelectedPB={setSelectedPB}
+							/>
+						))
+					)}
 				</div>
 			</div>
 			<SlideUpDownModal
