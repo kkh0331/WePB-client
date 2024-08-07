@@ -40,7 +40,7 @@ export default function HomePage() {
 	return (
 		<div>
 			<div className="flex items-center w-full h-16 px-5 font-bold">WeePB</div>
-			<div className="w-full px-5 pb-28 bg-sh-gr-01">
+			<div className="w-full h-16 px-5 pb-28 bg-sh-gr-01">
 				<div className="flex items-center py-2">
 					<img src={search} className="mr-2 w-7 h-7" />
 					<span>카테고리별로 PB 정보를 확인할 수 있어요!</span>
@@ -77,7 +77,9 @@ export default function HomePage() {
 						상품 1
 					</button>
 				</div>
-				<div className="flex flex-col items-center w-full gap-5 my-2">
+			</div>
+			<div className='h-[calc(100vh-245px)] overflow-y-scroll bg-sh-gr-01'>
+				<div className="flex flex-col items-center gap-5 my-2">
 					{isLoading ? (
 						<Loading />
 					) : (
