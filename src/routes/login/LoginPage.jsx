@@ -41,7 +41,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-sh-gr-01">
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
           <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" /> {/* 로고 나오면 수정예정. placeholder임 */}

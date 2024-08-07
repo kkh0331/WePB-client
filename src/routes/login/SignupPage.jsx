@@ -101,7 +101,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4" onClick={handleCloseModal}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-sh-gr-01 p-4" onClick={handleCloseModal}>
       <button className="absolute top-8 left-4 text-black" onClick={() => navigate('/login')}>
         &lt;
       </button>
@@ -144,19 +144,18 @@ export default function SignupPage() {
             {passwordConfirm && (passwordMatch ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.')}
           </p>
           <button
-  className="w-full px-4 py-2 text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
-  onClick={handleNameConnect}
->
-  자산연결
-</button>
-<div className="mt-4"></div>
-<button
-  className="w-full px-4 py-2 text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
-  onClick={handleSignupComplete}
->
-  회원가입
-</button>
-
+            className="w-full px-4 py-2 text-white bg-[#0046FF] rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+            onClick={handleNameConnect}
+          >
+            자산연결
+          </button>
+          <div className="mt-4"></div>
+          <button
+            className="w-full px-4 py-2 text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+            onClick={handleSignupComplete}
+          >
+            회원가입
+          </button>
           <p className="h-6 text-center" style={{ color: '#EE4D2A' }}>{signupError}</p>
         </div>
       </div>
