@@ -15,7 +15,7 @@ export default function GroupDocument({ documents }) {
 		<div className="mt-4">
 			<p className="text-base font-semibold">{date}</p>
 			{documents.map(document => {
-				return <Document key={document.reservationDate} document={document} />;
+				return <Document key={document.id} document={document} />;
 			})}
 		</div>
 	);

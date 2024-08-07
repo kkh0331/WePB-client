@@ -32,56 +32,6 @@ export default function MyPage() {
 	};
 	useEffect(() => {
 		try {
-			// role에 따라서 api 따로 보내야 함.
-			// const processedDocuments = [
-			// 	{
-			// 		name: '테스트',
-			// 		content: '"빅파이01는 왜 빅파이인가요?"',
-			// 		reservationDate: '2024-08-05T08:54:21Z',
-			// 	},
-			// 	{
-			// 		name: '테스트',
-			// 		content: '"빅파이02는 왜 빅파이인가요?"',
-			// 		reservationDate: '2024-08-06T08:54:21Z',
-			// 	},
-			// 	{
-			// 		name: '테스트',
-			// 		content: '"빅파이03는 왜 빅파이인가요?"',
-			// 		reservationDate: '2024-08-07T08:54:21Z',
-			// 	},
-			// 	{
-			// 		name: '테스트',
-			// 		content: '"빅파이04는 왜 빅파이인가요?"',
-			// 		reservationDate: '2024-08-05T09:54:21Z',
-			// 	},
-			// 	{
-			// 		name: '테스트',
-			// 		content: '"빅파이05는 왜 빅파이인가요?"',
-			// 		reservationDate: '2024-08-05T11:54:21Z',
-			// 	},
-			// 	{
-			// 		name: '테스트',
-			// 		content: '"빅파이06는 왜 빅파이인가요?"',
-			// 		reservationDate: '2024-08-06T08:00:21Z',
-			// 	},
-			// ]
-			// 	.map(document => {
-			// 		return {
-			// 			...document,
-			// 			date: moment(document.reservationDate).format('YYYYMMDD'),
-			// 			time: moment(document.reservationDate).format('HHmm'),
-			// 		};
-			// 	})
-			// 	.reduce((newDocuments, document) => {
-			// 		const { date } = document;
-			// 		if (!newDocuments[date]) newDocuments[date] = [];
-			// 		newDocuments[date].push(document);
-			// 		return newDocuments;
-			// 	}, {});
-
-			// setDocuments(processedDocuments);
-			// const extractKeys = Object.keys(processedDocuments).reverse();
-			// setKeys(extractKeys);
 			fetchList();
 		} catch (error) {
 			console.error(error);
