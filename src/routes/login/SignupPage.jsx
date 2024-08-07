@@ -101,7 +101,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-sh-gr-01 p-4" onClick={handleCloseModal}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4" onClick={handleCloseModal}>
       <button className="absolute top-8 left-4 text-black" onClick={() => navigate('/login')}>
         &lt;
       </button>
@@ -110,7 +110,7 @@ export default function SignupPage() {
           <input
             type="text"
             placeholder="이름"
-            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
+            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -118,7 +118,7 @@ export default function SignupPage() {
           <input
             type="text"
             placeholder="이메일"
-            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
+            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500"
             value={id}
             onChange={handleIdChange}
           />
@@ -126,7 +126,7 @@ export default function SignupPage() {
           <input
             type="password"
             placeholder="비밀번호"
-            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
+            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500"
             value={password}
             onChange={handlePasswordChange}
           />
@@ -136,26 +136,28 @@ export default function SignupPage() {
           <input
             type="password"
             placeholder="비밀번호 확인"
-            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
+            className="w-full px-4 py-2 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500"
             value={passwordConfirm}
             onChange={handlePasswordConfirmChange}
           />
           <p className="h-6" style={{ color: passwordMatch ? '#94CAFF' : '#EE4D2A' }}>
             {passwordConfirm && (passwordMatch ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.')}
           </p>
-          <button
-            className="w-full px-4 py-2 text-white bg-[#0046FF] rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
-            onClick={handleNameConnect}
-          >
-            자산연결
-          </button>
-          <div className="mt-4"></div>
-          <button
-            className="w-full px-4 py-2 text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
-            onClick={handleSignupComplete}
-          >
-            회원가입
-          </button>
+          <div className="flex flex-col items-center space-y-4">
+            <button
+              className="w-2/3 px-4 py-2 text-white bg-[#0046FF] rounded-lg shadow-md"
+              onClick={handleNameConnect}
+            >
+              자산연결
+            </button>
+            <div className="mt-4"></div>
+            <button
+              className="w-2/3 px-4 py-2 text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+              onClick={handleSignupComplete}
+            >
+              회원가입
+            </button>
+          </div>
           <p className="h-6 text-center" style={{ color: '#EE4D2A' }}>{signupError}</p>
         </div>
       </div>
@@ -168,7 +170,7 @@ export default function SignupPage() {
               <input
                 type="text"
                 placeholder=""
-                className="w-full px-4 py-2 pr-12 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
+                className="w-full px-4 py-2 pr-12 text-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500"
                 value={tempAsset}
                 onChange={handleAssetChange}
               />
