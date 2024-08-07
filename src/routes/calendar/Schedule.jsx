@@ -28,7 +28,7 @@ export default function Schedule({
 			<div className="flex flex-col justify-center w-3/5">
 				<p className="font-bold text-[15px]">
 					{name} ({partnerName}
-					{role ? 'PB님' : '고객님'})
+					{partnerName && role ? 'PB님' : '고객님'})
 				</p>
 				<p className="text-sm font-normal text-gray-400">{place}</p>
 			</div>

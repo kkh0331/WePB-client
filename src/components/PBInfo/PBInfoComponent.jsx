@@ -74,11 +74,9 @@ export default function PBInfoComponent({ id }) {
 							) : null}
 						</div>
 					</div>
-					<div className="flex flex-col w-full gap-3 p-5 mt-3">
-						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[15px] flex-1 text-right">
-								경력
-							</span>
+					<div className="flex flex-col w-full gap-5 p-5 mt-3">
+						<ul class="flex gap-5 w-full border-b-[1px] pb-5">
+							<span className="font-bold text-[16px] flex-1">경력</span>
 							<div className="flex flex-col w-9/12">
 								{data.portpolios.map((elem, index) => (
 									<li className="text-[16px] flex flex-col" key={index}>
@@ -91,18 +89,18 @@ export default function PBInfoComponent({ id }) {
 								))}
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[15px] flex-1 text-right">
-								대외평가
-							</span>
+						<ul class="flex gap-5 w-full border-b-[1px] pb-5">
+							<span className="font-bold text-[16px] flex-1">대외평가</span>
 							<div className="flex flex-col w-9/12">
 								{data.awards?.length > 0 ? (
 									data.awards.map((elem, index) => (
-										<li className="text-[16px] truncate flex flex-col">
+										<li className="text-[16px] w-full flex flex-col">
 											<span className="text-[13px]">
 												{elem.awards_date.slice(0, 7)}
 											</span>
-											{elem.awards_title}
+											<span className="w-full break-words">
+												{elem.awards_title}
+											</span>
 										</li>
 									))
 								) : (
@@ -110,10 +108,8 @@ export default function PBInfoComponent({ id }) {
 								)}
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[15px] flex-1 text-right">
-								자격증
-							</span>
+						<ul class="flex gap-5w-full border-b-[1px] pb-5">
+							<span className="font-bold text-[16px] flex-1">자격증</span>
 							<div className="flex flex-col w-9/12">
 								{data.pbUser.certificate ? (
 									data.pbUser.certificate.split(',').map((elem, index) => (
@@ -127,9 +123,7 @@ export default function PBInfoComponent({ id }) {
 							</div>
 						</ul>
 						<ul class="flex gap-5 w-full">
-							<span className="font-bold text-[15px] flex-1 text-right">
-								지점 정보
-							</span>
+							<span className="font-bold text-[16px] flex-1">지점 정보</span>
 							<div className="flex flex-col w-9/12">
 								<li className="text-[16px]">
 									{data.office.name} ({data.office.region})
@@ -139,7 +133,7 @@ export default function PBInfoComponent({ id }) {
 								</li> */}
 							</div>
 						</ul>
-						<div className='mt-1'>
+						<div className="mt-1">
 							<MapComponent
 								lat={data.office.latitude}
 								lng={data.office.longitude}
