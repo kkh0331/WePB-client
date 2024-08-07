@@ -23,3 +23,12 @@ export const getChatContents = async(roomId, userId, role) => {
     console.log(error);
   }
 }
+
+export const getPartnerNmCg = async(partnerId) => {
+  try{
+    const response = await instance.get(`/users/${partnerId}`)
+    return response.data;
+  }catch(error){
+    console.log(error);
+  }
+}

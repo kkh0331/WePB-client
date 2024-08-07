@@ -7,7 +7,7 @@ import consulting from '../../assets/consulting.png';
 import arrowUp from '../../assets/arrow-up.svg';
 import back from '../../assets/cheveron-left.svg';
 import { Stomp } from '@stomp/stompjs';
-import { getChatContents } from '../../libs/apis/chat';
+import { getChatContents, getPartnerNmCg } from '../../libs/apis/chat';
 import moment from 'moment';
 import Loading from '../../components/common/Loading';
 
@@ -22,6 +22,7 @@ export default function ChatRoomPage() {
 	const [isLoading, setIsLoading] = useState(true);
 	const partnerId =
 		role === 0 ? chatRoomCode.split('chat')[1] : chatRoomCode.split('chat')[0];
+	const [partnerInfo, setPartnerInfo] = useState({});
 
 	const handleInputChange = event => {
 		setInputValue(event.target.value);
@@ -29,7 +30,7 @@ export default function ChatRoomPage() {
 
 	useEffect(() => {
 		connect();
-		fetchMessages();
+		fetchInfo();
 		return () => disconnect();
 	}, []);
 
@@ -37,11 +38,13 @@ export default function ChatRoomPage() {
 		lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [messages]);
 
-	const fetchMessages = async () => {
+	const fetchInfo = async () => {
 		// 기존 채팅 메시지를 서버로부터 가져오는 함수
 		try {
 			const response = await getChatContents(chatRoomCode, id, role);
+			const response2 = await getPartnerNmCg(partnerId);
 			setMessages(response.response || []);
+			setPartnerInfo(response2.response);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -57,7 +60,6 @@ export default function ChatRoomPage() {
 			stompClient.current.subscribe(`/sub/chat/${chatRoomCode}`, message => {
 				// console.log(JSON.parse(message.body));
 				const newMessage = JSON.parse(message.body);
-				console.log(newMessage);
 				setMessages(preMessage => [...preMessage, newMessage]);
 			});
 		});
@@ -95,28 +97,30 @@ export default function ChatRoomPage() {
 				/>
 				<span className="text-xl">채팅</span>
 			</div>
-			<ChatPartnerInfo />
 			{isLoading ? (
 				<Loading />
 			) : (
-				<div className="flex flex-col flex-1 w-full px-5 mt-6 mb-32 overflow-y-scroll">
-					{messages.map(message => {
-						return id === message.sender_id ? (
-							<ChatSenderComponent
-								key={message.id}
-								message={message.message}
-								time={message.send_time}
-							/>
-						) : (
-							<ChatReceiverComponent
-								key={message.id}
-								message={message.message}
-								time={message.send_time}
-							/>
-						);
-					})}
-					<div ref={lastMessageRef} />
-				</div>
+				<>
+					<ChatPartnerInfo partnerInfo={partnerInfo} />
+					<div className="flex flex-col flex-1 w-full px-5 mt-6 mb-32 overflow-y-scroll">
+						{messages.map(message => {
+							return id === message.sender_id ? (
+								<ChatSenderComponent
+									key={message.id}
+									message={message.message}
+									time={message.send_time}
+								/>
+							) : (
+								<ChatReceiverComponent
+									key={message.id}
+									message={message.message}
+									time={message.send_time}
+								/>
+							);
+						})}
+						<div ref={lastMessageRef} />
+					</div>
+				</>
 			)}
 			<ChatInputComponent
 				inputValue={inputValue}
@@ -127,15 +131,16 @@ export default function ChatRoomPage() {
 	);
 }
 
-const ChatPartnerInfo = () => {
+const ChatPartnerInfo = ({ partnerInfo }) => {
 	const navigate = useNavigate();
+	const { role } = useSelector(state => state.user);
 	return (
 		<div className="flex items-center justify-between px-5">
 			<div className="flex">
 				<div className="w-12 h-12 bg-gray-300 rounded-full" />
 				<div className="flex flex-col justify-center mx-4">
-					<span className="text-[18px] font-bold">권기현 팀장</span>
-					<span className="text-[13px]">머시기저시기 담당</span>
+					<span className="text-[18px] font-bold">{partnerInfo.name} {role === 0 ? 'PB님' : '고객님'}</span>
+					<span className="text-[13px]">{partnerInfo.category}</span>
 				</div>
 			</div>
 			<button
