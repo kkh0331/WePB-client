@@ -103,10 +103,14 @@ export default function HomePage() {
 
 const SlideUpDownModal = ({ setIsModal, isModal, selectedPB }) => {
 	return (
-		<Sheet isOpen={isModal} onClose={() => setIsModal(false)} detent="800px">
+		<Sheet
+			isOpen={isModal}
+			onClose={() => setIsModal(false)}
+			detent="content-height"
+		>
 			<Sheet.Container>
 				<Sheet.Header />
-				<Sheet.Content className="py-10">
+				<Sheet.Content className="py-10 overflow-y-scroll">
 					<PBInfoComponent id={selectedPB} />
 				</Sheet.Content>
 			</Sheet.Container>
