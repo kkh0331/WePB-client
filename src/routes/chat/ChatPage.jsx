@@ -15,11 +15,20 @@ export default function ChatPage() {
 			<div className="flex items-center justify-center w-full h-16 px-5 text-xl font-bold">
 				채팅 리스트
 			</div>
-			{chatRooms.map(chatRoom => {
-				return (
-					<ChatListComponent key={chatRoom.chatRoomCode} chatRoom={chatRoom} />
-				);
-			})}
+			{chatRooms?.length > 0 ? (
+				chatRooms.map(chatRoom => {
+					return (
+						<ChatListComponent
+							key={chatRoom.chatRoomCode}
+							chatRoom={chatRoom}
+						/>
+					);
+				})
+			) : (
+				<div className="w-full flex justify-center items-center h-[70vh]">
+					<span>해당 내역이 없습니다.</span>
+				</div>
+			)}
 		</>
 	);
 }

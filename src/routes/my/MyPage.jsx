@@ -131,12 +131,18 @@ export default function MyPage() {
 					<div className="px-5">
 						<div>
 							{role == 0
-								? '☑️ 고객분들의 상담내용을 확인할 수 있어요'
-								: '☑️ 요청하신 상담내용을 확인할 수 있어요'}
+								? '☑️ 고객분들의 상담내용을 확인할 수 있어요.'
+								: '☑️ 요청하신 상담내용을 확인할 수 있어요.'}
 						</div>
-						{keys.map(key => {
-							return <GroupDocument key={key} documents={documents[key]} />;
-						})}
+						{documents?.length > 0 ? (
+							keys.map(key => {
+								return <GroupDocument key={key} documents={documents[key]} />;
+							})
+						) : (
+							<div className="flex items-center justify-center w-full h-[50vh]">
+								<span>해당 내역이 없습니다.</span>
+							</div>
+						)}
 					</div>
 				</>
 			)}
