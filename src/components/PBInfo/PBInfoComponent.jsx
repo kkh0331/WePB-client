@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 
 // components
 import ButtonActive from '../button/ButtonActive';
+import MapComponent from './MapComponent';
 
 export default function PBInfoComponent({ id }) {
 	const [data, setData] = useState({});
@@ -127,12 +128,19 @@ export default function PBInfoComponent({ id }) {
 								<li className="text-[16px]">
 									{data.office.name} ({data.office.region})
 								</li>
-								<li className="text-[14px] text-[#707070]">
+								{/* <li className="text-[14px] text-[#707070]">
 									{data.office.address}
-								</li>
+								</li> */}
 							</div>
 						</ul>
-						<div className="border-2 rounded-[20px] w-full p-5 mt-5 text-[16px]">
+						<div className="mt-1">
+							<MapComponent
+								lat={data.office.latitude}
+								lng={data.office.longitude}
+								lastPartAddress={data.office.address}
+							/>
+						</div>
+						<div className="border-2 rounded-[20px] w-full p-3 mt-3 text-[16px]">
 							{data.pbUser.pr}
 						</div>
 					</div>
