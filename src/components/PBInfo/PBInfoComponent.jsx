@@ -38,17 +38,17 @@ export default function PBInfoComponent({ pbId }) {
 	}, []);
 
 	const clickCreateRoom = async () => {
-		try{
+		try {
 			const response = await createRoom(id, pbId, role);
 			console.log(response);
-			if(response.status === 200){
+			if (response.status === 200) {
 				// enterRoom
-				navigate(`../chat/${pbId}chat${id}`)
+				navigate(`../chat/${pbId}chat${id}`);
 			}
-		}catch(error){
+		} catch (error) {
 			console.log(error);
-		} 
-	}
+		}
+	};
 
 	return (
 		<div>
@@ -57,51 +57,55 @@ export default function PBInfoComponent({ pbId }) {
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
 				</div>
 			) : (
-				<>
+				<div>
 					<div className="flex items-center justify-center w-full gap-5">
 						<img
 							src={data.pbUser.photo || profile}
 							onError={e => {
 								e.target.src = profile;
 							}}
-							className="flex items-center justify-center w-32 h-32 border-2 rounded-full"
+							className="flex items-center justify-center w-24 h-24 rounded-full"
 						/>
 						<div className="flex flex-col items-left ">
+							<span className="ml-2 text-[15px] text-[#002DAA] font-bold">
+								{data.pbUser.invest_type}
+							</span>
 							<div className="flex items-baseline gap-2 pl-2">
 								<span className="text-[24px] font-bold">
-									{data.pbUser.name} 팀장
+									{data.pbUser.name} PB
 								</span>
-								<span className="text-[15px] text-[#505050]">8년차</span>
+								<span className="text-[15px] text-[#505050]">
+									{data.pbUser.category}
+								</span>
 							</div>
-							<span className="text-[18px] my-1 pl-2">머시기저시기 담당</span>
-							<div className="flex items-center gap-1">
+							<span className="text-[16px] pl-2">
+								{data.pbUser.category_detail}
+							</span>
+							<div className="ml-2 flex items-center gap-[1px]">
 								<img src={emailLink} className="w-4 h-4" />
 								<span className="text-[13px]">{data.pbUser.email}</span>
 							</div>
-							<div className="flex items-center gap-1">
-								<img src={paperClip} className="w-4 h-4" />
-								<span className="text-[13px]">{data.pbUser.link}</span>
-							</div>
+							{data.pbUser.link ? (
+								<div className="flex items-center gap-1 ml-2">
+									<img src={paperClip} className="w-4 h-4" />
+									<span className="text-[13px]">{data.pbUser.link}</span>
+								</div>
+							) : null}
 						</div>
 					</div>
 					<div className="flex flex-col w-full gap-3 p-5 mt-3">
-						<ul className="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
-								학력
-							</span>
-							<div className="flex flex-col w-9/12">
-								<li className="text-[16px]">성시경대학교</li>
-								<li className="text-[16px]">경희대학교</li>
-							</div>
-						</ul>
 						<ul className="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1 text-right">
 								경력
 							</span>
 							<div className="flex flex-col w-9/12">
 								{data.portpolios.map((elem, index) => (
-									<li className="text-[16px]" key={index}>
+									<li className="text-[16px] flex flex-col" key={index}>
 										{elem.company}
+										<span className="text-[12px]">
+											({elem.start_date.slice(0, 10)}~
+											{elem.end_date.slice(0, 10)})
+										</span>
 									</li>
 								))}
 							</div>
@@ -111,10 +115,13 @@ export default function PBInfoComponent({ pbId }) {
 								대외평가
 							</span>
 							<div className="flex flex-col w-9/12">
-								{data.length > 0 ? (
+								{data.awards?.length > 0 ? (
 									data.awards.map((elem, index) => (
-										<li className="text-[16px] truncate">
-											{elem.awards.awards_title}
+										<li className="text-[16px] truncate flex flex-col">
+											<span className="text-[13px]">
+												{elem.awards_date.slice(0, 7)}
+											</span>
+											{elem.awards_title}
 										</li>
 									))
 								) : (
@@ -122,18 +129,53 @@ export default function PBInfoComponent({ pbId }) {
 								)}
 							</div>
 						</ul>
+						<ul class="flex gap-5 w-full">
+							<span className="font-bold text-[16px] flex-1 text-right">
+								자격증
+							</span>
+							<div className="flex flex-col w-9/12">
+								{data.pbUser.certificate ? (
+									data.pbUser.certificate.split(',').map((elem, index) => (
+										<li className="text-[16px] truncate flex flex-col">
+											<span className="text-[16px]">{elem}</span>
+										</li>
+									))
+								) : (
+									<span>해당 항목이 없습니다.</span>
+								)}
+							</div>
+						</ul>
+						<ul class="flex gap-5 w-full">
+							<span className="font-bold text-[16px] flex-1 text-right">
+								지점 정보
+							</span>
+							<div className="flex flex-col w-9/12">
+								<li className="text-[16px]">
+									{data.office.name} ({data.office.region})
+								</li>
+								<li className="text-[14px] text-[#707070]">
+									{data.office.address}
+								</li>
+							</div>
+						</ul>
 						<div className="border-2 rounded-[20px] w-full p-5 mt-5 text-[16px]">
 							{data.pbUser.pr}
 						</div>
 					</div>
-					{role === 0 ? <></> : 
+					{role === 0 ? (
+						<></>
+					) : (
 						<div className="flex justify-center w-full">
 							<div className="flex w-5/12">
-								<ButtonActive btnTxt="채팅하기" isConfirm={true} clickBtn={clickCreateRoom}/>
+								<ButtonActive
+									btnTxt="채팅하기"
+									isConfirm={true}
+									clickBtn={clickCreateRoom}
+								/>
 							</div>
 						</div>
-					}
-				</>
+					)}
+				</div>
 			)}
 		</div>
 	);

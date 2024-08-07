@@ -70,6 +70,7 @@ export default function CalendarPage() {
 						[...schedules].map(schedule => (
 							<Schedule
 								key={schedule.id}
+								partnerName={schedule.partnerName}
 								dayTime={moment(schedule.dayTime).format('HH:mm')}
 								name={schedule.scheduleName}
 								place={schedule.schedulePlace}

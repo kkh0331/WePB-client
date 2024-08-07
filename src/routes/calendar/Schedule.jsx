@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ChatSvg from "@/assets/svg/chat-text.svg"
-import ContentSvg from "@/assets/svg/card-text.svg"
+import ChatSvg from '@/assets/svg/chat-text.svg';
+import ContentSvg from '@/assets/svg/card-text.svg';
 import ContentPopup from '../../components/common/ContentPopup';
 import { createRoom } from '../../libs/apis/chat';
 import { useSelector } from 'react-redux';
