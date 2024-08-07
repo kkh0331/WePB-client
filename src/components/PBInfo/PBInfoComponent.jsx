@@ -97,11 +97,13 @@ export default function PBInfoComponent({ id }) {
 							<div className="flex flex-col w-9/12">
 								{data.awards?.length > 0 ? (
 									data.awards.map((elem, index) => (
-										<li className="text-[16px] truncate flex flex-col">
+										<li className="text-[16px] w-full flex flex-col">
 											<span className="text-[13px]">
 												{elem.awards_date.slice(0, 7)}
 											</span>
-											{elem.awards_title}
+											<span className="w-full break-words">
+												{elem.awards_title}
+											</span>
 										</li>
 									))
 								) : (
