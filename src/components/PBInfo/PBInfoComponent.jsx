@@ -37,7 +37,7 @@ export default function PBInfoComponent({ id }) {
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
 				</div>
 			) : (
-				<>
+				<div>
 					<div className="flex items-center justify-center w-full gap-5">
 						<img
 							src={data.pbUser.photo || profile}
@@ -111,6 +111,22 @@ export default function PBInfoComponent({ id }) {
 						</ul>
 						<ul class="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1 text-right">
+								자격증
+							</span>
+							<div className="flex flex-col w-9/12">
+								{data.pbUser.certificate ? (
+									data.pbUser.certificate.split(',').map((elem, index) => (
+										<li className="text-[16px] truncate flex flex-col">
+											<span className="text-[16px]">{elem}</span>
+										</li>
+									))
+								) : (
+									<span>해당 항목이 없습니다.</span>
+								)}
+							</div>
+						</ul>
+						<ul class="flex gap-5 w-full">
+							<span className="font-bold text-[16px] flex-1 text-right">
 								지점 정보
 							</span>
 							<div className="flex flex-col w-9/12">
@@ -131,7 +147,7 @@ export default function PBInfoComponent({ id }) {
 							<ButtonActive btnTxt="채팅하기" isConfirm={true} />
 						</div>
 					</div>
-				</>
+				</div>
 			)}
 		</div>
 	);
