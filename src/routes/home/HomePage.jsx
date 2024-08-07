@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // modal sheet
 import { Sheet } from 'react-modal-sheet';
@@ -18,6 +19,7 @@ import Loading from '../../components/common/Loading';
 import { getPBList, getPBListByCategory } from '../../libs/apis/pb';
 
 export default function HomePage() {
+	const navigate = useNavigate();
 	const [isModal, setIsModal] = useState(false);
 	const [isSelected, setIsSelected] = useState(-1);
 	const [pbList, setPbList] = useState([]);
@@ -57,7 +59,10 @@ export default function HomePage() {
 	}, [isSelected, isDistance]);
 	return (
 		<div>
-			<div className="flex items-center w-full h-16 px-5 font-bold">WeePB</div>
+			<div className="flex items-center justify-between w-full h-16 px-5 font-bold">
+				WeePB
+				<button onClick={() => navigate('/login')}>로그인</button>
+			</div>
 			<div className="w-full px-5 pb-28 bg-sh-gr-01">
 				{/* <div className="flex items-center py-2">
 			<div className="w-full h-16 px-5 pb-28 bg-sh-gr-01">
