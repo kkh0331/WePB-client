@@ -55,7 +55,7 @@ const router = createBrowserRouter([
 						index: true,
 					},
 					{
-						path: 'reservation',
+						path: ':chatRoomCode/reservation',
 						element: <ConsultingReservationPage />,
 						index: true,
 					},
