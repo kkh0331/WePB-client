@@ -3,36 +3,52 @@ import React from 'react';
 // assets
 import profile from '../../assets/profile.svg';
 
+// components
+import ButtonActive from '../../components/button/ButtonActive';
+
 export default function PBCardListComponent({
 	setIsModal,
 	data,
 	setSelectedPB,
 }) {
+	const clickDetailBtn = () => {
+		setIsModal(true);
+		setSelectedPB(data.id);
+	};
 	return (
 		<div>
-			<div className="w-[80vw] h-[20vh] rounded-[30px] shadow-lg flex items-center justify-center px-3 bg-white">
+			<div className="w-[78vw] h-[18vh] rounded-[30px] shadow-lg flex items-center justify-center px-3 bg-white">
 				<img
 					src={data.photo || profile}
 					onError={e => {
 						e.target.src = profile;
 					}}
-					className="rounded-full w-28 h-28"
+					className="w-24 h-24 rounded-full"
 				/>
-				<div className="flex flex-col ml-3">
-					<div className="flex flex-row items-end gap-2">
-						<span className="text-[20px] font-bold">{data.name} 팀장</span>
-						<span className="text-[15px] text-[#505050]">8년차</span>
+				<div className="flex flex-col flex-1 ml-3">
+					<div className="flex flex-row items-baseline gap-2">
+						<span className="text-[20px] font-bold">{data.name} PB</span>
+						<span className="text-[12px] text-[#505050]">
+							{data.category_detail}
+						</span>
 					</div>
-					<span className="text-[15px]">머시기저시기 담당</span>
-					<button
-						className="btn bg-[#0046FF] font-bold text-white text-[17px] rounded-[10px] px-5 py-1 mt-3"
+					<span className="text-[15px]">{data.office_name}</span>
+					<div className="flex w-full mt-2">
+						<ButtonActive
+							btnTxt="자세히 보기"
+							isConfirm={true}
+							clickBtn={clickDetailBtn}
+						/>
+					</div>
+					{/* <button
+						className="btn bg-[#0046FF] font-bold text-white text-[15px] rounded-[10px] mt-3"
 						onClick={() => {
 							setIsModal(true);
 							setSelectedPB(data.id);
 						}}
 					>
 						자세히 보기
-					</button>
+					</button> */}
 				</div>
 			</div>
 		</div>
