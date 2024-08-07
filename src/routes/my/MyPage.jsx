@@ -84,7 +84,7 @@ export default function MyPage() {
 								? '☑️ 고객분들의 상담내용을 확인할 수 있어요.'
 								: '☑️ 요청하신 상담내용을 확인할 수 있어요.'}
 						</div>
-						{documents?.length > 0 ? (
+						{keys?.length > 0 ? (
 							keys.map(key => {
 								return <GroupDocument key={key} documents={documents[key]} />;
 							})
