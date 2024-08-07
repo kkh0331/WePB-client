@@ -41,7 +41,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
           <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" /> {/* 로고 나오면 수정예정. placeholder임 */}
@@ -52,30 +52,32 @@ export default function LoginPage() {
             placeholder="이메일"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
-            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
+            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500 focus:placeholder-[#94caff]"
           />
           <input
             type="password"
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-black focus:placeholder-[#94caff]"
+            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500 focus:placeholder-[#94caff]"
           />
         </div>
         {error && <p className="mt-4 text-red-500">{error}</p>}
-        <div className="mt-20 space-y-8">
+        <div className="mt-16 space-y-8 flex flex-col items-center">
           <button
-            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+            className="w-2/3 px-4 py-2 text-white bg-[#0046FF] rounded-lg shadow-md focus:outline-none"
             onClick={handleLogin}
           >
             로그인
           </button>
-          <button
-            className="w-full px-4 py-2 font-bold text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
-            onClick={handleSignUp}
-          >
-            회원가입
-          </button>
+        <button
+          className="w-2/3 px-4 py-2 text-black bg-white rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+          onClick={handleSignUp}
+        >
+          회원가입
+        </button>
+
+
         </div>
       </div>
     </div>
