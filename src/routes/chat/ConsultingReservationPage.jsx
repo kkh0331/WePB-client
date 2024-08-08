@@ -41,6 +41,7 @@ export default function ConsultingReservationPage() {
 	const [tmp, setTmp] = useState(0);
 	const [partnerName, setPartnerName] = useState('');
 	const { chatRoomCode } = useParams();
+	const [photo, setPhoto] = useState("");
 	const partnerId =
 		role === 0 ? Number(chatRoomCode.split('chat')[1]) : Number(chatRoomCode.split('chat')[0]);
 	// console.log(partnerId)
@@ -106,6 +107,7 @@ export default function ConsultingReservationPage() {
 		try {
 			const response = await getPartnerNmCg(partnerId);
 			setPartnerName(response.response.name);
+			setPhoto(response.response.photo);
 		} catch (error) {
 			console.log(error);
 		}
@@ -125,7 +127,7 @@ export default function ConsultingReservationPage() {
 			<div className="flex flex-col p-5">
 				<div className="flex items-center mb-5">
 					<img
-						src={profile}
+						src={photo || profile}
 						onError={e => {
 							e.target.src = profile;
 						}}
