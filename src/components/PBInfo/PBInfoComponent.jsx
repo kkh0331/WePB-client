@@ -12,14 +12,20 @@ import { useEffect } from 'react';
 
 // components
 import ButtonActive from '../button/ButtonActive';
+import { useSelector } from 'react-redux';
+import { createRoom } from '../../libs/apis/chat';
+import { useNavigate } from 'react-router-dom';
 import MapComponent from './MapComponent';
 
-export default function PBInfoComponent({ id }) {
+export default function PBInfoComponent({ pbId }) {
+	const { id, role } = useSelector(state => state.user);
 	const [data, setData] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
+	const navigate = useNavigate();
+
 	const fetchPBInfo = async () => {
 		try {
-			const response = await getPBInfo(id);
+			const response = await getPBInfo(pbId);
 			setData(response.response);
 		} catch (error) {
 			console.log(error);
@@ -31,6 +37,20 @@ export default function PBInfoComponent({ id }) {
 	useEffect(() => {
 		fetchPBInfo();
 	}, []);
+
+	const clickCreateRoom = async () => {
+		try {
+			const response = await createRoom(id, pbId, role);
+			console.log(response);
+			if (response.status === 200) {
+				// enterRoom
+				navigate(`../chat/${pbId}chat${id}`);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<div>
 			{isLoading ? (
@@ -80,7 +100,7 @@ export default function PBInfoComponent({ id }) {
 								{data.pbUser.pr}
 							</div>
 						) : null}
-						<ul class="flex gap-5 w-full border-b-[1px] pb-5">
+						<ul className="flex gap-5 w-full border-b-[1px] pb-5">
 							<span className="font-bold text-[16px] flex-1">경력</span>
 							<div className="flex flex-col w-9/12">
 								{data.portpolios.map((elem, index) => (
@@ -97,12 +117,12 @@ export default function PBInfoComponent({ id }) {
 								))}
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full border-b-[1px] pb-5">
+						<ul className="flex gap-5 w-full border-b-[1px] pb-5">
 							<span className="font-bold text-[16px] flex-1">대외평가</span>
 							<div className="flex flex-col w-9/12">
 								{data.awards?.length > 0 ? (
 									data.awards.map((elem, index) => (
-										<li className="text-[16px] w-full flex flex-col">
+										<li className="text-[16px] w-full flex flex-col" key={elem.id}>
 											<span className="text-[13px]">
 												{elem.awards_date.slice(0, 7)}
 											</span>
@@ -116,12 +136,12 @@ export default function PBInfoComponent({ id }) {
 								)}
 							</div>
 						</ul>
-						<ul class="flex gap-5w-full border-b-[1px] pb-5">
+						<ul className="flex gap-5w-full border-b-[1px] pb-5">
 							<span className="font-bold text-[16px] flex-1">자격증</span>
 							<div className="flex flex-col w-9/12">
 								{data.pbUser.certificate ? (
 									data.pbUser.certificate.split(',').map((elem, index) => (
-										<li className="text-[16px] truncate flex flex-col">
+										<li className="text-[16px] truncate flex flex-col" key={index}>
 											<span className="text-[16px]">{elem}</span>
 										</li>
 									))
@@ -130,7 +150,7 @@ export default function PBInfoComponent({ id }) {
 								)}
 							</div>
 						</ul>
-						<ul class="flex gap-5 w-full">
+						<ul className="flex gap-5 w-full">
 							<span className="font-bold text-[16px] flex-1">지점 정보</span>
 							<div className="flex flex-col w-9/12">
 								<li className="text-[16px]">
@@ -149,11 +169,19 @@ export default function PBInfoComponent({ id }) {
 							/>
 						</div>
 					</div>
-					<div className="flex justify-center w-full">
-						<div className="flex w-5/12">
-							<ButtonActive btnTxt="채팅하기" isConfirm={true} />
+					{role === 0 ? (
+						<></>
+					) : (
+						<div className="flex justify-center w-full">
+							<div className="flex w-5/12">
+								<ButtonActive
+									btnTxt="채팅하기"
+									isConfirm={true}
+									clickBtn={clickCreateRoom}
+								/>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 			)}
 		</div>
