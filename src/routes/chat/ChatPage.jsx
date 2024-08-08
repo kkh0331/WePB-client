@@ -43,7 +43,7 @@ const ChatListComponent = ({ chatRoom }) => {
 			onClick={() => navigate(chatRoom.chatRoomCode)}
 		>
 			<img
-				src={profile}
+				src={chatRoom.photo || profile}
 				onError={e => {
 					e.target.src = profile;
 				}}

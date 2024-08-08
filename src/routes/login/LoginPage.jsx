@@ -5,6 +5,7 @@ import { loginUser, getUserInfo } from '../../libs/apis/login';
 import { setUser } from '../../store/reducers/user';
 import emailicon from '../../assets/emailicon.png';
 import passwordicon from '../../assets/passwordicon.png';
+import BackBtn from '../../assets/cheveron-left.svg';
 
 import solLogo from '../../assets/solLogo.png';
 
@@ -47,7 +48,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <div className="absolute top-8 left-4 text-black" onClick={() => navigate('/home')}>
-        <img src="/src/assets/cheveron-left.svg" alt="Logo" className="w-8 h-8" />
+        <img src={BackBtn} alt="Logo" className="w-8 h-8" />
       </div>
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
