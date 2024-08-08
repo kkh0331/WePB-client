@@ -9,7 +9,7 @@ import check from '../../assets/clipboard-list.svg';
 import smile from '../../assets/emoji-happy.svg';
 
 export default function MyPage() {
-	const { name, id, role } = useSelector(state => state.user);
+	const { name, id, role, photo } = useSelector(state => state.user);
 	const [documents, setDocuments] = useState({});
 	const [keys, setKeys] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -60,7 +60,7 @@ export default function MyPage() {
 					</div>
 					<div className="relative flex items-center justify-start w-full p-5">
 						<img
-							src={profile} // PB photo 추가해야함
+							src={photo || profile} // PB photo 추가해야함
 							onError={e => {
 								e.target.src = profile;
 							}}

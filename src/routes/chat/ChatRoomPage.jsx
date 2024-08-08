@@ -140,7 +140,7 @@ const ChatPartnerInfo = ({ partnerInfo }) => {
 		<div className="flex items-center justify-between px-5 py-3 bg-white border-b-[1px]">
 			<div className="flex">
 				<img
-					src={profile}
+					src={partnerInfo.photo || profile}
 					onError={e => {
 						e.target.src = profile;
 					}}
