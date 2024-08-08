@@ -42,6 +42,9 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+            <div className="absolute top-8 left-4 text-black" onClick={() => navigate('/home')}>
+            <img src="https://i.postimg.cc/zXdJMJrq/pngwing-com.png" alt="Logo" className="w-8 h-8" /> 
+      </div>
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
           <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" /> {/* 로고 나오면 수정예정. placeholder임 */}
@@ -71,7 +74,7 @@ export default function LoginPage() {
             로그인
           </button>
         <button
-          className="w-2/3 px-4 py-2 text-black bg-white rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+          className="w-2/3 px-4 py-2 text-black bg-[#97A4B2] rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
           onClick={handleSignUp}
         >
           회원가입
