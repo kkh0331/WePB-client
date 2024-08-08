@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 
 // modal sheet
 import { Sheet } from 'react-modal-sheet';
@@ -27,11 +28,13 @@ export default function HomePage() {
 	const [selectedPB, setSelectedPB] = useState(-1);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isDistance, setIsDistance] = useState(false);
-	const {id, name} = useSelector(state => state.user)
+	const [page, setPage] = useState(0);
+	const [ref, inView] = useInView();
+	const { id, name } = useSelector(state => state.user);
 	const fetchPBList = async () => {
 		try {
-			const data = await getPBList();
-			setPbList(data.response);
+			const data = await getPBList(isDistance, page);
+			setPbList([...pbList, ...data.response.content]);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -51,8 +54,17 @@ export default function HomePage() {
 	};
 
 	useEffect(() => {
-		fetchPBList();
+		fetchPBList(isDistance, 0);
 	}, []);
+
+	useEffect(() => {
+		if (inView) {
+			if (page < 26) {
+				fetchPBList(isDistance, page + 1);
+				setPage(page + 1);
+			}
+		}
+	}, [inView]);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -63,10 +75,11 @@ export default function HomePage() {
 		<div>
 			<div className="relative flex items-center justify-between w-full h-16 px-5 font-sans text-xl font-bold bg-white border-t border-b border-gray-200 shadow">
 				SolPB
-				{
-					id !=="" ? <span>{name}</span> :
+				{id !== '' ? (
+					<span>{name}</span>
+				) : (
 					<button onClick={() => navigate('/login')}>로그인</button>
-				}
+				)}
 			</div>
 			<div className="w-full px-5 overflow-y-hidden bg-white">
 				<div className="flex items-center justify-between w-full py-4">
@@ -120,7 +133,7 @@ export default function HomePage() {
 						{isLoading ? (
 							<Loading />
 						) : (
-							pbList.map((elem, index) => (
+							pbList?.map((elem, index) => (
 								<PBCardListComponent
 									key={index}
 									setIsModal={setIsModal}
@@ -130,6 +143,7 @@ export default function HomePage() {
 							))
 						)}
 					</div>
+					<div className="h-10" ref={ref} />
 				</div>
 				<SlideUpDownModal
 					setIsModal={setIsModal}
@@ -151,7 +165,7 @@ const SlideUpDownModal = ({ setIsModal, isModal, selectedPB }) => {
 			<Sheet.Container>
 				<Sheet.Header />
 				<Sheet.Content className="pt-5 pb-10 overflow-y-scroll">
-					<PBInfoComponent id={selectedPB} />
+					<PBInfoComponent pbId={selectedPB} />
 				</Sheet.Content>
 			</Sheet.Container>
 			<Sheet.Backdrop />
