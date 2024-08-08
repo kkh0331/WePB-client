@@ -29,7 +29,7 @@ export default function NavLayout() {
   }, [location.pathname]);
 
 	const connect = () => {
-		const socket = new WebSocket('ws://localhost:8080/ws');
+		const socket = new WebSocket('ws://133.186.251.189/:8080/ws');
 		stompClient.current = Stomp.over(socket);
 		stompClient.current.connect({}, () => {
 			stompClient.current.subscribe(`/sub/user/${id}`, message => {
