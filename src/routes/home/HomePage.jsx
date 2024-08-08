@@ -32,10 +32,14 @@ export default function HomePage() {
 	const [page, setPage] = useState(0);
 	const [ref, inView] = useInView();
 	const { id, name } = useSelector(state => state.user);
-	const fetchPBList = async () => {
+	const [isSelectOpen, setIsSelectOpen] = useState(false);
+	const [type, setType] = useState(0); // 선택된 type value로 되어 있어!!
+
+	const fetchPBList = async (isDistance, page) => {
 		try {
-			const data = await getPBList(isDistance, page);
-			setPbList([...pbList, ...data.response.content]);
+			const data = await getPBList(isDistance, page, type);
+			if (page === 0) setPbList([...data.response.content]);
+			else setPbList([...pbList, ...data.response.content]);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -43,10 +47,16 @@ export default function HomePage() {
 		}
 	};
 
-	const fetchPBListByCategory = async () => {
+	const fetchPBListByCategory = async (isDistance, page) => {
 		try {
-			const data = await getPBListByCategory(isSelected, isDistance);
-			setPbList(data.response);
+			const data = await getPBListByCategory(
+				isSelected,
+				isDistance,
+				page,
+				type,
+			);
+			if (page === 0) setPbList([...data.response.content]);
+			else setPbList([...pbList, ...data.response.content]);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -60,44 +70,46 @@ export default function HomePage() {
 
 	useEffect(() => {
 		if (inView) {
-			if (page < 26) {
-				fetchPBList(isDistance, page + 1);
+			if (page < 25) {
+				if (isSelected === -1) fetchPBList(isDistance, page);
+				else fetchPBListByCategory(isDistance, page);
 				setPage(page + 1);
 			}
 		}
 	}, [inView]);
 
 	useEffect(() => {
+		setPbList([]);
 		setIsLoading(true);
-		if (isSelected === -1) fetchPBList();
-		else fetchPBListByCategory();
-	}, [isSelected, isDistance]);
+		setPage(0);
+		if (isSelected === -1) fetchPBList(isDistance, 0);
+		else fetchPBListByCategory(isDistance, 0);
+	}, [isSelected, isDistance, type]);
 
-	const [isSelectOpen, setIsSelectOpen] = useState(false);
-	const [type, setType] = useState(0); // 선택된 type value로 되어 있어!!
-
-	const clickType = (type) => {
+	const clickType = type => {
 		setType(type);
 		setIsSelectOpen(false);
 		console.log(type);
-	}
+	};
 
 	const changeTypeName = () => {
-		if(type === 0) return '전체'
-		if(type === 5) return '공격투자형'
-		if(type === 4) return '적극투자형'
-		if(type === 3) return '위험중립형'
-		if(type === 2) return '안전추구형'
-		if(type === 1) return '안전형'
-	}
+		if (type === 0) return '전체';
+		if (type === 5) return '공격투자형';
+		if (type === 4) return '적극투자형';
+		if (type === 3) return '위험중립형';
+		if (type === 2) return '안전추구형';
+		if (type === 1) return '안전형';
+	};
 
 	return (
-		<div className='relative'>
-			{isSelectOpen ? <SelectInvestType clickType={clickType} selectedType={type}/> : null}
+		<div className="relative">
+			{isSelectOpen ? (
+				<SelectInvestType clickType={clickType} selectedType={type} />
+			) : null}
 			<div className="relative flex items-center justify-between w-full h-16 px-5 font-sans text-xl font-bold bg-white border-t border-b border-gray-200 shadow">
 				SolPB
 				{id !== '' ? (
-					<span>{name}</span>
+					<span className="text-[16px]">{name}님</span>
 				) : (
 					<button onClick={() => navigate('/login')}>로그인</button>
 				)}
@@ -135,9 +147,12 @@ export default function HomePage() {
 						파생
 					</span>
 				</div>
-				<div className="flex justify-between items-center">
-					<div className='flex items-center gap-2'>
-						<div className='rounded-xl px-2 shadow border' onClick={() => setIsSelectOpen(true)}>
+				<div className="flex items-center justify-between">
+					<div className="flex items-center gap-2">
+						<div
+							className="px-2 font-semibold border shadow rounded-xl"
+							onClick={() => setIsSelectOpen(true)}
+						>
 							# {changeTypeName()}
 						</div>
 					</div>
@@ -169,7 +184,7 @@ export default function HomePage() {
 							))
 						)}
 					</div>
-					<div className="h-10" ref={ref} />
+					<div className="h-1" ref={ref} />
 				</div>
 				<SlideUpDownModal
 					setIsModal={setIsModal}
