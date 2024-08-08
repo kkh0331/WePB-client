@@ -4,7 +4,9 @@ import { signupUser, checkEmailAvailability } from '../../libs/apis/signin';
 import emailicon from '../../assets/emailicon.png';
 import passwordicon from '../../assets/passwordicon.png';
 import usernameicon from '../../assets/usernameicon.png';
-
+import ButtonActive from '../../components/button/ButtonActive';
+import check from '../../assets/check.svg';
+import BackBtn from '../../assets/cheveron-left.svg';
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -88,7 +90,12 @@ export default function SignupPage() {
     setPasswordMatch(e.target.value === password);
   };
 
+  const [status, setStatus] = useState(0);
+  const [signUpMessage, setSignUpMessage] = useState("");
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
+
   const handleSignupComplete = async () => {
+    // alert('회원가입 완료');
     if (
       name.length >= 2 &&
       emailMessage === '사용 가능한 이메일입니다.' &&
@@ -98,32 +105,43 @@ export default function SignupPage() {
       try {
         const response = await signupUser(id, password, name, 0, photo);
         if (response.success) {
-          alert('회원가입 완료');
-          navigate('/login');
+          setSignUpMessage("회원 가입 완료");
+          setStatus(0);
+          // alert('회원가입 완료');
+          // navigate('/login');
         } else {
           const errorMessage = response.error?.errorMessage;
           if (typeof errorMessage === 'string') {
-            setSignupError(errorMessage);
+            // setSignupError(errorMessage);
+            setSignUpMessage(errorMessage);
           } else if (errorMessage?.password) {
-            setSignupError(errorMessage.password);
+            // setSignupError(errorMessage.password);
+            setSignUpMessage(errorMessage.password);
           } else {
-            setSignupError('잠시 후에 다시 시도해주세요.');
+            // setSignupError('잠시 후에 다시 시도해주세요.');
+            setSignUpMessage('잠시 후에 다시 시도해주세요.')
           }
+          setStatus(1);
         }
       } catch (error) {
-        setSignupError('잠시 후에 다시 시도해주세요.');
+        // setSignupError('잠시 후에 다시 시도해주세요.');
+        setSignUpMessage('잠시 후에 다시 시도해주세요.')
+        setStatus(1);
       }
     } else {
-      setSignupError('모든 필드를 올바르게 입력해주세요.');
+      // setSignupError('모든 필드를 올바르게 입력해주세요.');
+      setSignUpMessage('모든 필드를 올바르게 입력해주세요.')
+      setStatus(1);
     }
+    setIsOpenAlert(true);
   };
 
   return (
     <div className=" w-full flex flex-col items-center justify-center min-h-screen bg-white p-4">
+      {isOpenAlert ? <AlertModal status={status} message={signUpMessage} setIsOpenAlert={() => setIsOpenAlert(false)}/> : null}
       <div className="absolute top-8 left-4 text-black" onClick={() => navigate('/login')}>
-        <img src="/src/assets/cheveron-left.svg" alt="Logo" className="w-8 h-8" />
+        <img src={BackBtn} alt="Logo" className="w-8 h-8" />
       </div>
-
       <div className="w-11/12 max-w-sm mt-4">
         <div className="space-y-3">
           <div className="flex items-center border rounded-xl shadow-md">
@@ -137,7 +155,7 @@ export default function SignupPage() {
               onBlur={handleNameBlur}
             />
           </div>
-          <p className="h-6" style={{ color: nameMessage === '이름이 정상적으로 입력되었습니다.' ? '#94CAFF' : '#EE4D2A' }}>{nameMessage}</p>
+          <p className="h-6" style={{ color: nameMessage === '이름이 정상적으로 입력되었습니다.' ? '#0046ff' : '#EE4D2A' }}>{nameMessage}</p>
           <div className="flex items-center border rounded-xl shadow-md">
             <img src={emailicon} alt="Email Icon" className="w-6 h-6 ml-3" />
             <input
@@ -149,7 +167,7 @@ export default function SignupPage() {
               onBlur={handleEmailChange}
             />
           </div>
-          <p className="h-6" style={{ color: emailMessage === '사용 가능한 이메일입니다.' ? '#94CAFF' : '#EE4D2A' }}>{emailMessage}</p>
+          <p className="h-6" style={{ color: emailMessage === '사용 가능한 이메일입니다.' ? '#0046ff' : '#EE4D2A' }}>{emailMessage}</p>
           <div className="flex items-center border rounded-xl shadow-md">
             <img src={passwordicon} alt="Password Icon" className="w-6 h-6 ml-3" />
             <input
@@ -160,7 +178,7 @@ export default function SignupPage() {
               onChange={handlePasswordChange}
             />
           </div>
-          <p className="h-6" style={{ color: passwordValid ? '#94CAFF' : '#EE4D2A' }}>
+          <p className="h-6" style={{ color: passwordValid ? '#0046ff' : '#EE4D2A' }}>
             {password && (passwordValid ? '사용 가능한 비밀번호입니다' : '사용 불가능한 비밀번호입니다')}
           </p>
           <div className="flex items-center border rounded-xl shadow-md">
@@ -173,7 +191,7 @@ export default function SignupPage() {
               onChange={handlePasswordConfirmChange}
             />
           </div>
-          <p className="h-6" style={{ color: passwordMatch ? '#94CAFF' : '#EE4D2A' }}>
+          <p className="h-6" style={{ color: passwordMatch ? '#0046ff' : '#EE4D2A' }}>
             {passwordConfirm && (passwordMatch ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.')}
           </p>
           <div className="flex flex-col items-center space-y-4">
@@ -190,3 +208,36 @@ export default function SignupPage() {
     </div>
   );
 }
+
+const AlertModal = ({ status, message, setIsOpenAlert }) => {
+	const navigate = useNavigate();
+
+  const clickBtn = () => {
+    if(status === 0){
+      navigate('/login')
+    } else {
+      setIsOpenAlert();
+    }
+  }
+
+	return (
+		<div className="absolute z-10 flex items-center justify-center w-screen h-screen">
+			<div className="absolute w-full h-full bg-gray-300 opacity-50 z-11" />
+			<div className="fixed shadow-md bg-white rounded-[30px] z-20 p-10 flex flex-col items-center gap-5 animate-slide-down">
+				<div className="flex justify-center gap-1">
+					<img src={check} className="w-7 h-7" />
+					<span className="font-bold text-[18px] text-center whitespace-pre-line">
+						{message}
+					</span>
+				</div>
+				<div className="flex items-center justify-center w-full">
+					<ButtonActive
+						btnTxt="확인"
+						isConfirm={true}
+						clickBtn={() => clickBtn(status)}
+					/>
+				</div>
+			</div>
+		</div>
+	);
+};
