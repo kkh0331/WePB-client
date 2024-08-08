@@ -21,7 +21,7 @@ export const signupUser = async (email, password, name, cash, photo) => {
 
 export const checkEmailAvailability = async (email) => {
   try {
-    const response = await instance.post('/users/test', { email });
+    const response = await instance.post('/users/checkEmail', { email });
     return response.data;
   } catch (error) {
     throw new Error('이메일 확인 중 오류가 발생했습니다.');
