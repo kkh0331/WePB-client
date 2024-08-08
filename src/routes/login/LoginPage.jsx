@@ -1,9 +1,12 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser, getUserInfo } from '../../libs/apis/login';
 import { setUser } from '../../store/reducers/user';
+import emailicon from '../../assets/emailicon.png';
+import passwordicon from '../../assets/passwordicon.png';
+
+import solLogo from '../../assets/solLogo.png';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -48,34 +51,40 @@ export default function LoginPage() {
       </div>
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
-          <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" />
+          <img src={solLogo} alt="Logo" className="w-36 h-36" />
         </div>
         <div className="space-y-8">
-          <input
-            type="text"
-            placeholder="이메일"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500 focus:placeholder-[#94caff]"
-          />
-          <input
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 text-black placeholder-black border rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-[#94caff] placeholder-gray-500 focus:placeholder-[#94caff]"
-          />
+          <div className="flex items-center border rounded-xl shadow-md">
+            <img src={emailicon} alt="Email Icon" className="w-6 h-6 ml-3" />
+            <input
+              type="text"
+              placeholder="이메일"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              className="w-full px-4 py-2 text-black border-none focus:outline-none focus:ring-0"
+            />
+          </div>
+          <div className="flex items-center border rounded-xl shadow-md">
+            <img src={passwordicon} alt="Password Icon" className="w-6 h-6 ml-3" />
+            <input
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 text-black border-none focus:outline-none focus:ring-0"
+            />
+          </div>
         </div>
         {error && <p className="mt-4 text-red-500">{error}</p>}
         <div className="mt-16 space-y-8 flex flex-col items-center">
           <button
-            className="w-2/3 px-4 py-2 text-white bg-[#0046FF] rounded-lg shadow-md focus:outline-none"
+            className="w-2/3 px-4 py-2 text-white bg-[#0046FF] rounded-full shadow-md focus:outline-none"
             onClick={handleLogin}
           >
             로그인
           </button>
           <button
-            className="w-2/3 px-4 py-2 text-black bg-[#ECECEC] rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+            className="w-2/3 px-4 py-2 text-black bg-[#ECECEC] rounded-full shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
             onClick={handleSignUp}
           >
             회원가입
