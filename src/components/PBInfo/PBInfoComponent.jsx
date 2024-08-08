@@ -34,6 +34,14 @@ export default function PBInfoComponent({ pbId }) {
 		}
 	};
 
+	const type = {
+		안정형: 'rgba(179, 220, 235, 0.8)',
+		안정추구형: 'rgba(186, 200, 248, 0.8)',
+		위험중립형: 'rgba(249, 231, 203, 0.8)',
+		적극투자형: 'rgba(252, 205, 187, 0.8)',
+		공격투자형: 'rgba(255, 175, 169, 0.8)',
+	};
+
 	useEffect(() => {
 		fetchPBInfo();
 	}, []);
@@ -60,41 +68,45 @@ export default function PBInfoComponent({ pbId }) {
 			) : (
 				<div>
 					<div className="flex items-center justify-center w-full gap-5">
-						<img
-							src={data.pbUser.photo || profile}
-							onError={e => {
-								e.target.src = profile;
-							}}
-							className="flex items-center justify-center w-24 h-24 rounded-full"
-						/>
-						<div className="flex flex-col items-left ">
-							<span className="ml-2 text-[15px] text-[#002DAA] font-bold">
-								{data.pbUser.invest_type}
-							</span>
-							<div className="flex items-baseline gap-2 pl-2">
-								<span className="text-[24px] font-bold">
-									{data.pbUser.name} PB
-								</span>
-								<span className="text-[15px] text-[#505050]">
-									{data.pbUser.category}
-								</span>
-							</div>
-							<span className="text-[16px] pl-2">
-								{data.pbUser.category_detail}
-							</span>
-							<div className="ml-2 flex items-center gap-[1px]">
-								<img src={emailLink} className="w-4 h-4" />
-								<span className="text-[13px]">{data.pbUser.email}</span>
-							</div>
-							{data.pbUser.link ? (
-								<div className="flex items-center gap-[1px] ml-2">
-									<img src={paperClip} className="w-4 h-4" />
-									<span className="text-[13px]">{data.pbUser.link}</span>
+						<div className="flex items-center justify-center w-full gap-5 flex-shirink-0">
+							<img
+								src={data.pbUser.photo || profile}
+								onError={e => {
+									e.target.src = profile;
+								}}
+								className="flex items-center justify-center w-24 h-24 rounded-full"
+							/>
+							<div className="flex flex-col items-left">
+								<div className="relative flex justify-center h-full ml-3 w-fit">
+									<div
+										className="box-content absolute bottom-[1px] w-full h-[10px] px-1 z-1"
+										style={{
+											backgroundColor: `${type[data.pbUser.invest_type]}`,
+										}}
+									/>
+									<span className="text-[14px] font-medium z-10">
+										{data.pbUser.invest_type}
+									</span>
 								</div>
-							) : null}
+								<div className="flex items-baseline gap-2 pl-2">
+									<span className="text-[24px] font-bold">
+										{data.pbUser.name} PB
+									</span>
+									<span className="text-[15px] text-[#505050]">
+										{data.pbUser.category}
+									</span>
+								</div>
+								<span className="text-[16px] pl-2">
+									{data.pbUser.category_detail}
+								</span>
+								<div className="ml-2 flex items-center gap-[1px]">
+									<img src={emailLink} className="w-4 h-4" />
+									<span className="text-[13px]">{data.pbUser.email}</span>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div className="flex flex-col w-full gap-5 p-5 mt-3">
+					<div className="flex flex-col w-full gap-5 p-5 mt-3 mb-8">
 						{data.pbUser.pr ? (
 							<div className="border-[1px] rounded-[10px] w-full p-5 text-[16px]">
 								{data.pbUser.pr}
@@ -109,7 +121,7 @@ export default function PBInfoComponent({ pbId }) {
 										key={index}
 									>
 										<span className="font-semibold">{elem.company}</span>
-										<span className="text-[12px]">
+										<span className="text-[12px] text-[#474759]">
 											({elem.start_date.slice(0, 4)}~{elem.end_date.slice(0, 4)}
 											)
 										</span>
@@ -122,8 +134,11 @@ export default function PBInfoComponent({ pbId }) {
 							<div className="flex flex-col w-9/12">
 								{data.awards?.length > 0 ? (
 									data.awards.map((elem, index) => (
-										<li className="text-[16px] w-full flex flex-col" key={elem.id}>
-											<span className="text-[13px]">
+										<li
+											className="text-[16px] w-full flex flex-col"
+											key={elem.id}
+										>
+											<span className="text-[13px] text-[#474759]">
 												{elem.awards_date.slice(0, 7)}
 											</span>
 											<span className="w-full font-semibold break-words">
@@ -141,7 +156,10 @@ export default function PBInfoComponent({ pbId }) {
 							<div className="flex flex-col w-9/12">
 								{data.pbUser.certificate ? (
 									data.pbUser.certificate.split(',').map((elem, index) => (
-										<li className="text-[16px] truncate flex flex-col" key={index}>
+										<li
+											className="text-[16px] truncate flex flex-col"
+											key={index}
+										>
 											<span className="text-[16px]">{elem}</span>
 										</li>
 									))
@@ -150,7 +168,7 @@ export default function PBInfoComponent({ pbId }) {
 								)}
 							</div>
 						</ul>
-						<ul className="flex gap-5 w-full">
+						<ul className="flex w-full gap-5">
 							<span className="font-bold text-[16px] flex-1">지점 정보</span>
 							<div className="flex flex-col w-9/12">
 								<li className="text-[16px]">
@@ -172,7 +190,7 @@ export default function PBInfoComponent({ pbId }) {
 					{role === 0 ? (
 						<></>
 					) : (
-						<div className="flex justify-center w-full">
+						<div className="fixed bottom-0 z-20 flex justify-center w-full py-3 bg-white">
 							<div className="flex w-5/12">
 								<ButtonActive
 									btnTxt="채팅하기"

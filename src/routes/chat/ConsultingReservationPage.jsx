@@ -11,6 +11,7 @@ import calendar from '../../assets/calendar.svg';
 import messageIcon from '../../assets/chat-alt.svg';
 import back from '../../assets/cheveron-left.svg';
 import check from '../../assets/check.svg';
+import profile from '../../assets/profile.svg';
 
 // components
 import CustomCalendar from '../../components/calendar/CustomCalendar';
@@ -38,7 +39,7 @@ export default function ConsultingReservationPage() {
 	const [message, setMessage] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [tmp, setTmp] = useState(0);
-	const [partnerName, setPartnerName] = useState("");
+	const [partnerName, setPartnerName] = useState('');
 	const { chatRoomCode } = useParams();
 	const partnerId =
 		role === 0 ? Number(chatRoomCode.split('chat')[1]) : Number(chatRoomCode.split('chat')[0]);
@@ -99,21 +100,21 @@ export default function ConsultingReservationPage() {
 
 	useEffect(() => {
 		fetchPartnerName();
-	}, [])
+	}, []);
 
 	const fetchPartnerName = async () => {
-		try{
+		try {
 			const response = await getPartnerNmCg(partnerId);
-			setPartnerName(response.response.name)
-		} catch (error){
+			setPartnerName(response.response.name);
+		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 
 	return (
 		<div className="relative mb-16">
 			{isOpen ? <AlertModal status={status} hasToReload={hasToReload} /> : null}
-			<div className="flex items-center justify-center h-16 p-5 font-bold">
+			<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow">
 				<img
 					src={back}
 					className="absolute left-0 w-8 h-8 ml-5"
@@ -123,8 +124,16 @@ export default function ConsultingReservationPage() {
 			</div>
 			<div className="flex flex-col p-5">
 				<div className="flex items-center mb-5">
-					<div className="bg-gray-300 rounded-full w-9 h-9" />
-					<span className="text-[18px] font-bold ml-3 mr-1">{partnerName} PB</span>
+					<img
+						src={profile}
+						onError={e => {
+							e.target.src = profile;
+						}}
+						className="flex items-center justify-center rounded-full w-9 h-9"
+					/>
+					<span className="text-[18px] font-bold ml-3 mr-1">
+						{partnerName} PB
+					</span>
 					<span className="text-[18px]">님과의 상담을 예약해요!</span>
 				</div>
 				<div>

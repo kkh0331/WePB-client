@@ -11,22 +11,22 @@ export default function Schedule({ dayTime, name, description, place, pbId, part
   const { id, role } = useSelector(state => state.user);
   const navigate = useNavigate();
 
-  const clickContent = () => {
-    setIsContent(!isContent)
-  }
+	const clickContent = () => {
+		setIsContent(!isContent);
+	};
 
   const clickCreateRoom = async () => {
 		try{
 			const response = await createRoom(customId, pbId, role);
 			console.log(response);
-			if(response.status === 200){
+			if (response.status === 200) {
 				// enterRoom
 				navigate(`../chat/${pbId}chat${customId}`)
 			}
-		}catch(error){
+		} catch (error) {
 			console.log(error);
-		} 
-	}
+		}
+	};
 
 	const extraText = () => {
 		if(partnerName){
@@ -39,8 +39,6 @@ export default function Schedule({ dayTime, name, description, place, pbId, part
 			return ""
 		}
 	}
-
-	// {partnerName}{role ? 'PB님' : '고객님'}
 
 	return (
 		<div className="flex h-16 p-1 px-2 mt-2 text-base bg-white rounded-lg shadow">

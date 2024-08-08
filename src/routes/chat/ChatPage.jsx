@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import profile from '../../assets/profile.svg';
 
 export default function ChatPage() {
 	const { chatRooms } = useSelector(state => state.chat);
@@ -36,10 +37,16 @@ const ChatListComponent = ({ chatRoom }) => {
 	const navigate = useNavigate();
 	return (
 		<div
-			className="h-[11vh] px-[6vw] bg-white flex flex-row items-center border-y-[1px]"
+			className="h-[11vh] px-[6vw] bg-white flex flex-row items-center"
 			onClick={() => navigate(chatRoom.chatRoomCode)}
 		>
-			<div className="flex-shrink-0 w-16 h-16 bg-gray-300 rounded-full" />
+			<img
+				src={profile}
+				onError={e => {
+					e.target.src = profile;
+				}}
+				className="flex items-center justify-center w-16 h-16 rounded-full"
+			/>
 			<div className="mx-[3vw] w-full">
 				<div className="flex flex-row justify-between">
 					<div>
@@ -50,7 +57,7 @@ const ChatListComponent = ({ chatRoom }) => {
 							{chatRoom.partnerCategory}
 						</span>
 					</div>
-					<span className="text-[18px] text-[#8F8F8F]">
+					<span className="text-[15px] text-[#8F8F8F]">
 						{moment(chatRoom.lastMessageTime).format('HH:mm')}
 					</span>
 				</div>

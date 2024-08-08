@@ -3,9 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // assets
-import consulting from '../../assets/consulting.png';
+import consulting from '../../assets/clipboard-list.svg';
 import arrowUp from '../../assets/arrow-up.svg';
 import back from '../../assets/cheveron-left.svg';
+import profile from '../../assets/profile.svg';
+
 import { Stomp } from '@stomp/stompjs';
 import { getChatContents, getPartnerNmCg } from '../../libs/apis/chat';
 import moment from 'moment';
@@ -89,7 +91,7 @@ export default function ChatRoomPage() {
 
 	return (
 		<div className="flex flex-col h-screen overflow-y-hidden">
-			<div className="flex items-center justify-center h-16 p-5 font-bold">
+			<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow">
 				<img
 					src={back}
 					className="absolute left-0 w-8 h-8 ml-5"
@@ -102,7 +104,7 @@ export default function ChatRoomPage() {
 			) : (
 				<>
 					<ChatPartnerInfo partnerInfo={partnerInfo} />
-					<div className="flex flex-col flex-1 w-full px-5 mt-6 mb-32 overflow-y-scroll">
+					<div className="flex flex-col flex-1 w-full h-full px-5 overflow-y-scroll">
 						{messages.map(message => {
 							return id === message.sender_id ? (
 								<ChatSenderComponent
@@ -120,13 +122,13 @@ export default function ChatRoomPage() {
 						})}
 						<div ref={lastMessageRef} />
 					</div>
+					<ChatInputComponent
+						inputValue={inputValue}
+						handleInputChange={handleInputChange}
+						sendMessage={sendMessage}
+					/>
 				</>
 			)}
-			<ChatInputComponent
-				inputValue={inputValue}
-				handleInputChange={handleInputChange}
-				sendMessage={sendMessage}
-			/>
 		</div>
 	);
 }
@@ -135,23 +137,33 @@ const ChatPartnerInfo = ({ partnerInfo }) => {
 	const navigate = useNavigate();
 	const { role } = useSelector(state => state.user);
 	return (
-		<div className="flex items-center justify-between px-5">
+		<div className="flex items-center justify-between px-5 py-3 bg-white border-b-[1px]">
 			<div className="flex">
-				<div className="w-12 h-12 bg-gray-300 rounded-full" />
+				<img
+					src={profile}
+					onError={e => {
+						e.target.src = profile;
+					}}
+					className="flex items-center justify-center w-12 h-12 rounded-full"
+				/>
 				<div className="flex flex-col justify-center mx-4">
-					<span className="text-[18px] font-bold">{partnerInfo.name} {role === 0 ? '고객님' : 'PB님'}</span>
+					<span className="text-[18px] font-bold">
+						{partnerInfo.name} {role === 0 ? '고객님' : 'PB님'}
+					</span>
 					<span className="text-[13px]">{partnerInfo.category}</span>
 				</div>
 			</div>
-			{role === 0 ? <></> :
+			{role === 0 ? (
+				<></>
+			) : (
 				<button
 					className="flex flex-col items-center justify-center"
 					onClick={() => navigate('reservation')}
 				>
-					<img src={consulting} className="w-5" />
+					<img src={consulting} className="w-7" />
 					<span className="text-[12px] mt-1">상담 신청하기</span>
 				</button>
-			}
+			)}
 		</div>
 	);
 };
@@ -184,7 +196,7 @@ const ChatReceiverComponent = ({ time, message }) => {
 
 const ChatInputComponent = ({ inputValue, handleInputChange, sendMessage }) => {
 	return (
-		<div className="fixed bottom-0 flex items-center justify-center flex-shrink-0 w-full mb-20">
+		<div className="flex items-center justify-center flex-shrink-0 w-full mb-5">
 			<div className="border-2 rounded-[20px] py-2 px-3 w-11/12 flex justify-between bg-white">
 				<input
 					className="flex-1 ml-2 mr-4 bg-white"

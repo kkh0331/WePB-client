@@ -15,7 +15,7 @@ export default function ContentPopup({
 			<div className="z-100 bg-gray-50 border w-full relative mx-5 shadow-lg p-3 rounded-lg">
 				<div className="flex justify-between items-center">
 					<p className="font-bold">
-						{partnerName ? '[상담 요청 사항]' : '[개인 메모]'}
+						{partnerName ? '[상세 내용]' : '[개인 일정]'}
 					</p>
 					<p className="mr-1" onClick={setIsContentPopup}>
 						X
@@ -72,7 +72,7 @@ export default function ContentPopup({
           <span className='text-sm'>{place||'PB 회사'}</span>
 				</p>
         </div>
-				<p className="mt-2 break-words">{content}</p>
+				<p className="mt-2 break-words">{content ? content : '내용이 없습니다.'}</p>
 			</div>
 		</div>
 	);
