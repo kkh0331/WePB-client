@@ -37,7 +37,7 @@ export default function CalendarPage() {
 	};
 
 	return (
-		<div className="h-screen bg-white">
+		<div className="h-screen bg-indigo-50">
 			<div
 				className={`${isAddSchedule ? 'opacity-20' : ''} w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 text-xl font-sans font-bold flex justify-center items-center relative shadow`}
 			>
@@ -61,7 +61,7 @@ export default function CalendarPage() {
 				<CustomCalendar value={value} onChange={onChange} />
 			</div>
 
-			<div className="flex-1 mt-2 mb-16">
+			<div className={`flex-1 mt-2 mb-16 ${isAddSchedule ? 'opacity-10' : ''}`}>
 				<p className="ml-3 px-1 font-black mt-2 mb-2">
 					{moment(value).format('YYYY년 MM월 DD일')}
 				</p>

@@ -46,7 +46,7 @@ export default function EnableTime({
 	const timeClass = timeObj => {
 		if (!timeObj.isEnable) return 'border-gray-200 text-gray-200';
 		if (isAddSchedule) {
-			if (schedules.includes(timeObj.time)) return 'text-white bg-blue-600';
+			if (selectedTime.includes(timeObj.time)) return 'text-white bg-blue-600';
 		} else {
 			if (selectedTime === timeObj.time) return 'text-white bg-blue-600';
 		}
@@ -55,15 +55,19 @@ export default function EnableTime({
 
 	const clickTime = timeObj => {
 		if (!timeObj.isEnable) return;
-		if (isAddSchedule) {
-			if (schedules.includes(timeObj.time)) {
-				setSchedules(prev => prev.filter(x => x != timeObj.time));
-			} else {
-				setSchedules(prev => [...prev, timeObj.time]);
-			}
-		} else {
-			setSelectedTime(timeObj.time);
-		}
+		setSelectedTime(timeObj.time)
+		// if (isAddSchedule) {
+		// 	setSelectedTime(timeObj.time)
+		// 	// if (selectedTime.includes(timeObj.time)) {
+		// 	// 	setSelectedTime(timeObj.time)
+		// 	// 	// setSchedules(prev => prev.filter(x => x != timeObj.time));
+		// 	// } else {
+		// 	// 	setSelectedTime(timeObj.time)
+		// 	// 	// setSchedules(prev => [...prev, timeObj.time]);
+		// 	// }
+		// } else {
+		// 	setSelectedTime(timeObj.time);
+		// }
 	};
 
 	return (

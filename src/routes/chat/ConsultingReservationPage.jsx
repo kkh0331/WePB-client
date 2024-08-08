@@ -42,7 +42,7 @@ export default function ConsultingReservationPage() {
 	const { chatRoomCode } = useParams();
 	const partnerId =
 		role === 0 ? Number(chatRoomCode.split('chat')[1]) : Number(chatRoomCode.split('chat')[0]);
-	console.log(partnerId)
+	// console.log(partnerId)
 	/**
 	 * status
 	 * 0 : 입력 값 제대로 안넣었을 때

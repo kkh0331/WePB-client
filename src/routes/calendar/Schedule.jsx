@@ -28,27 +28,47 @@ export default function Schedule({ dayTime, name, description, place, pbId, part
 		} 
 	}
 
+	const extraText = () => {
+		if(partnerName){
+			if(role){
+				return `(${partnerName} PB님)`
+			} else {
+				return `(${partnerName} 고객님)`
+			}
+		} else {
+			return ""
+		}
+	}
+
+	// {partnerName}{role ? 'PB님' : '고객님'}
+
 	return (
 		<div className="flex h-16 p-1 px-2 mt-2 text-base bg-white rounded-lg shadow">
 			<div className="flex items-center w-1/5">{dayTime}</div>
 			<div className="flex flex-col justify-center w-3/5">
 				<p className="font-bold text-[15px]">
-					{name} ({partnerName}
-					{role ? 'PB님' : '고객님'})
+					{name} {extraText()}		
 				</p>
 				<p className="text-sm font-normal text-gray-400">{place}</p>
 			</div>
 			<div className="flex items-center justify-end w-1/5 pr-1">
-				<img src={ContentSvg} onClick={clickContent} className="w-5 h-5 mr-2" />
+				{
+					description ? <img src={ContentSvg} onClick={clickContent} className="w-5 h-5 mr-2" /> : null 
+				}
 				{isContent ? (
 					<ContentPopup
+						partnerName={partnerName}
 						content={description}
+						dayTime={dayTime}
+						place={place}
 						setIsContentPopup={() => setIsContent(!isContent)}
 					/>
 				) : (
 					<></>
 				)}
-				<img src={ChatSvg} onClick={clickCreateRoom} />
+				{
+					partnerName ? <img src={ChatSvg} onClick={clickCreateRoom} /> : null 
+				}
 			</div>
 		</div>
 	);
