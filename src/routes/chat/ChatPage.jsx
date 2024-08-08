@@ -47,7 +47,7 @@ const ChatListComponent = ({ chatRoom }) => {
 				onError={e => {
 					e.target.src = profile;
 				}}
-				className="flex items-center justify-center w-16 h-16 rounded-full"
+				className="flex items-center justify-center w-14 h-14 rounded-full"
 			/>
 			<div className="mx-[3vw] w-full">
 				<div className="flex flex-row justify-between">
