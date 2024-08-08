@@ -49,9 +49,7 @@ export default function MyPage() {
 	return (
 		<div className={`min-h-screen h-full bg-sh-gr-01 pb-20`}>
 			{isLoading ? (
-				<div className="flex items-center justify-center h-full">
-					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
-				</div>
+				<Loading/>
 			) : (
 				<>
 					<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow dark:bg-gray-700 dark:border-gray-600">
@@ -91,7 +89,9 @@ export default function MyPage() {
 								return <GroupDocument key={key} documents={documents[key]} />;
 							})
 						) : (
-							<Loading/>
+							<div className="flex justify-center items-center h-[33vh]">
+								<span>일정이 없습니다.</span>
+							</div>
 						)}
 					</div>
 				</>

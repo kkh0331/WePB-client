@@ -97,15 +97,15 @@ export default function HomePage() {
 					</span>
 				</div>
 				<div className="flex justify-end">
-					<label class="inline-flex items-center">
-						<span class="mx-2 text-sm font-medium text-[#545454]">거리순</span>
+					<label className="inline-flex items-center">
+						<span className="mx-2 text-sm font-medium text-[#545454]">거리순</span>
 						<input
 							type="checkbox"
 							onChange={() => setIsDistance(!isDistance)}
 							value={isDistance}
-							class="sr-only peer"
+							className="sr-only peer"
 						/>
-						<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#002DAA]"></div>
+						<div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#002DAA]"></div>
 					</label>
 				</div>
 				<div className="h-[calc(100vh-245px)] overflow-y-scroll">
@@ -143,7 +143,7 @@ const SlideUpDownModal = ({ setIsModal, isModal, selectedPB }) => {
 		>
 			<Sheet.Container>
 				<Sheet.Header />
-				<Sheet.Content className="py-10">
+				<Sheet.Content className="py-10 overflow-y-scroll">
 					<PBInfoComponent pbId={selectedPB} />
 				</Sheet.Content>
 			</Sheet.Container>
