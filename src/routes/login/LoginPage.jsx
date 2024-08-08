@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -18,8 +19,8 @@ export default function LoginPage() {
         if (data.response === 'password error') {
           setError('비밀번호가 틀렸습니다.');
         } else {
-          const token = data.response; 
-          sessionStorage.setItem('token', token); 
+          const token = data.response;
+          sessionStorage.setItem('token', token);
           const userInfo = await getUserInfo(token);
           dispatch(setUser(userInfo.response)); 
           navigate('/home');
@@ -28,11 +29,11 @@ export default function LoginPage() {
         if (data.response === '회원가입이 필요합니다') {
           setError('아이디가 존재하지 않습니다.');
         } else {
-          setError('로그인 중 오류가 발생했습니다.');
+          setError('잠시 후에 다시 시도해주세요.');
         }
       }
     } catch (err) {
-      setError(err.message || '로그인 중 오류가 발생했습니다.');
+      setError(err.message || '잠시 후에 다시 시도해주세요.');
     }
   };
 
@@ -42,12 +43,12 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-            <div className="absolute top-8 left-4 text-black" onClick={() => navigate('/home')}>
-            <img src="https://i.postimg.cc/zXdJMJrq/pngwing-com.png" alt="Logo" className="w-8 h-8" /> 
+      <div className="absolute top-8 left-4 text-black" onClick={() => navigate('/home')}>
+        <img src="/src/assets/cheveron-left.svg" alt="Logo" className="w-8 h-8" />
       </div>
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
-          <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" /> {/* 로고 나오면 수정예정. placeholder임 */}
+          <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" />
         </div>
         <div className="space-y-8">
           <input
@@ -73,14 +74,12 @@ export default function LoginPage() {
           >
             로그인
           </button>
-        <button
-          className="w-2/3 px-4 py-2 text-black bg-[#97A4B2] rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
-          onClick={handleSignUp}
-        >
-          회원가입
-        </button>
-
-
+          <button
+            className="w-2/3 px-4 py-2 text-black bg-[#ECECEC] rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+            onClick={handleSignUp}
+          >
+            회원가입
+          </button>
         </div>
       </div>
     </div>
