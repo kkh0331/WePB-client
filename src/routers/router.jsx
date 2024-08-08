@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 // layout
 import NavLayout from '../components/NavLayout';
@@ -16,6 +16,10 @@ import ChatRoomPage from '../routes/chat/ChatRoomPage';
 import ConsultingReservationPage from '../routes/chat/ConsultingReservationPage';
 
 const router = createBrowserRouter([
+	{
+		path: "",
+		element: <Navigate to="/home" replace />,
+	},
 	{
 		path: '/login',
 		element: <LoginPage />,

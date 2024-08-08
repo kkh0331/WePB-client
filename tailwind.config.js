@@ -11,7 +11,7 @@ export default {
 			},
 			animation: {
 				'slide-down': 'slide-down 0.5s ease-in-out',
-				'slide-up': 'slide-up 3s ease-in-out',
+				'slide-up': 'slide-up 2s ease-out',
 			},
 			keyframes: {
 				'slide-down': {
@@ -26,11 +26,11 @@ export default {
 				},
 				'slide-up': {
 					'0%': {
-						transform: 'translateY(0)',
+						transform: 'translateY(20)',
 						opacity: '1',
 					},
 					'100%': {
-						transform: 'translateY(-20px)',
+						transform: 'translateY(0px)',
 						opacity: '0',
 					},
 				},
