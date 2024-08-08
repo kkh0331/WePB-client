@@ -80,6 +80,7 @@ export default function CalendarPage() {
 								place={schedule.schedulePlace}
 								description={schedule.scheduleDescription}
 								pbId={schedule.pbId}
+								customId={schedule.customId}
 							/>
 						))
 					) : (
