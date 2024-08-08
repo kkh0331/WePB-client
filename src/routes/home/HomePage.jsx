@@ -205,7 +205,7 @@ const SlideUpDownModal = ({ setIsModal, isModal, selectedPB }) => {
 		>
 			<Sheet.Container>
 				<Sheet.Header />
-				<Sheet.Content className="pt-5 pb-10 overflow-y-scroll">
+				<Sheet.Content className="pt-5">
 					<PBInfoComponent pbId={selectedPB} />
 				</Sheet.Content>
 			</Sheet.Container>

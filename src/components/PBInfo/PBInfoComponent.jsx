@@ -66,7 +66,7 @@ export default function PBInfoComponent({ pbId }) {
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
 				</div>
 			) : (
-				<div>
+				<div className="h-[80vh] overflow-y-scroll">
 					<div className="flex items-center justify-center w-full gap-5">
 						<div className="flex items-center justify-center w-full gap-5 flex-shirink-0">
 							<img
