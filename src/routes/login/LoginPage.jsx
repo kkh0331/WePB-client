@@ -6,6 +6,8 @@ import { setUser } from '../../store/reducers/user';
 import emailicon from '../../assets/emailicon.png';
 import passwordicon from '../../assets/passwordicon.png';
 
+import solLogo from '../../assets/solLogo.png';
+
 export default function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,7 +51,7 @@ export default function LoginPage() {
       </div>
       <div className="w-11/12 max-w-sm p-4">
         <div className="flex justify-center mb-16">
-          <img src="https://via.placeholder.com/100" alt="Logo" className="w-24 h-24" />
+          <img src={solLogo} alt="Logo" className="w-36 h-36" />
         </div>
         <div className="space-y-8">
           <div className="flex items-center border rounded-xl shadow-md">
