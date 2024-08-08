@@ -75,15 +75,23 @@ export default function PBInfoComponent({ id }) {
 						</div>
 					</div>
 					<div className="flex flex-col w-full gap-5 p-5 mt-3">
+						{data.pbUser.pr ? (
+							<div className="border-[1px] rounded-[10px] w-full p-5 text-[16px]">
+								{data.pbUser.pr}
+							</div>
+						) : null}
 						<ul class="flex gap-5 w-full border-b-[1px] pb-5">
 							<span className="font-bold text-[16px] flex-1">경력</span>
 							<div className="flex flex-col w-9/12">
 								{data.portpolios.map((elem, index) => (
-									<li className="text-[16px] flex flex-col" key={index}>
-										{elem.company}
+									<li
+										className="text-[16px] flex items-baseline gap-2"
+										key={index}
+									>
+										<span className="font-semibold">{elem.company}</span>
 										<span className="text-[12px]">
-											({elem.start_date.slice(0, 10)}~
-											{elem.end_date.slice(0, 10)})
+											({elem.start_date.slice(0, 4)}~{elem.end_date.slice(0, 4)}
+											)
 										</span>
 									</li>
 								))}
@@ -98,7 +106,7 @@ export default function PBInfoComponent({ id }) {
 											<span className="text-[13px]">
 												{elem.awards_date.slice(0, 7)}
 											</span>
-											<span className="w-full break-words">
+											<span className="w-full font-semibold break-words">
 												{elem.awards_title}
 											</span>
 										</li>
@@ -128,20 +136,17 @@ export default function PBInfoComponent({ id }) {
 								<li className="text-[16px]">
 									{data.office.name} ({data.office.region})
 								</li>
-								{/* <li className="text-[14px] text-[#707070]">
+								<li className="text-[14px] text-[#707070]">
 									{data.office.address}
-								</li> */}
+								</li>
 							</div>
 						</ul>
-						<div className="mt-1">
+						<div className="my-1">
 							<MapComponent
 								lat={data.office.latitude}
 								lng={data.office.longitude}
 								lastPartAddress={data.office.address}
 							/>
-						</div>
-						<div className="border-2 rounded-[20px] w-full p-3 mt-3 text-[16px]">
-							{data.pbUser.pr}
 						</div>
 					</div>
 					<div className="flex justify-center w-full">
