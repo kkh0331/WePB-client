@@ -53,7 +53,7 @@ export default function AddSchedule({
 		<div
 			className={`${isAddSchedule ? 'flex' : 'hidden'} fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full p-3`}
 		>
-			<div className="w-full p-3 bg-white rounded-xl">
+			<div className="w-full p-3 bg-white rounded-xl animate-slide-down">
 				<div className="w-full mb-3 text-2xl font-bold text-center">
 					개별일정추가
 				</div>

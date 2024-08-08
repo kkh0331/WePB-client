@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import profile from '../../assets/profile.svg';
 
 export default function ChatPage() {
 	const { chatRooms } = useSelector(state => state.chat);
@@ -12,23 +13,25 @@ export default function ChatPage() {
 
 	return (
 		<>
-			<div className="flex items-center justify-center w-full h-16 px-5 text-xl font-bold">
+			<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow">
 				채팅 리스트
 			</div>
-			{chatRooms?.length > 0 ? (
-				chatRooms.map(chatRoom => {
-					return (
-						<ChatListComponent
-							key={chatRoom.chatRoomCode}
-							chatRoom={chatRoom}
-						/>
-					);
-				})
-			) : (
-				<div className="w-full flex justify-center items-center h-[70vh]">
-					<span>해당 내역이 없습니다.</span>
-				</div>
-			)}
+			<div className="flex flex-col divide-y-[1px] border-b-[1px]">
+				{chatRooms?.length > 0 ? (
+					chatRooms.map(chatRoom => {
+						return (
+							<ChatListComponent
+								key={chatRoom.chatRoomCode}
+								chatRoom={chatRoom}
+							/>
+						);
+					})
+				) : (
+					<div className="w-full flex justify-center items-center h-[70vh]">
+						<span>해당 내역이 없습니다.</span>
+					</div>
+				)}
+			</div>
 		</>
 	);
 }
@@ -39,10 +42,16 @@ const ChatListComponent = ({ chatRoom }) => {
 	const navigate = useNavigate();
 	return (
 		<div
-			className="h-[11vh] px-[6vw] bg-white flex flex-row items-center border-y-[1px]"
+			className="h-[11vh] px-[6vw] bg-white flex flex-row items-center"
 			onClick={() => navigate(chatRoom.chatRoomCode)}
 		>
-			<div className="flex-shrink-0 w-16 h-16 bg-gray-300 rounded-full" />
+			<img
+				src={profile}
+				onError={e => {
+					e.target.src = profile;
+				}}
+				className="flex items-center justify-center w-16 h-16 rounded-full"
+			/>
 			<div className="mx-[3vw] w-full">
 				<div className="flex flex-row justify-between">
 					<div>
@@ -53,7 +62,7 @@ const ChatListComponent = ({ chatRoom }) => {
 							{chatRoom.partnerCategory}
 						</span>
 					</div>
-					<span className="text-[18px] text-[#8F8F8F]">
+					<span className="text-[15px] text-[#8F8F8F]">
 						{moment(chatRoom.lastMessageTime).format('HH:mm')}
 					</span>
 				</div>

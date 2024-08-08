@@ -7,41 +7,57 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function Schedule({ dayTime, name, description, place, pbId }) {
-  const [isContent, setIsContent] = useState(false);
-  const { id, role } = useSelector(state => state.user);
-  const navigate = useNavigate();
+	const [isContent, setIsContent] = useState(false);
+	const { id, role } = useSelector(state => state.user);
+	const navigate = useNavigate();
 
-  const clickContent = () => {
-    setIsContent(!isContent)
-  }
+	const clickContent = () => {
+		setIsContent(!isContent);
+	};
 
-  const clickCreateRoom = async () => {
-		try{
+	const clickCreateRoom = async () => {
+		try {
 			const response = await createRoom(id, pbId, role);
 			console.log(response);
-			if(response.status === 200){
+			if (response.status === 200) {
 				// enterRoom
-				navigate(`../chat/${pbId}chat${id}`)
+				navigate(`../chat/${pbId}chat${id}`);
 			}
-		}catch(error){
+		} catch (error) {
 			console.log(error);
-		} 
-	}
+		}
+	};
 
 	return (
-		<div className='mt-2 bg-white p-1 h-16 rounded-lg text-base flex px-2 shadow'>
-      <div className='flex items-center w-1/5'>
-        {dayTime} 
-      </div>
-      <div className='w-3/5 flex flex-col justify-center'>
-        <p className='font-bold text-lg'>{name}</p>
-        <p className='font-normal text-gray-400 text-sm'>{place}</p>
-      </div>
-      <div className='w-1/5 flex justify-end items-center pr-1'>
-        <img src={ContentSvg} onClick={clickContent} className='mr-2 w-5 h-5'/>
-        {isContent ? <ContentPopup content={description} setIsContentPopup={() => setIsContent(!isContent)}/> : <></>}
-        <img src={ChatSvg} onClick={() => clickCreateRoom(pbId)}/>
-      </div>
+		<div className="flex h-16 p-1 px-2 mt-2 text-base bg-white rounded-lg shadow">
+			<div className="flex items-center w-1/5" onClick={clickContent}>
+				{dayTime}
+			</div>
+			<div
+				className="flex flex-col justify-center w-3/5"
+				onClick={clickContent}
+			>
+				<p className="text-lg font-bold">
+					{name}
+					{/* {partnerName
+						? ` (${partnerName}
+					${partnerName && role ? 'PB님' : '고객님'})`
+						: null} */}
+				</p>
+				<p className="text-sm font-normal text-gray-400">{place}</p>
+			</div>
+			<div className="flex items-center justify-end w-1/5 pr-1">
+				{/* <img src={ContentSvg} onClick={clickContent} className='w-5 h-5 mr-2'/> */}
+				{isContent ? (
+					<ContentPopup
+						content={description}
+						setIsContentPopup={() => setIsContent(!isContent)}
+					/>
+				) : (
+					<></>
+				)}
+				<img src={ChatSvg} onClick={() => clickCreateRoom(pbId)} />
+			</div>
 		</div>
 	);
 }

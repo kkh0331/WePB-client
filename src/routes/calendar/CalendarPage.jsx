@@ -36,9 +36,9 @@ export default function CalendarPage() {
 	};
 
 	return (
-		<div className="h-screen bg-sh-gr-01">
+		<div className="h-screen bg-indigo-50">
 			<div
-				className={`${isAddSchedule ? 'opacity-20' : ''} w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 text-xl font-sans font-bold flex justify-center items-center relative shadow`}
+				className={`${isAddSchedule ? 'opacity-20' : ''} w-full h-16 bg-white border-t border-gray-200 text-xl font-sans font-bold flex justify-center items-center relative shadow`}
 			>
 				<div>일정</div>
 				{role === 0 ? (
@@ -61,10 +61,10 @@ export default function CalendarPage() {
 			</div>
 
 			<div className="flex-1 mt-2 mb-16">
-				<p className="ml-3 px-1 font-black mt-2 mb-2">
+				<p className="px-1 mt-2 mb-2 ml-3 font-black">
 					{moment(value).format('YYYY년 MM월 DD일')}
 				</p>
-				<div className='h-[32vh] ml-3 mr-3 overflow-y-scroll'>
+				<div className="h-[32vh] ml-3 mr-3 overflow-y-scroll">
 					{isLoading ? (
 						<div className="flex items-center justify-center h-[33vh]">
 							<Loading />
