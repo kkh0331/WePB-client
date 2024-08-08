@@ -4,6 +4,9 @@ import EditSvg from '@/assets/svg/edit.svg';
 import moment from 'moment';
 import GroupDocument from '../../components/my/GroupDocument';
 import { getRequestList } from '../../libs/apis/mypage';
+import profile from '../../assets/profile.svg';
+import check from '../../assets/clipboard-list.svg';
+import smile from '../../assets/emoji-happy.svg';
 
 export default function MyPage() {
 	const { name, id, role } = useSelector(state => state.user);
@@ -45,29 +48,37 @@ export default function MyPage() {
 	};
 
 	return (
-		<div className={`min-h-screen h-full bg-sh-gr-01 pb-20`}>
+		<div className={`min-h-screen h-full bg-indigo-50 pb-20`}>
 			{isLoading ? (
 				<div className="flex items-center justify-center h-full">
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
 				</div>
 			) : (
 				<>
-					<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow dark:bg-gray-700 dark:border-gray-600">
+					<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow">
 						<div>마이페이지</div>
 					</div>
 					<div className="relative flex items-center justify-start w-full p-5">
-						<div className="flex items-center justify-center w-20 h-20 bg-gray-300 rounded-full" />
+						<img
+							src={profile} // PB photo 추가해야함
+							onError={e => {
+								e.target.src = profile;
+							}}
+							className="flex items-center justify-center w-20 h-20 rounded-full"
+						/>
 						<div className="flex flex-col ml-5 items-left">
 							<div className="flex items-baseline gap-2 pl-2">
-								<span className="text-[24px] font-bold">
-									<span className="text-blue-700">
-										{name} {role === 0 ? 'PB' : '고객'}
-									</span>
-									님,
+								<span className="text-[24px] font-bold flex items-center">
+									<div>
+										<span className="mr-1 text-blue-700">{name}</span>
+										<span className="text-[18px]">
+											{role === 0 ? 'PB님' : '고객님'}
+										</span>
+									</div>
 								</span>
 							</div>
-							<span className="text-[18px] my-1 pl-2">
-								항상 화이팅하세요~~!!
+							<span className="text-[16px] my-1 pl-2 flex items-center">
+								항상 화이팅하세요 ! <img src={smile} className="w-5 h-5 ml-1" />
 							</span>
 						</div>
 						{role === 0 ? (
@@ -79,10 +90,11 @@ export default function MyPage() {
 						)}
 					</div>
 					<div className="px-5">
-						<div>
+						<div className="flex items-center">
+							<img src={check} className="w-6 h-6 mr-1" />
 							{role == 0
-								? '☑️ 고객분들의 상담내용을 확인할 수 있어요.'
-								: '☑️ 요청하신 상담내용을 확인할 수 있어요.'}
+								? '고객분들의 상담내용을 확인할 수 있어요.'
+								: '요청하신 상담내용을 확인할 수 있어요.'}
 						</div>
 						{keys?.length > 0 ? (
 							keys.map(key => {
