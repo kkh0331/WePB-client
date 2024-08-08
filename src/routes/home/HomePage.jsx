@@ -31,10 +31,12 @@ export default function HomePage() {
 	const [page, setPage] = useState(0);
 	const [ref, inView] = useInView();
 	const { id, name } = useSelector(state => state.user);
-	const fetchPBList = async () => {
+
+	const fetchPBList = async (isDistance, page) => {
 		try {
 			const data = await getPBList(isDistance, page);
-			setPbList([...pbList, ...data.response.content]);
+			if (page === 0) setPbList([...data.response.content]);
+			else setPbList([...pbList, ...data.response.content]);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -42,10 +44,11 @@ export default function HomePage() {
 		}
 	};
 
-	const fetchPBListByCategory = async () => {
+	const fetchPBListByCategory = async (isDistance, page) => {
 		try {
-			const data = await getPBListByCategory(isSelected, isDistance);
-			setPbList(data.response);
+			const data = await getPBListByCategory(isSelected, isDistance, page);
+			if (page === 0) setPbList([...data.response.content]);
+			else setPbList([...pbList, ...data.response.content]);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -59,18 +62,22 @@ export default function HomePage() {
 
 	useEffect(() => {
 		if (inView) {
-			if (page < 26) {
-				fetchPBList(isDistance, page + 1);
+			if (page < 25) {
+				if (isSelected === -1) fetchPBList(isDistance, page);
+				else fetchPBListByCategory(isDistance, page);
 				setPage(page + 1);
 			}
 		}
 	}, [inView]);
 
 	useEffect(() => {
+		setPbList([]);
 		setIsLoading(true);
-		if (isSelected === -1) fetchPBList();
-		else fetchPBListByCategory();
+		setPage(0);
+		if (isSelected === -1) fetchPBList(isDistance, 0);
+		else fetchPBListByCategory(isDistance, 0);
 	}, [isSelected, isDistance]);
+
 	return (
 		<div>
 			<div className="relative flex items-center justify-between w-full h-16 px-5 font-sans text-xl font-bold bg-white border-t border-b border-gray-200 shadow">
@@ -143,7 +150,7 @@ export default function HomePage() {
 							))
 						)}
 					</div>
-					<div className="h-10" ref={ref} />
+					<div className="h-1" ref={ref} />
 				</div>
 				<SlideUpDownModal
 					setIsModal={setIsModal}

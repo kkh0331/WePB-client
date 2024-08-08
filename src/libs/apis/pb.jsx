@@ -20,10 +20,10 @@ export const getPBInfo = async id => {
 	}
 };
 
-export const getPBListByCategory = async (id, distance) => {
+export const getPBListByCategory = async (id, distance, page) => {
 	try {
 		const response = await instance.get(
-			`/mainPage/pbList/${id}?distance=${distance}`,
+			`/mainPage/pbList/${id}?distance=${distance}&page=${page}&size=10`,
 		);
 		return response.data;
 	} catch (error) {
