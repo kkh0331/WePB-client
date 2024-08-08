@@ -35,7 +35,7 @@ export default function SignupPage() {
     const newId = e.target.value;
     setId(newId);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  
     if (newId.length === 0) {
       setEmailMessage('이메일을 입력해주세요');
     } else if (!emailRegex.test(newId)) {
@@ -43,12 +43,21 @@ export default function SignupPage() {
     } else {
       try {
         const emailCheckResponse = await checkEmailAvailability(newId);
-        setEmailMessage(emailCheckResponse.success ? '사용 가능한 이메일입니다.' : '이미 사용 중인 이메일입니다.');
+        if (emailCheckResponse.success) {
+          if (emailCheckResponse.response === '중복된 이메일입니다.') {
+            setEmailMessage('이미 사용 중인 이메일입니다.');
+          } else {
+            setEmailMessage('사용 가능한 이메일입니다.');
+          }
+        } else {
+          setEmailMessage('잠시 후에 다시 시도해주세요.');
+        }
       } catch (error) {
         setEmailMessage('잠시 후에 다시 시도해주세요.');
       }
     }
   };
+  
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
