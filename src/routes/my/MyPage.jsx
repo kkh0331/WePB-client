@@ -47,7 +47,7 @@ export default function MyPage() {
 	};
 
 	return (
-		<div className={`min-h-screen h-full bg-sh-gr-01 pb-20`}>
+		<div className={`min-h-screen h-full bg-white pb-20 flex flex-col`}>
 			{isLoading ? (
 				<Loading/>
 			) : (
@@ -78,7 +78,7 @@ export default function MyPage() {
 							<></>
 						)}
 					</div>
-					<div className="px-5">
+					<div className="px-5 flex flex-col flex-1">
 						<div>
 							{role == 0
 								? '☑️ 고객분들의 상담내용을 확인할 수 있어요.'
@@ -89,8 +89,8 @@ export default function MyPage() {
 								return <GroupDocument key={key} documents={documents[key]} />;
 							})
 						) : (
-							<div className="flex justify-center items-center h-[33vh]">
-								<span>일정이 없습니다.</span>
+							<div className="flex justify-center items-center flex-1">
+								<span>{id==='' ? '로그인 후 진행해 주세요' : '일정이 없습니다.'}</span>
 							</div>
 						)}
 					</div>

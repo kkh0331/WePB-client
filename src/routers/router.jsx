@@ -14,6 +14,7 @@ import LoginPage from '../routes/login/LoginPage';
 import SignupPage from '../routes/login/SignupPage';
 import ChatRoomPage from '../routes/chat/ChatRoomPage';
 import ConsultingReservationPage from '../routes/chat/ConsultingReservationPage';
+import LoginErrorPage from '../components/common/LoginErrorPage';
 
 const router = createBrowserRouter([
 	{
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
 				element: <MyPage />,
 				index: true,
 			},
+			{
+				path: '/check/login',
+				element: <LoginErrorPage/>,
+				index: true
+			}
 		],
 	},
 ]);

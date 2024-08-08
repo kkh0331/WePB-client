@@ -5,13 +5,10 @@ import moment from 'moment';
 
 export default function ChatPage() {
 	const { chatRooms } = useSelector(state => state.chat);
-
-	useEffect(() => {
-		console.log(chatRooms);
-	}, [chatRooms]);
+	const {id} = useSelector(state => state.user);
 
 	return (
-		<>
+		<div className='flex flex-col h-screen'>
 			<div className="flex items-center justify-center w-full h-16 px-5 text-xl font-bold">
 				채팅 리스트
 			</div>
@@ -25,11 +22,11 @@ export default function ChatPage() {
 					);
 				})
 			) : (
-				<div className="w-full flex justify-center items-center h-[70vh]">
-					<span>해당 내역이 없습니다.</span>
+				<div className="flex justify-center items-center flex-1">
+					<span>{id === '' ? '로그인 후 진행해 주세요' : '해당 내역이 없습니다'}</span>
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
 
