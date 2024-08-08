@@ -104,7 +104,7 @@ export default function ChatRoomPage() {
 			) : (
 				<>
 					<ChatPartnerInfo partnerInfo={partnerInfo} />
-					<div className="flex flex-col flex-1 w-full h-full px-5 overflow-y-scroll">
+					<div className="flex flex-col w-full px-5 overflow-y-scroll" style={{ height: 'calc(95vh - 100px)' }}>
 						{messages.map(message => {
 							return id === message.sender_id ? (
 								<ChatSenderComponent
