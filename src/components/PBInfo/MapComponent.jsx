@@ -54,9 +54,9 @@ const MapComponent = ({ lat, lng, lastPartAddress }) => {
 					/>
 				</Map>
 			</div>
-			<div className="text-[15px] font-semibold ps-2">
+			{/* <div className="text-[14px] ps-2">
 				{address} {lastPartAddress}
-			</div>
+			</div> */}
 		</>
 	);
 };
