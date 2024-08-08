@@ -1,8 +1,10 @@
 import instance from './base';
 
-export const getPBList = async () => {
+export const getPBList = async (distance, page) => {
 	try {
-		const response = await instance.get(`/mainPage/pbList`);
+		const response = await instance.get(
+			`/mainPage/pbList?distance=${distance}&page=${page}&size=10`,
+		);
 		return response.data;
 	} catch (error) {
 		console.log(error);
