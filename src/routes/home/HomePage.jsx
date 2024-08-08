@@ -147,7 +147,7 @@ export default function HomePage() {
 						파생
 					</span>
 				</div>
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-between mb-3">
 					<div className="flex items-center gap-2">
 						<div
 							className="px-2 font-semibold border shadow rounded-xl"
