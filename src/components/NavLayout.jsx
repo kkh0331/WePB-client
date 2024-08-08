@@ -38,17 +38,19 @@ export default function NavLayout() {
 					return new Date(b.lastMessageTime) - new Date(a.lastMessageTime);
 				});
 				dispatch(setChatRooms(newChatRooms));
-				const newLastMessage = newChatRooms[0];
-				if(lastMessageTimeRef.current < newLastMessage.lastMessageTime){
-					setName(newLastMessage.partnerName)
-					if(newLastMessage.lastMessage === ''){
-						setMessage('새로운 채팅방이 생성되었습니다.')
-					} else {
-						setMessage(newLastMessage.lastMessage)
-					}
-					dispatch(setLastMessageTime(newLastMessage.lastMessageTime))
-					if(!pathnameRef.current.startsWith('/chat')){
-						setIsAlarmOpen(true);
+				if(newChatRooms.length > 0){
+					const newLastMessage = newChatRooms[0];
+					if(lastMessageTimeRef.current === "" || lastMessageTimeRef.current < newLastMessage.lastMessageTime){
+						setName(newLastMessage.partnerName)
+						if(newLastMessage.lastMessage === ''){
+							setMessage('새로운 채팅방이 생성되었습니다.')
+						} else {
+							setMessage(newLastMessage.lastMessage)
+						}
+						dispatch(setLastMessageTime(newLastMessage.lastMessageTime))
+						if(!pathnameRef.current.startsWith('/chat')){
+							setIsAlarmOpen(true);
+						}
 					}
 				}
 			});
@@ -72,12 +74,15 @@ export default function NavLayout() {
 	const fetchChatList = async () => {
 		try{
 			const response = await getChatList(id, role);
+			console.log(response);
 			const res = response.response;
 			res.sort((a, b) => {
 				return new Date(b.lastMessageTime) - new Date(a.lastMessageTime);
 			});
 			dispatch(setChatRooms(res));
-			dispatch(setLastMessageTime(res[0].lastMessageTime))
+			if(res.length > 0){
+				dispatch(setLastMessageTime(res[0].lastMessageTime))
+			}
 		} catch(error){
 			console.log(error);
 			dispatch(setChatRooms({chatRooms : []}));
