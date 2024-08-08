@@ -59,7 +59,12 @@ export default function PBCardListComponent({
 								{data.category_detail}
 							</span>
 						</div>
-						<span className="text-[15px]">{data.office_name}</span>
+						<div className="flex flex-col">
+							<span className="text-[15px]">{data.office_name}</span>
+							<span className="text-[12px] text-[#707070]">
+								내 위치로부터 {data.office_distance.toFixed(2)}km
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>
