@@ -2,6 +2,7 @@ import React from 'react';
 
 // assets
 import profile from '../../assets/profile.svg';
+import info from '../../assets/information-circle.svg';
 
 // components
 import ButtonActive from '../../components/button/ButtonActive';
@@ -26,39 +27,39 @@ export default function PBCardListComponent({
 
 	return (
 		<div>
-			<div className="w-[85vw] h-[17vh] rounded-[30px] shadow-xl flex items-center justify-around px-3 bg-white">
-				<img
-					src={data.photo || profile}
-					onError={e => {
-						e.target.src = profile;
-					}}
-					className="w-20 h-20 rounded-full"
-				/>
-				<div className="flex flex-col">
-					<div className="relative flex justify-center h-full ml-1 w-fit">
-						<div
-							className="box-content absolute bottom-[1px] w-full h-[10px] px-1 z-1"
-							style={{
-								backgroundColor: `${type[data.invest_type]}`,
-							}}
-						/>
-						<span className="text-[14px] font-medium z-10">
-							{data.invest_type}
-						</span>
-					</div>
-					<div className="flex flex-row items-baseline gap-2">
-						<span className="text-[20px] font-bold">{data.name} PB</span>
-						<span className="text-[12px] text-[#505050]">
-							{data.category_detail}
-						</span>
-					</div>
-					<span className="text-[15px]">{data.office_name}</span>
-					<div className="flex w-full mt-2">
-						<ButtonActive
-							btnTxt="자세히 보기"
-							isConfirm={true}
-							clickBtn={clickDetailBtn}
-						/>
+			<div
+				className="w-[82vw] h-[17vh] rounded-[30px] shadow-xl flex items-center justify-between px-3 bg-white border-b-4 transition-transform duration-150 ease-in-out transform active:translate-y-1"
+				onClick={() => clickDetailBtn()}
+			>
+				<div className="flex justify-center w-[40%]">
+					<img
+						src={data.photo || profile}
+						onError={e => {
+							e.target.src = profile;
+						}}
+						className="w-20 h-20 rounded-full"
+					/>
+				</div>
+				<div className="flex flex-col items-center flex-1">
+					<div className="flex-1 w-full">
+						<div className="relative flex justify-center h-full ml-1 w-fit">
+							<div
+								className="box-content absolute bottom-[1px] w-full h-[10px] px-1 z-1"
+								style={{
+									backgroundColor: `${type[data.invest_type]}`,
+								}}
+							/>
+							<span className="text-[14px] font-medium z-10">
+								{data.invest_type}
+							</span>
+						</div>
+						<div className="flex flex-row items-baseline gap-2">
+							<span className="text-[20px] font-bold">{data.name} PB</span>
+							<span className="text-[12px] text-[#505050]">
+								{data.category_detail}
+							</span>
+						</div>
+						<span className="text-[15px]">{data.office_name}</span>
 					</div>
 				</div>
 			</div>
