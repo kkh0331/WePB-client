@@ -10,7 +10,7 @@ export default function ButtonActive({ btnTxt, clickBtn, isConfirm }) {
 
 	return (
 		<button
-			className={`${btnClass} h-8 rounded-lg font-bold text-lg flex-grow`}
+			className={`${btnClass} h-8 rounded-lg text-md font-semibold flex-grow`}
 			onClick={() => clickBtn()}
 		>
 			{btnTxt}

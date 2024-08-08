@@ -17,3 +17,14 @@ export const getPBInfo = async id => {
 		console.log(error);
 	}
 };
+
+export const getPBListByCategory = async (id, distance) => {
+	try {
+		const response = await instance.get(
+			`/mainPage/pbList/${id}?distance=${distance}`,
+		);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+	}
+};

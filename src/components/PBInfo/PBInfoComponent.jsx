@@ -15,6 +15,7 @@ import ButtonActive from '../button/ButtonActive';
 import { useSelector } from 'react-redux';
 import { createRoom } from '../../libs/apis/chat';
 import { useNavigate } from 'react-router-dom';
+import MapComponent from './MapComponent';
 
 export default function PBInfoComponent({ pbId }) {
 	const { id, role } = useSelector(state => state.user);
@@ -93,11 +94,9 @@ export default function PBInfoComponent({ pbId }) {
 							) : null}
 						</div>
 					</div>
-					<div className="flex flex-col w-full gap-3 p-5 mt-3">
-						<ul className="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
-								경력
-							</span>
+					<div className="flex flex-col w-full gap-5 p-5 mt-3">
+						<ul class="flex gap-5 w-full border-b-[1px] pb-5">
+							<span className="font-bold text-[16px] flex-1">경력</span>
 							<div className="flex flex-col w-9/12">
 								{data.portpolios.map((elem, index) => (
 									<li className="text-[16px] flex flex-col" key={index}>
@@ -110,18 +109,18 @@ export default function PBInfoComponent({ pbId }) {
 								))}
 							</div>
 						</ul>
-						<ul className="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
-								대외평가
-							</span>
+						<ul class="flex gap-5 w-full border-b-[1px] pb-5">
+							<span className="font-bold text-[16px] flex-1">대외평가</span>
 							<div className="flex flex-col w-9/12">
 								{data.awards?.length > 0 ? (
 									data.awards.map((elem, index) => (
-										<li className="text-[16px] truncate flex flex-col">
+										<li className="text-[16px] w-full flex flex-col">
 											<span className="text-[13px]">
 												{elem.awards_date.slice(0, 7)}
 											</span>
-											{elem.awards_title}
+											<span className="w-full break-words">
+												{elem.awards_title}
+											</span>
 										</li>
 									))
 								) : (
@@ -129,10 +128,8 @@ export default function PBInfoComponent({ pbId }) {
 								)}
 							</div>
 						</ul>
-						<ul className="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
-								자격증
-							</span>
+						<ul class="flex gap-5w-full border-b-[1px] pb-5">
+							<span className="font-bold text-[16px] flex-1">자격증</span>
 							<div className="flex flex-col w-9/12">
 								{data.pbUser.certificate ? (
 									data.pbUser.certificate.split(',').map((elem, index) => (
@@ -145,20 +142,25 @@ export default function PBInfoComponent({ pbId }) {
 								)}
 							</div>
 						</ul>
-						<ul className="flex gap-5 w-full">
-							<span className="font-bold text-[16px] flex-1 text-right">
-								지점 정보
-							</span>
+						<ul class="flex gap-5 w-full">
+							<span className="font-bold text-[16px] flex-1">지점 정보</span>
 							<div className="flex flex-col w-9/12">
 								<li className="text-[16px]">
 									{data.office.name} ({data.office.region})
 								</li>
-								<li className="text-[14px] text-[#707070]">
+								{/* <li className="text-[14px] text-[#707070]">
 									{data.office.address}
-								</li>
+								</li> */}
 							</div>
 						</ul>
-						<div className="border-2 rounded-[20px] w-full p-5 mt-5 text-[16px]">
+						<div className="mt-1">
+							<MapComponent
+								lat={data.office.latitude}
+								lng={data.office.longitude}
+								lastPartAddress={data.office.address}
+							/>
+						</div>
+						<div className="border-2 rounded-[20px] w-full p-3 mt-3 text-[16px]">
 							{data.pbUser.pr}
 						</div>
 					</div>
