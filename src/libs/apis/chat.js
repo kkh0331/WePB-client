@@ -32,3 +32,15 @@ export const getPartnerNmCg = async(partnerId) => {
     console.log(error);
   }
 }
+
+export const createRoom = async(myId, pbId, role) => {
+  try{
+    const response = await instance.post('/chat/createRoom',{
+      myId, pbId, role
+    })
+    return response;
+  } catch(error){
+    console.log(error);
+  }
+}
+

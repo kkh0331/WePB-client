@@ -4,8 +4,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function BottomNavigation() {
 	const { pathname } = useLocation();
-	const {chatRooms} = useSelector(state => state.chat)
+	const { chatRooms } = useSelector(state => state.chat);
 	const [unCheckedCnt, setUnCheckedCnt] = useState(0);
+	const [isHidden, setIsHidden] = useState('');
 	const navigate = useNavigate();
 
 	const handleNavigation = path => {
@@ -19,16 +20,29 @@ export default function BottomNavigation() {
 	};
 
 	useEffect(() => {
-		const total = chatRooms.reduce((sum, item) => sum + item.unCheckedMessageCount, 0);
-		setUnCheckedCnt(total);	
-	}, [chatRooms])
+		const total = chatRooms.reduce(
+			(sum, item) => sum + item.unCheckedMessageCount,
+			0,
+		);
+		setUnCheckedCnt(total);
+	}, [chatRooms]);
 
-	return (
-		<div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+	useEffect(() => {
+		const pathname = location.pathname;
+		// 정규 표현식을 사용하여 pathname의 마지막이 숫자인지 확인
+		const endsWithNumber = /\d$/.test(pathname);
+		if (endsWithNumber) setIsHidden('hidden');
+		else setIsHidden('');
+	}, [location.pathname]);
+
+	return !isHidden ? (
+		<div
+			className={`fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200`}
+		>
 			<div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
 				<button
 					type="button"
-					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group"
 					onClick={() => handleNavigation('/home')}
 				>
 					<svg
@@ -48,7 +62,7 @@ export default function BottomNavigation() {
 				</button>
 				<button
 					type="button"
-					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group"
 					onClick={() => handleNavigation('/calendar')}
 				>
 					<svg
@@ -69,10 +83,10 @@ export default function BottomNavigation() {
 				</button>
 				<button
 					type="button"
-					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group"
 					onClick={() => handleNavigation('/chat')}
 				>
-					<div className='relative'>
+					<div className="relative">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className={`w-5 h-5 mb-2 ${navClass('chat')} relative`}
@@ -86,18 +100,20 @@ export default function BottomNavigation() {
 								clipRule="evenodd"
 							/>
 						</svg>
-						{unCheckedCnt === 0 ? <></> :
-							<div className='h-4 w-4 bg-red-500 absolute -top-0.5 -right-3 rounded-lg text-white flex items-center justify-center font-extralight text-xs'>
+						{unCheckedCnt === 0 ? (
+							<></>
+						) : (
+							<div className="h-4 w-4 bg-red-500 absolute -top-0.5 -right-3 rounded-lg text-white flex items-center justify-center font-extralight text-xs">
 								{unCheckedCnt}
 							</div>
-						}
+						)}
 					</div>
 
 					<span className={`text-sm ${navClass('chat')}`}>Chat</span>
 				</button>
 				<button
 					type="button"
-					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+					className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group"
 					onClick={() => handleNavigation('/my')}
 				>
 					<svg
@@ -117,5 +133,5 @@ export default function BottomNavigation() {
 				</button>
 			</div>
 		</div>
-	);
+	) : null;
 }
