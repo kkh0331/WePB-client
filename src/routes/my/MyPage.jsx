@@ -48,7 +48,7 @@ export default function MyPage() {
 	};
 
 	return (
-		<div className={`min-h-screen h-full bg-white pb-20 flex flex-col`}>
+		<div className={`min-h-screen h-full bg-indigo-50 pb-20 flex flex-col`}>
 			{isLoading ? (
 				<div className="flex items-center justify-center h-full">
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />
@@ -101,8 +101,12 @@ export default function MyPage() {
 								return <GroupDocument key={key} documents={documents[key]} />;
 							})
 						) : (
-							<div className="flex justify-center items-center flex-1">
-								<span>{id==='' ? '로그인 후 진행해 주세요' : '해당 내역이 없습니다.'}</span>
+							<div className="flex items-center justify-center flex-1">
+								<span>
+									{id === ''
+										? '로그인 후 진행해 주세요'
+										: '해당 내역이 없습니다.'}
+								</span>
 							</div>
 						)}
 					</div>

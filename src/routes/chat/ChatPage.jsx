@@ -6,11 +6,11 @@ import profile from '../../assets/profile.svg';
 
 export default function ChatPage() {
 	const { chatRooms } = useSelector(state => state.chat);
-	const {id} = useSelector(state => state.user);
+	const { id } = useSelector(state => state.user);
 
 	return (
-		<div className='flex flex-col h-screen'>
-			<div className="flex items-center justify-center w-full h-16 px-5 text-xl font-bold">
+		<div className="flex flex-col h-screen">
+			<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow">
 				채팅 리스트
 			</div>
 			{chatRooms?.length > 0 ? (
@@ -23,8 +23,10 @@ export default function ChatPage() {
 					);
 				})
 			) : (
-				<div className="flex justify-center items-center flex-1">
-					<span>{id === '' ? '로그인 후 진행해 주세요' : '해당 내역이 없습니다'}</span>
+				<div className="flex items-center justify-center flex-1">
+					<span>
+						{id === '' ? '로그인 후 진행해 주세요' : '해당 내역이 없습니다'}
+					</span>
 				</div>
 			)}
 		</div>
@@ -37,7 +39,7 @@ const ChatListComponent = ({ chatRoom }) => {
 	const navigate = useNavigate();
 	return (
 		<div
-			className="h-[11vh] px-[6vw] bg-white flex flex-row items-center"
+			className="h-[11vh] px-[6vw] bg-white flex flex-row items-center border-b-[1px]"
 			onClick={() => navigate(chatRoom.chatRoomCode)}
 		>
 			<img
