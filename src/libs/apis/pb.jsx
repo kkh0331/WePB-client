@@ -1,9 +1,9 @@
 import instance from './base';
 
-export const getPBList = async (distance, page) => {
+export const getPBList = async (distance, page, type) => {
 	try {
 		const response = await instance.get(
-			`/mainPage/pbList?distance=${distance}&page=${page}&size=10`,
+			`/mainPage/pbList?distance=${distance}&page=${page}&size=10&type=${type}`,
 		);
 		return response.data;
 	} catch (error) {
@@ -20,10 +20,10 @@ export const getPBInfo = async id => {
 	}
 };
 
-export const getPBListByCategory = async (id, distance, page) => {
+export const getPBListByCategory = async (id, distance, page, type) => {
 	try {
 		const response = await instance.get(
-			`/mainPage/pbList/${id}?distance=${distance}&page=${page}&size=10`,
+			`/mainPage/pbList/${id}?distance=${distance}&page=${page}&size=10&type=${type}`,
 		);
 		return response.data;
 	} catch (error) {
