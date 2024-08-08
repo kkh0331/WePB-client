@@ -15,6 +15,7 @@ import PBInfoComponent from '../../components/PBInfo/PBInfoComponent';
 import PBCardListComponent from '../../components/Home/PBCardListComponent';
 import ButtonActive from '../../components/button/ButtonActive';
 import Loading from '../../components/common/Loading';
+import SelectInvestType from './SelectInvestType';
 
 // apis
 import { getPBList, getPBListByCategory } from '../../libs/apis/pb';
@@ -78,8 +79,29 @@ export default function HomePage() {
 		else fetchPBListByCategory(isDistance, 0);
 	}, [isSelected, isDistance]);
 
+	const [isSelectOpen, setIsSelectOpen] = useState(false);
+	const [type, setType] = useState(0); // 선택된 type value로 되어 있어!!
+
+	const clickType = type => {
+		setType(type);
+		setIsSelectOpen(false);
+		console.log(type);
+	};
+
+	const changeTypeName = () => {
+		if (type === 0) return '전체';
+		if (type === 5) return '공격투자형';
+		if (type === 4) return '적극투자형';
+		if (type === 3) return '위험중립형';
+		if (type === 2) return '안전추구형';
+		if (type === 1) return '안전형';
+	};
+
 	return (
-		<div>
+		<div className="relative">
+			{isSelectOpen ? (
+				<SelectInvestType clickType={clickType} selectedType={type} />
+			) : null}
 			<div className="relative flex items-center justify-between w-full h-16 px-5 font-sans text-xl font-bold bg-white border-t border-b border-gray-200 shadow">
 				SolPB
 				{id !== '' ? (
@@ -121,7 +143,15 @@ export default function HomePage() {
 						파생
 					</span>
 				</div>
-				<div className="flex justify-end">
+				<div className="flex items-center justify-between">
+					<div className="flex items-center gap-2">
+						<div
+							className="px-2 border shadow rounded-xl"
+							onClick={() => setIsSelectOpen(true)}
+						>
+							# {changeTypeName()}
+						</div>
+					</div>
 					<label className="inline-flex items-center">
 						<span className="mx-2 text-sm font-medium text-[#545454]">
 							거리순
