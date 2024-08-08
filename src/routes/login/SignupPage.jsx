@@ -102,11 +102,11 @@ export default function SignupPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4" onClick={handleCloseModal}>
-      <button className="absolute top-8 left-4 text-black" onClick={() => navigate('/login')}>
-        &lt;
-      </button>
+      <div className="absolute top-8 left-4 text-black" onClick={() => navigate('/login')}>
+      <img src="https://i.postimg.cc/zXdJMJrq/pngwing-com.png" alt="Logo" className="w-8 h-8" /> 
+      </div>
       <div className="w-11/12 max-w-sm">
-        <div className="space-y-4">
+        <div className="space-y-3 mt-4">
           <input
             type="text"
             placeholder="이름"
@@ -152,7 +152,7 @@ export default function SignupPage() {
             </button>
             <div className="mt-4"></div>
             <button
-              className="w-2/3 px-4 py-2 text-black bg-white rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
+              className="w-2/3 px-4 py-2 text-black bg-[#97A4B2] rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#94caff]"
               onClick={handleSignupComplete}
             >
               회원가입
