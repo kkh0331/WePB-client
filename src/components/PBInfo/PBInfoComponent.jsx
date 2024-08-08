@@ -67,7 +67,7 @@ export default function PBInfoComponent({ id }) {
 								<span className="text-[13px]">{data.pbUser.email}</span>
 							</div>
 							{data.pbUser.link ? (
-								<div className="flex items-center gap-1 ml-2">
+								<div className="flex items-center gap-[1px] ml-2">
 									<img src={paperClip} className="w-4 h-4" />
 									<span className="text-[13px]">{data.pbUser.link}</span>
 								</div>
