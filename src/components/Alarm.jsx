@@ -14,7 +14,7 @@ export default function Alarm({ name, message, isAlarmOpen, setIsAlarmOpen }) {
 
 	return (
 		<div
-			className="fixed w-full top-0 z-50 mt-1 flex justify-center animate-slide-down' : 'animate-slide-up' p-3"
+			className="fixed w-full top-0 z-50 mt-1 flex justify-center animate-slide-down animate-slide-up p-3"
 		>
 			<div className="relative flex w-full rounded-2xl p-4 bg-gray-100 bg-opacity-80 border">
 				<div

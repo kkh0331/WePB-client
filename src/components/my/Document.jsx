@@ -32,20 +32,9 @@ export default function Document({ document }) {
 		>
 			<p className="w-1/5">{time}</p>
 			<p className="w-3/5">{title}</p>
-			<div className="flex items-center justify-end w-1/5 mr-1">
-				{/* <img
-					src={ContentSvg}
-					className="w-5 h-5"
-					onClick={() => setIsContent(!isContent)}
-				/> */}
-				{isContent ? (
-					<ContentPopup
-						content={document.content}
-						setIsContentPopup={() => setIsContent(!isContent)}
-					/>
-				) : (
-					<></>
-				)}
+			<div className="w-1/5 flex justify-end items-center mr-1">
+				<img src={ContentSvg} className='w-5 h-5' onClick={() => setIsContent(!isContent)}/>
+        {isContent ? <ContentPopup partnerName={document.name} content={document.content} setIsContentPopup={() => setIsContent(!isContent)} dayTime={time}/> : <></>}
 			</div>
 		</div>
 	);

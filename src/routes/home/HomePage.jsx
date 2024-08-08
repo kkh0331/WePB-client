@@ -17,6 +17,7 @@ import Loading from '../../components/common/Loading';
 
 // apis
 import { getPBList, getPBListByCategory } from '../../libs/apis/pb';
+import { useSelector } from 'react-redux';
 
 export default function HomePage() {
 	const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function HomePage() {
 	const [selectedPB, setSelectedPB] = useState(-1);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isDistance, setIsDistance] = useState(false);
+	const {id, name} = useSelector(state => state.user)
 	const fetchPBList = async () => {
 		try {
 			const data = await getPBList();
@@ -61,9 +63,10 @@ export default function HomePage() {
 		<div>
 			<div className="relative flex items-center justify-between w-full h-16 px-5 font-sans text-xl font-bold bg-white border-t border-b border-gray-200 shadow">
 				SolPB
-				<button className="text-[15px]" onClick={() => navigate('/login')}>
-					로그인
-				</button>
+				{
+					id !=="" ? <span>{name}</span> :
+					<button onClick={() => navigate('/login')}>로그인</button>
+				}
 			</div>
 			<div className="w-full px-5 overflow-y-hidden bg-white">
 				<div className="flex items-center justify-between w-full py-4">

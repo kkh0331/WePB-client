@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 // false이면, bg-gray, text-black
 export default function ButtonActive({ btnTxt, clickBtn, isConfirm }) {
 	const btnClass = useMemo(() => {
-		return isConfirm ? 'bg-[#2a3fec] text-white' : 'bg-gray-300 text-black';
+		return isConfirm ? 'bg-[#2a3fec] text-white' : 'bg-gray-200 text-black';
 	}, [isConfirm]);
 
 	return (

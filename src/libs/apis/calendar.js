@@ -24,3 +24,13 @@ export const getTodaySchedules = async (id, today, role) => {
     console.log(error);
   }
 }
+
+export const addCalendar = async(data) => {
+  try{
+    const res = await instance.post("/calendar/save", data)
+    console.log(res);
+    return res.data;
+  } catch(error){
+    console.log(error)
+  }
+}

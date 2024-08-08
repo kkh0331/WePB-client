@@ -80,6 +80,7 @@ export default function NavLayout() {
 			dispatch(setLastMessageTime(res[0].lastMessageTime))
 		} catch(error){
 			console.log(error);
+			dispatch(setChatRooms({chatRooms : []}));
 		}
 	}
 

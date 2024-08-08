@@ -8,6 +8,7 @@ import AddSchedule from './AddSchedule';
 import CustomCalendar from '../../components/calendar/CustomCalendar';
 import { getTodaySchedules } from '../../libs/apis/calendar';
 import Loading from '../../components/common/Loading';
+import { useNavigate } from 'react-router-dom';
 
 export default function CalendarPage() {
 	const { id, role } = useSelector(state => state.user);
@@ -60,8 +61,8 @@ export default function CalendarPage() {
 				<CustomCalendar value={value} onChange={onChange} />
 			</div>
 
-			<div className="flex-1 mt-2 mb-16">
-				<p className="px-1 mt-2 mb-2 ml-3 font-black">
+			<div className={`flex-1 mt-2 mb-16 ${isAddSchedule ? 'opacity-10' : ''}`}>
+				<p className="ml-3 px-1 font-black mt-2 mb-2">
 					{moment(value).format('YYYY년 MM월 DD일')}
 				</p>
 				<div className="h-[32vh] ml-3 mr-3 overflow-y-scroll">
@@ -79,11 +80,12 @@ export default function CalendarPage() {
 								place={schedule.schedulePlace}
 								description={schedule.scheduleDescription}
 								pbId={schedule.pbId}
+								customId={schedule.customId}
 							/>
 						))
 					) : (
 						<div className="flex justify-center items-center h-[33vh]">
-							<span>일정이 없습니다.</span>
+							<span>{id === '' ? '로그인 후 진행해 주세요' : '일정이 없습니다'}</span>
 						</div>
 					)}
 				</div>
