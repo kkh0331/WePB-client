@@ -48,7 +48,7 @@ export default function MyPage() {
 	};
 
 	return (
-		<div className={`min-h-screen h-full bg-indigo-50 pb-20`}>
+		<div className={`min-h-screen h-full bg-sh-gr-01 pb-20`}>
 			{isLoading ? (
 				<div className="flex items-center justify-center h-full">
 					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin" />

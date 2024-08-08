@@ -78,6 +78,7 @@ export default function CalendarPage() {
 								name={schedule.scheduleName}
 								place={schedule.schedulePlace}
 								description={schedule.scheduleDescription}
+								pbId={schedule.pbId}
 							/>
 						))
 					) : (
