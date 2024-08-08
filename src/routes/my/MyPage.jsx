@@ -4,6 +4,7 @@ import EditSvg from '@/assets/svg/edit.svg';
 import moment from 'moment';
 import GroupDocument from '../../components/my/GroupDocument';
 import { getRequestList } from '../../libs/apis/mypage';
+import Loading from "@/components/common/Loading"
 
 export default function MyPage() {
 	const { name, id, role } = useSelector(state => state.user);
@@ -28,6 +29,7 @@ export default function MyPage() {
 				return newDocuments;
 			}, {});
 		setDocuments(processedData);
+		console.log(processedData)
 		setKeys(Object.keys(processedData).reverse());
 	};
 	useEffect(() => {
@@ -89,9 +91,7 @@ export default function MyPage() {
 								return <GroupDocument key={key} documents={documents[key]} />;
 							})
 						) : (
-							<div className="flex items-center justify-center w-full h-[50vh]">
-								<span>해당 내역이 없습니다.</span>
-							</div>
+							<Loading/>
 						)}
 					</div>
 				</>
@@ -99,50 +99,3 @@ export default function MyPage() {
 		</div>
 	);
 }
-
-// redux 테스트코드
-
-/*
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearUser } from '../../store/reducers/user';
-import { useNavigate } from 'react-router-dom';
-
-export default function MyPage() {
-  const user = useSelector(state => state.user.user); 
-  const [error, setError] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      setError('로그인이 되어있지 않습니다.');
-    } else {
-      console.log(user);
-    }
-  }, [user]);
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('token');
-    dispatch(clearUser());
-    navigate('/login');
-  };
-
-  return (
-    <div>
-      {error ? (
-        <div>{error}</div>
-      ) : (
-        <>
-          <div>ID: {user?.id}</div>
-          <div>Name: {user?.name}</div>
-          <div>Role: {user?.role}</div>
-          // API 까보니까 ID/NAME/ROLE 이렇게 3개 와서 테스트용으로 표시해둠
-          <button onClick={handleLogout}>로그아웃</button>
-        </>
-      )}
-    </div>
-  );
-}
-
-  */
