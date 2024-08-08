@@ -201,11 +201,10 @@ const SlideUpDownModal = ({ setIsModal, isModal, selectedPB }) => {
 		<Sheet
 			isOpen={isModal}
 			onClose={() => setIsModal(false)}
-			detent="content-height"
 		>
-			<Sheet.Container>
+			<Sheet.Container style={{ maxHeight: '90vh' }}>
 				<Sheet.Header />
-				<Sheet.Content className="pt-5">
+				<Sheet.Content className="overflow-y-auto style={{ height: 'calc(100vh - 100px)' }">
 					<PBInfoComponent pbId={selectedPB} />
 				</Sheet.Content>
 			</Sheet.Container>
