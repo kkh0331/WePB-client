@@ -9,6 +9,8 @@ import CustomCalendar from '../../components/calendar/CustomCalendar';
 import { getTodaySchedules } from '../../libs/apis/calendar';
 import Loading from '../../components/common/Loading';
 import { useNavigate } from 'react-router-dom';
+import ButtonActive from '../../components/button/ButtonActive';
+import check from '../../assets/check.svg';
 
 export default function CalendarPage() {
 	const { id, role } = useSelector(state => state.user);
@@ -36,6 +38,16 @@ export default function CalendarPage() {
 		}
 	};
 
+	const checktDate = () => {
+		if(moment(new Date()).format("YYYYMMDD") <= moment(value).format("YYYYMMDD")){
+			setIsAddSchedule(true);
+		} else {
+			setIsAlertModal(true);
+		}
+	}
+
+	const [isAlertModal, setIsAlertModal] = useState(false);
+
 	return (
 		<div className="h-screen bg-indigo-50">
 			<div
@@ -45,12 +57,13 @@ export default function CalendarPage() {
 				{role === 0 ? (
 					<button
 						className="absolute right-4"
-						onClick={() => setIsAddSchedule(!isAddSchedule)}
+						onClick={() => checktDate()}
 					>
 						+
 					</button>
 				) : null}
 			</div>
+			{isAlertModal ? <AlertModal setIsAlertModal={() => setIsAlertModal(false)}/> : null}
 			<AddSchedule
 				id="default-modal"
 				selectedDate={value}
@@ -93,3 +106,27 @@ export default function CalendarPage() {
 		</div>
 	);
 }
+
+const AlertModal = ({ setIsAlertModal }) => {
+	return (
+		<div className="absolute z-10 flex items-center justify-center w-screen h-screen">
+			<div className="absolute w-full h-full bg-gray-300 opacity-50 z-11" />
+			<div className="fixed shadow-md bg-white rounded-[30px] z-20 p-10 flex flex-col items-center gap-5 animate-slide-down">
+				<div className="flex justify-center gap-1">
+					<img src={check} className="w-7 h-7" />
+					<span className="font-bold text-[18px] text-center whitespace-pre-line">
+						과거의 날짜는 예약할 수 없습니다.
+					</span>
+				</div>
+				<div className="flex items-center justify-center w-full">
+					<ButtonActive
+						btnTxt="확인"
+						isConfirm={true}
+						clickBtn={() => setIsAlertModal()}
+					/>
+				</div>
+			</div>
+		</div>
+	);
+};
+
