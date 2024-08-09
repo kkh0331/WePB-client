@@ -20,7 +20,7 @@ export default function Alarm({ name, message, isAlarmOpen, setIsAlarmOpen }) {
 				<div
 					role="button"
 					className="absolute rounded-lg p-1 right-0 top-0 mr-2 mt-2"
-					onClick={null}
+					onClick={() => setIsAlarmOpen()}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
