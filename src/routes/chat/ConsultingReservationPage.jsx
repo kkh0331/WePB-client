@@ -23,6 +23,7 @@ import ButtonActive from '../../components/button/ButtonActive';
 import { makeReservation } from '../../libs/apis/reservation';
 import { getAvailableTime } from '../../libs/apis/schedule';
 import { getPartnerNmCg } from '../../libs/apis/chat';
+import moment from 'moment';
 
 export default function ConsultingReservationPage() {
 	const navigate = useNavigate();
@@ -58,6 +59,10 @@ export default function ConsultingReservationPage() {
 		if (message === '' || selectedTime === -1) {
 			setIsOpen(true);
 			setStatus(0);
+		} 
+		else if(moment(new Date()).format("YYYYMMDD") > moment(selectedDate).format("YYYYMMDD")){
+			setIsOpen(true);
+			setStatus(3);
 		} else {
 			try {
 				const response = await makeReservation({
@@ -191,7 +196,8 @@ const AlertModal = ({ status, hasToReload }) => {
 							모두 입력해주세요.`
 							: status === 1
 								? '상담 예약이 완료되었습니다.'
-								: '이미 마감된 시간입니다.'}
+								: status === 3
+								? '과거의 날짜는 선택할 수 없습니다.' : '이미 마감된 시간입니다.'}
 					</span>
 				</div>
 				<div className="flex items-center justify-center w-full">
