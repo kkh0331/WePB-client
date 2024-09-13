@@ -27,7 +27,7 @@ export default function SelectInvestType({clickType, selectedType}) {
           <div className='flex justify-center gap-4 w-full px-2'>
             <InvestType value={3} name={"위험중립형"} setType={(value) => setType(value)} type={type}/>
             <InvestType value={2} name={"안전추구형"} setType={(value) => setType(value)} type={type}/>
-            <InvestType value={1} name={"안전형"} setType={(value) => setType(value)} type={type}/>
+            <InvestType value={1} name={"안정형"} setType={(value) => setType(value)} type={type}/>
           </div>
         </div>
 				<div className="flex items-evenly justify-center w-full">
