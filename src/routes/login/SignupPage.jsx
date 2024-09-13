@@ -7,6 +7,7 @@ import usernameicon from '../../assets/usernameicon.png';
 import ButtonActive from '../../components/button/ButtonActive';
 import check from '../../assets/check.svg';
 import BackBtn from '../../assets/cheveron-left.svg';
+import AlertModal from '../../components/common/AlertModal';
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -107,24 +108,18 @@ export default function SignupPage() {
         if (response.success) {
           setSignUpMessage("회원 가입 완료");
           setStatus(0);
-          // alert('회원가입 완료');
-          // navigate('/login');
         } else {
           const errorMessage = response.error?.errorMessage;
           if (typeof errorMessage === 'string') {
-            // setSignupError(errorMessage);
             setSignUpMessage(errorMessage);
           } else if (errorMessage?.password) {
-            // setSignupError(errorMessage.password);
             setSignUpMessage(errorMessage.password);
           } else {
-            // setSignupError('잠시 후에 다시 시도해주세요.');
             setSignUpMessage('잠시 후에 다시 시도해주세요.')
           }
           setStatus(1);
         }
       } catch (error) {
-        // setSignupError('잠시 후에 다시 시도해주세요.');
         setSignUpMessage('잠시 후에 다시 시도해주세요.')
         setStatus(1);
       }
@@ -136,9 +131,21 @@ export default function SignupPage() {
     setIsOpenAlert(true);
   };
 
+  const alertMessage = (status) =>{
+    return signUpMessage
+  }
+
+  const alertClickBtn = (status) => {
+    if(status === 0){
+      navigate('/login')
+    } else {
+      setIsOpenAlert();
+    }
+  }
+
   return (
     <div className=" w-full flex flex-col items-center justify-center min-h-screen bg-white p-4">
-      {isOpenAlert ? <AlertModal status={status} message={signUpMessage} setIsOpenAlert={() => setIsOpenAlert(false)}/> : null}
+      {isOpenAlert ? <AlertModal status={status} message={alertMessage} clickBtn={alertClickBtn}/> : null}
       <div className="absolute top-8 left-4 text-black" onClick={() => navigate('/login')}>
         <img src={BackBtn} alt="Logo" className="w-8 h-8" />
       </div>
@@ -208,36 +215,3 @@ export default function SignupPage() {
     </div>
   );
 }
-
-const AlertModal = ({ status, message, setIsOpenAlert }) => {
-	const navigate = useNavigate();
-
-  const clickBtn = () => {
-    if(status === 0){
-      navigate('/login')
-    } else {
-      setIsOpenAlert();
-    }
-  }
-
-	return (
-		<div className="absolute z-10 flex items-center justify-center w-screen h-screen">
-			<div className="absolute w-full h-full bg-gray-300 opacity-50 z-11" />
-			<div className="fixed shadow-md bg-white rounded-[30px] z-20 p-10 flex flex-col items-center gap-5 animate-slide-down">
-				<div className="flex justify-center gap-1">
-					<img src={check} className="w-7 h-7" />
-					<span className="font-bold text-[18px] text-center whitespace-pre-line">
-						{message}
-					</span>
-				</div>
-				<div className="flex items-center justify-center w-full">
-					<ButtonActive
-						btnTxt="확인"
-						isConfirm={true}
-						clickBtn={() => clickBtn(status)}
-					/>
-				</div>
-			</div>
-		</div>
-	);
-};

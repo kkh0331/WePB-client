@@ -24,6 +24,7 @@ import { makeReservation } from '../../libs/apis/reservation';
 import { getAvailableTime } from '../../libs/apis/schedule';
 import { getPartnerNmCg } from '../../libs/apis/chat';
 import moment from 'moment';
+import AlertModal from '../../components/common/AlertModal';
 
 export default function ConsultingReservationPage() {
 	const navigate = useNavigate();
@@ -108,6 +109,7 @@ export default function ConsultingReservationPage() {
 		fetchPartnerName();
 	}, []);
 
+
 	const fetchPartnerName = async () => {
 		try {
 			const response = await getPartnerNmCg(partnerId);
@@ -118,9 +120,38 @@ export default function ConsultingReservationPage() {
 		}
 	};
 
+	{status === 0
+		? `예약 날짜, 시간, 메시지를
+		모두 입력해주세요.`
+		: status === 1
+			? '상담 예약이 완료되었습니다.'
+			: status === 3
+			? '과거의 날짜는 선택할 수 없습니다.' : '이미 마감된 시간입니다.'}
+
+	const alertMessage = (status) => {
+		switch(status){
+			case 0:
+				return "예약 날짜, 시간, 메시지를 모두 입력해주세요."
+			case 1:
+				return "상담 예약이 완료되었습니다."
+			case 3:
+				return "과거의 날짜는 선택할 수 없습니다."
+			default:
+				return "이미 마감된 시간입니다."
+		}
+	}
+
+	const alertClickBtn = (status) => {
+		if(status === 1){
+			navigate('/home')
+		} else {
+			hasToReload()
+		}
+	}
+
 	return (
 		<div className="relative mb-16">
-			{isOpen ? <AlertModal status={status} hasToReload={hasToReload} /> : null}
+			{isOpen ? <AlertModal status={status} message={alertMessage} clickBtn={alertClickBtn} /> : null}
 			<div className="relative flex items-center justify-center w-full h-16 font-sans text-xl font-bold bg-white border-t border-gray-200 shadow">
 				<img
 					src={back}
@@ -181,33 +212,3 @@ export default function ConsultingReservationPage() {
 		</div>
 	);
 }
-
-const AlertModal = ({ status, hasToReload }) => {
-	const navigate = useNavigate();
-	return (
-		<div className="absolute z-10 flex items-center justify-center w-screen h-screen">
-			<div className="absolute w-full h-full bg-gray-300 opacity-50 z-11" />
-			<div className="fixed shadow-md bg-white rounded-[30px] z-20 p-10 flex flex-col items-center gap-5 animate-slide-down">
-				<div className="flex justify-center gap-1">
-					<img src={check} className="w-7 h-7" />
-					<span className="font-bold text-[18px] text-center whitespace-pre-line">
-						{status === 0
-							? `예약 날짜, 시간, 메시지를
-							모두 입력해주세요.`
-							: status === 1
-								? '상담 예약이 완료되었습니다.'
-								: status === 3
-								? '과거의 날짜는 선택할 수 없습니다.' : '이미 마감된 시간입니다.'}
-					</span>
-				</div>
-				<div className="flex items-center justify-center w-full">
-					<ButtonActive
-						btnTxt="확인"
-						isConfirm={true}
-						clickBtn={() => (status === 1 ? navigate('/home') : hasToReload())}
-					/>
-				</div>
-			</div>
-		</div>
-	);
-};

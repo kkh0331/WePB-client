@@ -11,6 +11,7 @@ import Loading from '../../components/common/Loading';
 import { useNavigate } from 'react-router-dom';
 import ButtonActive from '../../components/button/ButtonActive';
 import check from '../../assets/check.svg';
+import AlertModal from '../../components/common/AlertModal';
 
 export default function CalendarPage() {
 	const { id, role } = useSelector(state => state.user);
@@ -46,6 +47,14 @@ export default function CalendarPage() {
 		}
 	}
 
+	const alertMessage = (status) => {
+		return "과거의 날짜는 예약할 수 없습니다."
+	}
+
+	const alertClickBtn = (status) => {
+		setIsAlertModal(false)
+	}
+
 	const [isAlertModal, setIsAlertModal] = useState(false);
 
 	return (
@@ -63,7 +72,7 @@ export default function CalendarPage() {
 					</button>
 				) : null}
 			</div>
-			{isAlertModal ? <AlertModal setIsAlertModal={() => setIsAlertModal(false)}/> : null}
+			{isAlertModal ? <	AlertModal message={alertMessage} clickBtn={alertClickBtn}/> : null}
 			<AddSchedule
 				id="default-modal"
 				selectedDate={value}
@@ -106,27 +115,3 @@ export default function CalendarPage() {
 		</div>
 	);
 }
-
-const AlertModal = ({ setIsAlertModal }) => {
-	return (
-		<div className="absolute z-10 flex items-center justify-center w-screen h-screen">
-			<div className="absolute w-full h-full bg-gray-300 opacity-50 z-11" />
-			<div className="fixed shadow-md bg-white rounded-[30px] z-20 p-10 flex flex-col items-center gap-5 animate-slide-down">
-				<div className="flex justify-center gap-1">
-					<img src={check} className="w-7 h-7" />
-					<span className="font-bold text-[18px] text-center whitespace-pre-line">
-						과거의 날짜는 예약할 수 없습니다.
-					</span>
-				</div>
-				<div className="flex items-center justify-center w-full">
-					<ButtonActive
-						btnTxt="확인"
-						isConfirm={true}
-						clickBtn={() => setIsAlertModal()}
-					/>
-				</div>
-			</div>
-		</div>
-	);
-};
-
